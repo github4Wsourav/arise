@@ -54,24 +54,6 @@ html[data-tier='10']::before {
   background-image: url('/assets/backgrounds/tier-10.webp');
 }
 
-/* Faint drifting dust motes (transparent asset), behind everything, slowly adrift. */
-html::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -9;
-  pointer-events: none;
-  background: url('/assets/fx/particles.webp') center / cover no-repeat;
-  mix-blend-mode: screen;
-  opacity: 0.6;
-  animation: drift 55s ease-in-out infinite alternate;
-}
-@keyframes drift {
-  to {
-    transform: translateY(-14px) scale(1.04);
-  }
-}
-
 /* Drifting aura glow field. Fixed, GPU-cheap (transform/opacity only). */
 body::before {
   content: '';
@@ -136,6 +118,46 @@ body::after {
 @media (min-width: 720px) {
   body::before {
     filter: blur(52px) saturate(1.15);
+  }
+}
+
+/* ---- Animated motes: glowing particles drifting up through the void -------- */
+.particle-field {
+  position: fixed;
+  inset: 0;
+  z-index: -7;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mote {
+  position: absolute;
+  bottom: -14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--aura-hi),
+    color-mix(in srgb, var(--aura) 60%, transparent) 55%,
+    transparent 75%
+  );
+  box-shadow: 0 0 6px color-mix(in srgb, var(--aura) 55%, transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: mote-rise var(--dur) linear var(--delay) infinite;
+}
+@keyframes mote-rise {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--o);
+  }
+  88% {
+    opacity: var(--o);
+  }
+  100% {
+    transform: translate3d(var(--drift), -102vh, 0);
+    opacity: 0;
   }
 }
 
@@ -817,7 +839,9 @@ html[data-tier='10'] .system-window::before {
 
 /* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */
 @media (prefers-reduced-motion: reduce) {
-  html::after,
+  .particle-field {
+    display: none;
+  }
   body::before,
   body::after,
   .system-window,

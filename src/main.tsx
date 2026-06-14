@@ -18,6 +18,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { loadManifest } from './character/manifest';
 import { SYSTEM } from './data/strings';
 import { installDevTools } from './dev/seed';
+import { ParticleField } from './ui/ParticleField';
 import { Dashboard } from './routes/dashboard/Dashboard';
 import { GateView } from './routes/gate/GateView';
 import { Profile } from './routes/profile/Profile';
@@ -31,14 +32,17 @@ function Shell() {
   useWatchers();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <motion.div
-      key={pathname}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <Outlet />
-    </motion.div>
+    <>
+      <ParticleField />
+      <motion.div
+        key={pathname}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <Outlet />
+      </motion.div>
+    </>
   );
 }
 
