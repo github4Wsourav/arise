@@ -1,0 +1,12 @@
+/* ============================================================================
+   Self-hosted display face — Jim Nightshade (SIL OFL; license at
+   public/fonts/JimNightshade-OFL.txt). Used for the System's titles/headings;
+   numerals stay on the clean --font-numeral so figures read at a glance.
+   ============================================================================ */
+@font-face {
+  font-family: 'Jim Nightshade';
+  src: url('/fonts/JimNightshade-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

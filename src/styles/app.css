@@ -223,7 +223,7 @@ button {
 }
 
 .level-numeral {
-  font-family: var(--font-display);
+  font-family: var(--font-numeral);
   font-weight: 700;
   font-size: 34px;
   color: var(--aura-hi);
@@ -919,7 +919,7 @@ button {
   justify-content: center;
   align-items: baseline;
   gap: 14px;
-  font-family: var(--font-display);
+  font-family: var(--font-numeral);
   font-weight: 700;
 }
 

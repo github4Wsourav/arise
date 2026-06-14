@@ -24,7 +24,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,woff2,json}'],
+        globPatterns: ['**/*.{js,css,html,png,svg,woff2,ttf,json}'],
         runtimeCaching: [
           {
             // character art is dropped in over time — cache-first, long-lived

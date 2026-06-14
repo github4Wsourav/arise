@@ -34,7 +34,8 @@
   --aura-intensity: 0.15;
 
   /* type */
-  --font-display: 'Unbounded', sans-serif;
+  --font-display: 'Jim Nightshade', 'Unbounded', cursive; /* titles & headings */
+  --font-numeral: 'Unbounded', sans-serif; /* big figures stay crisp */
   --font-body: 'Sora', sans-serif;
   --font-mono: 'Martian Mono', monospace;
 

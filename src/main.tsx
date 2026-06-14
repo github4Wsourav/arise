@@ -5,6 +5,7 @@ import '@fontsource/sora/600.css';
 import '@fontsource/sora/700.css';
 import '@fontsource/martian-mono/400.css';
 import '@fontsource/martian-mono/700.css';
+import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/app.css';
 import './styles/system-fx.css';
