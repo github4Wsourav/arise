@@ -7,6 +7,7 @@ import type { GameState } from '../../engine/types';
 import { appendEvent } from '../../store/append';
 import { dateIso, daysBetween } from '../../store/dates';
 import { useGameState } from '../../store/useGameState';
+import { Art } from '../../ui/Art';
 import { CharacterCard } from '../../ui/CharacterCard';
 import { RosterStrip } from '../../ui/RosterStrip';
 import { SyncDot } from '../../ui/SyncDot';
@@ -21,7 +22,8 @@ function TodayPanel({ state }: { state: GameState }) {
   if (today.type === 'gym' && today.session) {
     const session = SESSIONS[today.session];
     return (
-      <SystemWindow label={SYSTEM.dashboard.todayGate}>
+      <SystemWindow label={SYSTEM.dashboard.todayGate} className="system-window--gate">
+        <Art className="gate-art" src={`/assets/gates/${session.id}.webp`} />
         <h3 className="gate-name">{session.gateName}</h3>
         <p className="gate-focus">{session.focus}</p>
         <Link to="/gate/$sessionId" params={{ sessionId: session.id }} className="cta cta--link">

@@ -10,6 +10,7 @@ import { useGameState } from '../../store/useGameState';
 import { appendEvent } from '../../store/append';
 import { dateIso } from '../../store/dates';
 import { BodyHeatmap } from '../../body/BodyHeatmap';
+import { Art } from '../../ui/Art';
 import { SystemText } from '../../ui/SystemText';
 import { ExerciseCard } from './ExerciseCard';
 import { TallyScreen } from './TallyScreen';
@@ -51,6 +52,7 @@ export function GateView() {
         </Link>
         <span className="rank-badge">{tier.id.toUpperCase()}</span>
       </header>
+      <Art className="gate-hero" src={`/assets/gates/${session.id}.webp`} />
       <h1 className="gate-name">{session.gateName}</h1>
       <SystemText>{session.why.toUpperCase()}</SystemText>
       {state.pendingBosses

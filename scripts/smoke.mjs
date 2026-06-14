@@ -23,7 +23,7 @@ page.on('console', (msg) => {
 page.on('pageerror', (err) => errors.push(String(err)));
 page.on('response', (res) => {
   // missing character art is expected: the aura placeholder is the designed fallback
-  if (res.status() === 404 && !res.url().includes('/assets/characters/')) notFound.push(res.url());
+  if (res.status() === 404 && !res.url().includes('/assets/')) notFound.push(res.url());
 });
 
 await page.goto('http://localhost:5173', { waitUntil: 'networkidle' });

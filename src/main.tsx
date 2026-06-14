@@ -7,6 +7,7 @@ import '@fontsource/martian-mono/400.css';
 import '@fontsource/martian-mono/700.css';
 import './styles/tokens.css';
 import './styles/app.css';
+import './styles/system-fx.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

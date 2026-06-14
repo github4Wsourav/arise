@@ -1,0 +1,589 @@
+/* ============================================================================
+   Arise — System FX layer (docs/07-SYSTEM-UI.md)
+   The holographic "magic UI" overhaul. Presentation only; aura-token driven so
+   the whole HUD recolors per tier. Imported AFTER app.css so it amplifies the
+   base design system rather than replacing it.
+   ============================================================================ */
+
+/* ---- 1. The Void: a living background projected behind everything ---------- */
+/* Drifting aura glow field. Fixed, GPU-cheap (transform/opacity only). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -25%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      42% 38% at 28% 18%,
+      color-mix(in srgb, var(--aura) 26%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      48% 44% at 80% 88%,
+      color-mix(in srgb, var(--aura-deep) 60%, transparent),
+      transparent 72%
+    );
+  filter: blur(36px) saturate(1.1);
+  animation: aura-breathe 16s var(--ease-system) infinite alternate;
+}
+
+/* Scan-grid + vignette overlay. Sits above the void, below content. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--scan) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scan) 1px, transparent 1px),
+    radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  background-size:
+    44px 44px,
+    44px 44px,
+    100% 100%;
+  animation: scan-drift 24s linear infinite;
+}
+
+@keyframes aura-breathe {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+    opacity: 0.85;
+  }
+  to {
+    transform: translate3d(2%, 2%, 0) scale(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes scan-drift {
+  to {
+    background-position:
+      0 44px,
+      44px 0,
+      0 0;
+  }
+}
+
+/* On wide screens the column stays centered; give the void more presence. */
+@media (min-width: 720px) {
+  body::before {
+    filter: blur(52px) saturate(1.15);
+  }
+}
+
+/* ---- 2. System Windows: glass + animated aura border + HUD brackets -------- */
+.system-window {
+  background: var(--panel-glass);
+  -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
+  backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
+  box-shadow:
+    var(--glow-soft),
+    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 10%, transparent);
+}
+
+/* Materialize on mount. Gated behind no-preference so the DEFAULT (above) is
+   the visible state — if the animation never runs, content is never hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  .system-window {
+    animation: rise-in var(--t-slow) var(--ease-system) both;
+  }
+  .system-window:nth-of-type(1) {
+    animation-delay: 0ms;
+  }
+  .system-window:nth-of-type(2) {
+    animation-delay: 70ms;
+  }
+  .system-window:nth-of-type(3) {
+    animation-delay: 140ms;
+  }
+  .system-window:nth-of-type(4) {
+    animation-delay: 210ms;
+  }
+  .system-window:nth-of-type(n + 5) {
+    animation-delay: 280ms;
+  }
+}
+
+/* The existing inner aura border (app.css ::after) now breathes. */
+.system-window::after {
+  animation: border-pulse 4.5s ease-in-out infinite;
+}
+
+/* HUD corner brackets: an inset border masked to show only the four corner L's. */
+.system-window::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 5px;
+  border: 1px solid var(--hud);
+  pointer-events: none;
+  opacity: 0.7;
+  -webkit-mask:
+    linear-gradient(#000 0 0) top left,
+    linear-gradient(#000 0 0) top right,
+    linear-gradient(#000 0 0) bottom left,
+    linear-gradient(#000 0 0) bottom right;
+  mask:
+    linear-gradient(#000 0 0) top left,
+    linear-gradient(#000 0 0) top right,
+    linear-gradient(#000 0 0) bottom left,
+    linear-gradient(#000 0 0) bottom right;
+  -webkit-mask-size: 13px 13px;
+  mask-size: 13px 13px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes border-pulse {
+  0%,
+  100% {
+    border-color: color-mix(in srgb, var(--aura) 25%, transparent);
+    box-shadow: none;
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--aura) 55%, transparent);
+    box-shadow: 0 0 14px -2px color-mix(in srgb, var(--aura) 30%, transparent);
+  }
+}
+
+/* ---- 3. Glowing content: numerals, labels, bars --------------------------- */
+.level-numeral,
+.ceremony-new {
+  text-shadow: var(--text-glow);
+}
+
+.window-label {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--aura) 25%, transparent);
+}
+
+/* XP fill gains a travelling shimmer highlight + a glowing leading edge. */
+.xp-fill {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--aura) 60%, transparent),
+    0 0 2px var(--aura-hi);
+}
+.xp-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--aura-hi) 75%, transparent) 50%,
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2.6s var(--ease-system) infinite;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(220%);
+  }
+}
+
+/* ---- 4. Micro-interactions ------------------------------------------------ */
+/* Primary CTA: glow lift on hover, a press flare on tap. */
+.cta {
+  transition:
+    transform var(--t-fast) var(--ease-out),
+    box-shadow var(--t-mid) var(--ease-out),
+    filter var(--t-fast) var(--ease-out);
+}
+.cta:not(:disabled):hover {
+  filter: brightness(1.08);
+  box-shadow: var(--glow-mid);
+}
+.cta:not(:disabled):active {
+  transform: scale(0.97);
+  box-shadow: var(--glow-hard);
+}
+
+/* Roster chips + interactive rows: subtle glow on hover. */
+.roster-chip,
+.set-row,
+.quest-row,
+.cta--link {
+  transition:
+    transform var(--t-fast) var(--ease-out),
+    box-shadow var(--t-mid) var(--ease-out),
+    border-color var(--t-mid) var(--ease-out);
+}
+.roster-chip:hover,
+.cta--link:hover {
+  box-shadow: var(--glow-soft);
+}
+
+/* Today's roster chip pulses so the eye lands on it. */
+.roster-chip--today {
+  animation: today-pulse 2.4s ease-in-out infinite;
+}
+@keyframes today-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--aura) 40%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px 1px color-mix(in srgb, var(--aura) 45%, transparent);
+  }
+}
+
+/* Steppers / small buttons: tactile press. */
+.stepper button,
+.log-btn,
+.quest-claim {
+  transition:
+    transform var(--t-fast) var(--ease-out),
+    box-shadow var(--t-mid) var(--ease-out);
+}
+.stepper button:active,
+.log-btn:active,
+.quest-claim:active {
+  transform: scale(0.92);
+}
+.log-btn:hover,
+.quest-claim:hover {
+  box-shadow: var(--glow-mid);
+}
+.quest-claim:active {
+  box-shadow: var(--glow-hard);
+}
+
+/* Boss banner already exists — make it breathe with menace. */
+.boss-banner {
+  animation: border-pulse 2.8s ease-in-out infinite;
+  text-shadow: var(--text-glow);
+}
+
+/* ============================================================================
+   Cinematic component pass (docs/07-SYSTEM-UI.md §5) — bold & GPU-cheap.
+   ============================================================================ */
+
+/* ---- Daily quests: the System ticking a box ------------------------------- */
+.quest-mark--done {
+  display: inline-block;
+  animation: quest-pop 0.45s var(--ease-system) both;
+  text-shadow: var(--text-glow);
+}
+@keyframes quest-pop {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.45) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* ---- Set logger: a logged set lands with a flash -------------------------- */
+.set-row--logged {
+  animation: log-flash 0.6s var(--ease-out);
+}
+@keyframes log-flash {
+  0% {
+    background: color-mix(in srgb, var(--aura) 38%, var(--panel-2));
+    box-shadow: var(--glow-mid);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+.grade--beat,
+.grade--new {
+  text-shadow: var(--text-glow);
+}
+
+/* ---- Gate progress + the CLEAR GATE charge-up ----------------------------- */
+.gate-progress-fill {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--aura) 55%, transparent);
+}
+.gate-progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--aura-hi) 80%, transparent) 50%,
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2.2s var(--ease-system) infinite;
+}
+/* When the gate is fully cleared the CTA is enabled — it pulses, ready to fire. */
+.gate-foot .cta:not(:disabled) {
+  animation: ready-pulse 1.7s ease-in-out infinite;
+}
+@keyframes ready-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 14px color-mix(in srgb, var(--aura) 45%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 26px color-mix(in srgb, var(--aura) 65%, transparent),
+      0 0 8px var(--aura-hi);
+  }
+}
+
+/* ---- Tally window: give it the HUD treatment + a counting total ----------- */
+.tally-window {
+  position: relative;
+  background: var(--panel-glass);
+  -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.2);
+  backdrop-filter: blur(var(--blur-panel)) saturate(1.2);
+  box-shadow: var(--glow-mid);
+  animation: rise-in var(--t-slow) var(--ease-system) both;
+}
+.tally-window::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--hud);
+  pointer-events: none;
+  opacity: 0.6;
+  -webkit-mask:
+    linear-gradient(#000 0 0) top left,
+    linear-gradient(#000 0 0) top right,
+    linear-gradient(#000 0 0) bottom left,
+    linear-gradient(#000 0 0) bottom right;
+  mask:
+    linear-gradient(#000 0 0) top left,
+    linear-gradient(#000 0 0) top right,
+    linear-gradient(#000 0 0) bottom left,
+    linear-gradient(#000 0 0) bottom right;
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.tally-total {
+  font-size: 15px;
+}
+.tally-total .tally-xp {
+  font-size: 18px;
+  text-shadow: var(--text-glow);
+}
+.boss-announce {
+  text-shadow: var(--text-glow);
+}
+
+/* ---- Ceremony: a screen flash + an aura burst behind the reveal ----------- */
+.ceremony::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 50% at 50% 42%,
+    color-mix(in srgb, var(--aura) 55%, transparent),
+    transparent 70%
+  );
+  animation: ceremony-flash 0.9s var(--ease-out) both;
+}
+@keyframes ceremony-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+.ceremony-stage {
+  position: relative;
+}
+.ceremony-stage::before {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--aura) 40%, transparent),
+    transparent 65%
+  );
+  filter: blur(14px);
+  animation: aura-burst 2.4s var(--ease-system) infinite alternate;
+}
+@keyframes aura-burst {
+  from {
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+.ceremony-new {
+  animation: numeral-slam 0.7s var(--ease-system) both;
+}
+@keyframes numeral-slam {
+  0% {
+    transform: scale(2.2);
+    opacity: 0;
+    filter: blur(8px);
+  }
+  60% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ---- Header + sync indicator ---------------------------------------------- */
+.app-title {
+  text-shadow:
+    0 0 18px color-mix(in srgb, var(--aura) 40%, transparent),
+    0 0 4px color-mix(in srgb, var(--aura) 30%, transparent);
+}
+.profile-link {
+  transition:
+    color var(--t-mid) var(--ease-out),
+    text-shadow var(--t-mid) var(--ease-out);
+}
+.profile-link:hover {
+  color: var(--aura-hi);
+  text-shadow: var(--text-glow);
+}
+.sync-dot--syncing .dot {
+  animation: sync-throb 1s ease-in-out infinite;
+}
+@keyframes sync-throb {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--aura) 50%, transparent);
+    opacity: 0.6;
+  }
+  50% {
+    box-shadow: 0 0 8px 1px color-mix(in srgb, var(--aura) 60%, transparent);
+    opacity: 1;
+  }
+}
+.sync-dot--idle .dot {
+  box-shadow: 0 0 6px color-mix(in srgb, var(--ok) 60%, transparent);
+}
+.sync-dot--error .dot {
+  box-shadow: 0 0 6px color-mix(in srgb, var(--down) 70%, transparent);
+}
+
+/* ---- Profile: stat cells, relics, tier gallery, sparklines ---------------- */
+.stat-cell {
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+}
+.stat-cell .v {
+  text-shadow: var(--text-glow);
+}
+.stat-cell:hover {
+  box-shadow: var(--glow-soft);
+  transform: translateY(-1px);
+}
+
+.relic {
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    transform var(--t-fast) var(--ease-out),
+    border-color var(--t-mid) var(--ease-out);
+}
+.relic:hover {
+  box-shadow: var(--glow-mid);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--aura) 50%, var(--line));
+}
+.relic-glyph {
+  text-shadow: var(--text-glow);
+}
+
+.tier-slot {
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+}
+.tier-slot:not(.tier-slot--classified):hover {
+  box-shadow: var(--glow-mid);
+  transform: translateY(-2px);
+}
+/* the Hunter's current tier glows in the gallery */
+.tier-slot-aura {
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--aura) 18%, transparent);
+}
+
+.sparkline {
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--aura) 45%, transparent));
+}
+
+/* ---- Responsive: on wide screens the void breathes, column stays phone-width */
+@media (min-width: 720px) {
+  body::after {
+    background-size:
+      56px 56px,
+      56px 56px,
+      100% 100%;
+  }
+  .app-title {
+    font-size: 32px;
+  }
+}
+
+/* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .system-window,
+  .system-window::after,
+  .xp-fill::after,
+  .roster-chip--today,
+  .boss-banner,
+  .quest-mark--done,
+  .set-row--logged,
+  .gate-progress-fill::after,
+  .gate-foot .cta:not(:disabled),
+  .tally-window,
+  .ceremony::before,
+  .ceremony-stage::before,
+  .ceremony-new,
+  .sync-dot--syncing .dot {
+    animation: none !important;
+  }
+  .xp-fill::after,
+  .gate-progress-fill::after,
+  .ceremony::before,
+  .ceremony-stage::before {
+    display: none;
+  }
+}

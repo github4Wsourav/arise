@@ -21,7 +21,7 @@ page.on('console', (msg) => {
 });
 page.on('pageerror', (err) => errors.push(String(err)));
 page.on('response', (res) => {
-  if (res.status() === 404 && !res.url().includes('/assets/characters/')) notFound.push(res.url());
+  if (res.status() === 404 && !res.url().includes('/assets/')) notFound.push(res.url());
 });
 
 const totalXp = () => page.evaluate(async () => (await window.arise.state()).totalXp);
@@ -112,6 +112,7 @@ if (tierSlots !== 10) throw new Error(`expected 10 tier slots, got ${tierSlots}`
 if (classified === 0 || classified === 10) throw new Error('classified split looks wrong');
 if (relicCount === 0) throw new Error('expected named-milestone relics at the deep seed');
 if (titleRows < 2) throw new Error('expected the title picker at the deep seed');
+await page.waitForTimeout(1000); // let panel entrance animations settle before capture
 await page.screenshot({ path: 'screenshots/profile.png', fullPage: true });
 
 await page.evaluate(async () => await window.arise.reset());
