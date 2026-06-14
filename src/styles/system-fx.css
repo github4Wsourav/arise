@@ -6,6 +6,54 @@
    ============================================================================ */
 
 /* ---- 1. The Void: a living background projected behind everything ---------- */
+/* Per-tier blurred backdrop — drop-in (silently absent until the art exists; the
+   /assets 404 is whitelisted). Sits behind the void glow; body is transparent so
+   it shows through. The image CHANGES every tier (= every ~10 levels / threshold). */
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(10px) saturate(1.05);
+  opacity: 0.42;
+  transform: scale(1.08); /* push the blurred edges off-screen */
+  transition: opacity 1.4s ease;
+}
+html[data-tier='1']::before {
+  background-image: url('/assets/backgrounds/tier-1.webp');
+}
+html[data-tier='2']::before {
+  background-image: url('/assets/backgrounds/tier-2.webp');
+}
+html[data-tier='3']::before {
+  background-image: url('/assets/backgrounds/tier-3.webp');
+}
+html[data-tier='4']::before {
+  background-image: url('/assets/backgrounds/tier-4.webp');
+}
+html[data-tier='5']::before {
+  background-image: url('/assets/backgrounds/tier-5.webp');
+}
+html[data-tier='6']::before {
+  background-image: url('/assets/backgrounds/tier-6.webp');
+}
+html[data-tier='7']::before {
+  background-image: url('/assets/backgrounds/tier-7.webp');
+}
+html[data-tier='8']::before {
+  background-image: url('/assets/backgrounds/tier-8.webp');
+}
+html[data-tier='9']::before {
+  background-image: url('/assets/backgrounds/tier-9.webp');
+}
+html[data-tier='10']::before {
+  background-image: url('/assets/backgrounds/tier-10.webp');
+}
+
 /* Drifting aura glow field. Fixed, GPU-cheap (transform/opacity only). */
 body::before {
   content: '';
@@ -73,9 +121,25 @@ body::after {
   }
 }
 
-/* ---- 2. System Windows: glass + animated aura border + HUD brackets -------- */
+/* ---- 2. System Windows: glass + slow sheen + HUD brackets ------------------ */
 .system-window {
-  background: var(--panel-glass);
+  background-color: var(--panel-glass);
+  /* layer 1 = the slow travelling sheen; layer 2 = a fixed top-corner glass glint */
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 38%,
+      color-mix(in srgb, var(--aura-hi) 8%, transparent) 50%,
+      transparent 62%
+    ),
+    radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--aura-hi) 7%, transparent), transparent 55%);
+  background-size:
+    220% 100%,
+    100% 100%;
+  background-position:
+    135% 0,
+    0 0;
+  background-repeat: no-repeat;
   -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
   backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
   box-shadow:
@@ -83,11 +147,21 @@ body::after {
     inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 10%, transparent);
 }
 
+@keyframes panel-sheen {
+  to {
+    background-position:
+      -35% 0,
+      0 0;
+  }
+}
+
 /* Materialize on mount. Gated behind no-preference so the DEFAULT (above) is
    the visible state — if the animation never runs, content is never hidden. */
 @media (prefers-reduced-motion: no-preference) {
   .system-window {
-    animation: rise-in var(--t-slow) var(--ease-system) both;
+    animation:
+      rise-in var(--t-slow) var(--ease-system) both,
+      panel-sheen 13s ease-in-out infinite;
   }
   .system-window:nth-of-type(1) {
     animation-delay: 0ms;
@@ -104,11 +178,6 @@ body::after {
   .system-window:nth-of-type(n + 5) {
     animation-delay: 280ms;
   }
-}
-
-/* The existing inner aura border (app.css ::after) now breathes. */
-.system-window::after {
-  animation: border-pulse 4.5s ease-in-out infinite;
 }
 
 /* HUD corner brackets: an inset border masked to show only the four corner L's. */
@@ -146,18 +215,6 @@ body::after {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
-  }
-}
-
-@keyframes border-pulse {
-  0%,
-  100% {
-    border-color: color-mix(in srgb, var(--aura) 25%, transparent);
-    box-shadow: none;
-  }
-  50% {
-    border-color: color-mix(in srgb, var(--aura) 55%, transparent);
-    box-shadow: 0 0 14px -2px color-mix(in srgb, var(--aura) 30%, transparent);
   }
 }
 
@@ -233,6 +290,31 @@ body::after {
   transform: scale(0.97);
   box-shadow: var(--glow-hard);
 }
+/* A slow shimmer travels across primary buttons. */
+.cta {
+  position: relative;
+  overflow: hidden;
+}
+.cta:not(:disabled)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    color-mix(in srgb, #fff 26%, transparent) 50%,
+    transparent 60%
+  );
+  background-size: 240% 100%;
+  background-position: 150% 0;
+  animation: sheen-slide 5.5s ease-in-out infinite;
+}
+@keyframes sheen-slide {
+  to {
+    background-position: -40% 0;
+  }
+}
 
 /* Roster chips + interactive rows: subtle glow on hover. */
 .roster-chip,
@@ -249,18 +331,25 @@ body::after {
   box-shadow: var(--glow-soft);
 }
 
-/* Today's roster chip pulses so the eye lands on it. */
-.roster-chip--today {
-  animation: today-pulse 2.4s ease-in-out infinite;
+/* Today's roster chip catches a slow shimmer so the eye lands on it. */
+.roster-chip {
+  position: relative;
+  overflow: hidden;
 }
-@keyframes today-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--aura) 40%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 10px 1px color-mix(in srgb, var(--aura) 45%, transparent);
-  }
+.roster-chip--today::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    color-mix(in srgb, var(--aura) 38%, transparent) 50%,
+    transparent 58%
+  );
+  background-size: 240% 100%;
+  background-position: 150% 0;
+  animation: sheen-slide 4.8s ease-in-out infinite;
 }
 
 /* Steppers / small buttons: tactile press. */
@@ -284,9 +373,8 @@ body::after {
   box-shadow: var(--glow-hard);
 }
 
-/* Boss banner already exists — make it breathe with menace. */
+/* Boss banner — a steady menacing glow (no pulse). */
 .boss-banner {
-  animation: border-pulse 2.8s ease-in-out infinite;
   text-shadow: var(--text-glow);
 }
 
@@ -351,20 +439,12 @@ body::after {
   transform: translateX(-100%);
   animation: shimmer 2.2s var(--ease-system) infinite;
 }
-/* When the gate is fully cleared the CTA is enabled — it pulses, ready to fire. */
+/* When the gate is fully cleared the CTA is enabled — a steady ready-glow
+   (the slow CTA shimmer + this glow read as "armed", no pulsing). */
 .gate-foot .cta:not(:disabled) {
-  animation: ready-pulse 1.7s ease-in-out infinite;
-}
-@keyframes ready-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 14px color-mix(in srgb, var(--aura) 45%, transparent);
-  }
-  50% {
-    box-shadow:
-      0 0 26px color-mix(in srgb, var(--aura) 65%, transparent),
-      0 0 8px var(--aura-hi);
-  }
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--aura) 50%, transparent),
+    0 0 6px var(--aura-hi);
 }
 
 /* ---- Tally window: give it the HUD treatment + a counting total ----------- */
@@ -673,14 +753,6 @@ body::after {
   animation: none;
 }
 
-/* ---- Card material: a faint top-corner sheen so panels feel like glass ----- */
-.system-window {
-  background-image: radial-gradient(
-    120% 80% at 0% 0%,
-    color-mix(in srgb, var(--aura-hi) 7%, transparent),
-    transparent 55%
-  );
-}
 
 /* ---- Filmic grain: one faint static overlay for depth --------------------- */
 #root::after {
@@ -698,10 +770,9 @@ body::after {
   body::before,
   body::after,
   .system-window,
-  .system-window::after,
+  .cta:not(:disabled)::after,
+  .roster-chip--today::after,
   .xp-fill::after,
-  .roster-chip--today,
-  .boss-banner,
   .quest-mark--done,
   .set-row--logged,
   .gate-progress-fill::after,

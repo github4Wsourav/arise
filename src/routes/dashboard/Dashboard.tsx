@@ -99,16 +99,29 @@ export function Dashboard() {
   return (
     <main className="dashboard">
       <header className="app-header span-2">
-        <h1 className="app-title">{SYSTEM.appName}</h1>
-        <nav className="app-nav">
-          <SyncDot />
-          <Link to="/profile" className="profile-link system-text">
-            [{SYSTEM.profile.link}]
-          </Link>
-          <Link to="/settings" className="profile-link system-text">
-            [{SYSTEM.settings.link}]
-          </Link>
-        </nav>
+        <div className="app-nav-row">
+          <span className="app-eyebrow system-text system-text--muted">[{SYSTEM.dashboard.online}]</span>
+          <nav className="app-nav">
+            <SyncDot />
+            <Link to="/profile" className="profile-link system-text">
+              [{SYSTEM.profile.link}]
+            </Link>
+            <Link to="/settings" className="profile-link system-text">
+              [{SYSTEM.settings.link}]
+            </Link>
+          </nav>
+        </div>
+        <img
+          className="brand-hero"
+          src="/assets/brand/arise-wordmark.png"
+          alt={SYSTEM.appName}
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+            const fb = e.currentTarget.nextElementSibling;
+            if (fb instanceof HTMLElement) fb.classList.remove('visually-hidden');
+          }}
+        />
+        <h1 className="app-title brand-fallback visually-hidden">{SYSTEM.appName}</h1>
       </header>
       <div className="span-2">
         <SystemCommentary state={state} />

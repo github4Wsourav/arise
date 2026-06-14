@@ -20,6 +20,7 @@ export const SYSTEM = {
   streakSevered: 'YOUR STREAK HAS BEEN SEVERED. THE MULTIPLIER RESETS. THE RECORDS REMAIN.',
 
   dashboard: {
+    online: 'SYSTEM ONLINE',
     todayGate: 'TODAY’S GATE',
     enterGate: 'ENTER GATE',
     gateSealed: 'GATE ACCESS UNLOCKS IN PHASE 2',

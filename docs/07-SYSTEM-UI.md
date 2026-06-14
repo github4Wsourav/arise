@@ -113,9 +113,22 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       profile); filmic grain overlay + card top-corner sheen; tokens-driven **breathing-room
       pass** (`--panel-pad`/`--panel-gap`, wider gutter + max-w). *Verified: 114 tests, build,
       3 smokes; cohesive tiers 1/3/8.*
-- [ ] **Final:** Lighthouse re-run (confirm backdrop-filters didn't regress perf),
-      landscape/large-text responsive, update HANDOFF, tag. *(reduced-motion guard + high-tier
-      seed cohesion + smokes already verified each pass.)*
+- [x] **Brand + atmosphere (round 4):** real **ARISE logo** wired as the header
+      (`public/assets/brand/arise-wordmark.png`, `screen` blend + edge mask so the dark plate
+      melts into the void; text fallback if absent). **Per-tier blurred backgrounds** — drop-in
+      `public/assets/backgrounds/tier-1..10.webp` keyed on `html[data-tier]`, behind the void
+      (body now transparent, base color on `html`); the backdrop changes every tier/threshold.
+      **Pulse → slow shimmer** everywhere: panels get a 13s travelling sheen (replaced the
+      breathing border), CTAs + the today chip get a slow sheen sweep, CLEAR GATE/boss use a
+      steady glow (no pulsing). **Airier spacing** (`--panel-pad` 22 / `--panel-gap` 22 / gutter
+      18). **Asset-generation guide** for Karan: `docs/08-ASSETS.md` (prompts + paths + names
+      for all backgrounds/gates/overlays; character art excluded — separate pipeline).
+- [ ] **Edit past days' workouts (NEXT — functional, not cosmetic):** let the user open and
+      log/amend a *previous* day's session (shifts change). Needs: date-aware gate route, a way
+      to pick the day+session from the roster, SetLogger writing the chosen `sessionDate`, and a
+      convergence/replay test. Do this as its own commit with a test — it touches the event core.
+- [ ] **Final:** Lighthouse re-run (confirm backdrop-filters/grain didn't regress perf),
+      landscape/large-text responsive, update HANDOFF, tag.
 
 ---
 
