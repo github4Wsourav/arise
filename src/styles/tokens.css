@@ -33,11 +33,11 @@
   --aura-deep: #39414c;
   --aura-intensity: 0.15;
 
-  /* type */
-  --font-display: 'Jim Nightshade', 'Unbounded', cursive; /* titles & headings */
-  --font-numeral: 'Unbounded', sans-serif; /* big figures stay crisp */
-  --font-body: 'Sora', sans-serif;
-  --font-mono: 'Martian Mono', monospace;
+  /* type — Jim Nightshade everywhere (per request); originals kept as fallbacks */
+  --font-display: 'Jim Nightshade', 'Unbounded', cursive;
+  --font-numeral: 'Jim Nightshade', 'Unbounded', sans-serif;
+  --font-body: 'Jim Nightshade', 'Sora', sans-serif;
+  --font-mono: 'Jim Nightshade', 'Martian Mono', monospace;
 
   /* shape & space */
   --r-card: 14px;
