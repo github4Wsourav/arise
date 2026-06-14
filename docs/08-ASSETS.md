@@ -83,51 +83,76 @@ Per-tier `[SCENE]` / `[AURA COLOR]`:
 
 A banner shown on the dashboard "today" panel and as the hero inside each gate. **Landscape
 ~1200×525 (16:7)**, themed to the muscle group as a "dungeon gate / arena." Keep it dark so
-the System text reads on top; the app fades the bottom edge into the panel.
+the System text reads on top; the app fades the **bottom edge** into the panel, so keep the
+lower third quiet and the focal energy upper-centre.
 
-| File | Gate name | Trains | Scene prompt (append the global negative prompt) |
-|------|-----------|--------|--------------------------------------------------|
-| `push.webp` | Crimson Forge | chest · shoulders · triceps | `A dark fantasy forge-arena gate glowing with crimson and ember-orange fire, anvils and molten cracks, heat haze, cinematic, no characters, no text. 16:7 wide.` |
-| `pull.webp` | Iron Abyss | back · rear delts · biceps | `A vast dark chasm gate with hanging iron chains descending into a glowing teal-green abyss, cold mist, cinematic depth, no characters, no text. 16:7 wide.` |
-| `legs.webp` | Titan's Foothold | quads · hams · glutes · calves | `A colossal stone titan's foot and mountain foothold gate, amber torchlight, dust and scale, monumental and heavy, cinematic, no characters, no text. 16:7 wide.` |
+**Prompt template** (fill `[GATE SCENE]` + `[COLOR]`, then append the global negative prompt):
+```
+A wide cinematic dungeon-gate / arena establishing shot: [GATE SCENE], lit almost entirely by
+[COLOR] energy, volumetric haze, drifting embers and sparks, deep atmospheric perspective. The
+lower third is darker and calm (negative space for UI); the glow concentrates in the upper
+centre. Dark fantasy, moody, high detail. No characters, no people, no text, no logos. 16:7 wide.
+```
+
+| File | Gate · trains | `[GATE SCENE]` | `[COLOR]` |
+|------|---------------|----------------|-----------|
+| `push.webp` | Crimson Forge · chest/shoulders/triceps | `a molten forge-arena gateway, anvils and cracked lava channels, rising heat shimmer` | `crimson and ember-orange fire` |
+| `pull.webp` | Iron Abyss · back/rear delts/biceps | `a vast chasm gateway with massive hanging iron chains descending into the deep` | `cold teal-green abyssal light` |
+| `legs.webp` | Titan's Foothold · quads/hams/glutes/calves | `a colossal stone titan's foot planted on a mountain foothold, monumental scale, dust` | `warm amber torchlight` |
 
 ---
 
 ## 3. Decorative overlays (optional, high polish)  ·  `public/assets/fx/`
 
-These are transparent PNGs layered as effects. Optional — the app looks complete without
-them — but they push the "magic UI" feel further. **Export as PNG with real transparency.**
+Transparent PNGs layered as effects. Optional — the app is complete without them — but they
+push the "magic UI" feel. The single hardest requirement: a **truly transparent** background
+(alpha), or they'll show as dark boxes.
 
-| File | Size | Purpose | Prompt |
-|------|------|---------|--------|
-| `magic-circle.png` | 1024×1024 | spins slowly behind the ceremony / status hero | `A glowing arcane summoning circle, concentric rings of runic glyphs, thin bright violet-white lines on a fully transparent background, top-down, symmetrical, no fill, no text in a real language. PNG transparent.` |
-| `rune-corner.png` | 512×512 | ornament tucked into panel corners | `A single ornate glowing rune corner flourish, thin violet line-art, transparent background, one corner only. PNG transparent.` |
-| `particles.png` | 512×512 | tiling ember/dust overlay | `Scattered soft glowing dust motes and embers on a fully transparent background, seamless tileable, faint. PNG transparent.` |
+**Prompt template** (fill `[MOTIF]`, then append the global negative prompt):
+```
+[MOTIF], rendered as thin bright glowing line-art with a soft outer glow, on a FULLY
+TRANSPARENT background (alpha channel, nothing behind it), centred and symmetrical, no solid
+fill, no text or letters in any real language, no watermark. Export PNG with transparency.
+```
 
-> If you generate `magic-circle.png`, tell me and I'll wire it behind the ceremony + status
-> window (slow rotation, screen-blend) — that's a ~10-line change.
+| File | Size | `[MOTIF]` | Purpose in-app |
+|------|------|-----------|----------------|
+| `magic-circle.png` | 1024×1024 | `a top-down arcane summoning circle: concentric rings of invented runic glyphs and a geometric star, violet-white` | rotates slowly behind the ceremony / status hero |
+| `rune-corner.png` | 512×512 | `a single ornate corner flourish of one violet rune bracket (top-left corner only)` | tucked into panel corners |
+| `particles.png` | 512×512 | `scattered soft glowing dust motes and embers, faint, evenly spread, seamlessly tileable` | drifting overlay on the void |
 
----
-
-## 4. Brand & app icons (optional)  ·  `public/assets/brand/` + `public/icons/`
-
-The header wordmark is **already in** (`public/assets/brand/arise-wordmark.png`, the logo you
-made — composited with a `screen` blend so its dark plate melts into the void). Optional extras:
-
-| File | Size | Purpose | Prompt |
-|------|------|---------|--------|
-| `icon-source.png` | 1024×1024 | replace the procedural PWA icon | `An app icon for "Arise": a glowing violet arcane sigil / stylized monarch crown mark on a near-black rounded-square background, centered, bold, no text. 1:1.` |
-
-If you make `icon-source.png`, hand it over and I'll regenerate the 192/512/maskable PWA
-icons from it (the pipeline — `npm run icons` — already exists).
+> Generate `magic-circle.png` first — tell me and I'll wire it behind the ceremony + status
+> window (slow rotation, screen-blend), ~10 lines.
 
 ---
 
-## Priority order (if you only generate a few)
-1. **`tier-8.webp`, `tier-3.webp`, `tier-1.webp`** — the tiers you'll actually see soon; proves the per-threshold background swap.
-2. **`gates/push.webp`** (Crimson Forge) — you train push first; biggest "wow" on the dashboard.
-3. The rest of the tier backgrounds, then the other two gates.
-4. Decorative overlays + custom app icon last.
+## 4. Brand & app icon (optional)  ·  `public/assets/brand/` + `public/icons/`
 
-When you've dropped any of these in, ping me and I'll verify they load and tune the blur /
-opacity / fade to taste.
+The header wordmark is **already in** (`public/assets/brand/arise-wordmark.png`). Optional: a
+custom app/PWA icon to replace the procedural one.
+
+**Prompt template** (fill `[MARK]`):
+```
+A mobile app icon: [MARK], centred on a near-black (#07090E) rounded-square background, bold,
+high contrast, subtle outer glow, no text, no letters. Flat, iconic, readable at small sizes.
+1:1 square. Keep the mark within the centre 80% (safe area for the maskable crop).
+```
+
+| File | Size | `[MARK]` |
+|------|------|----------|
+| `icon-source.png` | 1024×1024 | `a glowing violet arcane sigil / stylised monarch crown mark in cracked-stone-and-neon style, matching the ARISE logo` |
+
+Hand over `icon-source.png` and I'll regenerate the 192/512/maskable icons (`npm run icons`).
+
+---
+
+## Status & priority
+
+- [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in and verified loading. ✅
+- [ ] **`gates/push.webp`** (Crimson Forge) — next biggest win; the gate you train first.
+- [ ] `gates/pull.webp`, `gates/legs.webp`.
+- [ ] `fx/magic-circle.png` (then ping me to wire it), other overlays.
+- [ ] `icon-source.png` (custom PWA icon).
+
+Drop any of these in `public/assets/...` and ping me — I'll verify they load and tune
+blur / opacity / fade / blend to taste.
