@@ -53,6 +53,10 @@ export interface Facts {
   quests: Map<string, string>;
   /** date → kg (last write per date wins) */
   bodyweights: Map<string, number>;
+  /** site → date → cm (LWW per site+date) */
+  measurements: Map<string, Map<string, number>>;
+  /** date → {kcal, protein} (LWW per date) */
+  nutrition: Map<string, { kcal: number; protein: number }>;
   /** history_imported sources already applied (feeds the Imported Soul relic) */
   importSources: Set<string>;
 }
@@ -73,6 +77,8 @@ export function collectFacts(sorted: AriseEvent[]): Facts {
     restDates: new Set(),
     quests: new Map(),
     bodyweights: new Map(),
+    measurements: new Map(),
+    nutrition: new Map(),
     importSources: new Set(),
   };
   const importedSources = facts.importSources;
@@ -133,6 +139,21 @@ export function collectFacts(sorted: AriseEvent[]): Facts {
       case 'bodyweight_logged': {
         const p = e.payload as { kg: number; date: string };
         facts.bodyweights.set(p.date, p.kg); // sorted order ⇒ LWW per date
+        break;
+      }
+      case 'measurement_logged': {
+        const p = e.payload as { site: string; cm: number; date: string };
+        let byDate = facts.measurements.get(p.site);
+        if (!byDate) {
+          byDate = new Map();
+          facts.measurements.set(p.site, byDate);
+        }
+        byDate.set(p.date, p.cm); // sorted order ⇒ LWW per site+date
+        break;
+      }
+      case 'nutrition_logged': {
+        const p = e.payload as { kcal: number; protein: number; date: string };
+        facts.nutrition.set(p.date, { kcal: p.kcal, protein: p.protein }); // LWW per date
         break;
       }
     }
@@ -387,6 +408,17 @@ export function reduce(events: AriseEvent[], cfg: ReduceConfig, nowIso?: string)
     lastTrainingDate: trainingDates[trainingDates.length - 1],
     bodyweights: [...facts.bodyweights.entries()]
       .map(([date, kg]) => ({ date, kg }))
+      .sort((a, b) => (a.date < b.date ? -1 : 1)),
+    measurements: Object.fromEntries(
+      [...facts.measurements.entries()].map(([site, byDate]) => [
+        site,
+        [...byDate.entries()]
+          .map(([date, cm]) => ({ date, cm }))
+          .sort((a, b) => (a.date < b.date ? -1 : 1)),
+      ]),
+    ),
+    nutrition: [...facts.nutrition.entries()]
+      .map(([date, v]) => ({ date, kcal: v.kcal, protein: v.protein }))
       .sort((a, b) => (a.date < b.date ? -1 : 1)),
     bossesDefeated,
     pendingBosses,

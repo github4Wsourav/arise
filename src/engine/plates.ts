@@ -34,6 +34,13 @@ export interface WarmupSet {
   reps: number;
 }
 
+/** Epley estimated 1-rep max, rounded to 0.5 kg. Reps are capped at 12 — the
+ *  formula drifts high on long sets, so we keep the estimate honest. */
+export function epley1RM(weightKg: number, reps: number): number {
+  if (reps <= 1) return weightKg;
+  return Math.round(weightKg * (1 + Math.min(reps, 12) / 30) * 2) / 2;
+}
+
 /** A light ramp up to the working weight (40/60/80%), rounded to 2.5 kg. */
 export function warmupRamp(workKg: number): WarmupSet[] {
   if (workKg < 20) return [];

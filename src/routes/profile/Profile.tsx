@@ -9,6 +9,7 @@ import { useEvents, useGameState } from '../../store/useGameState';
 import { Sparkline } from '../../ui/Sparkline';
 import { StreakCalendar } from '../../ui/StreakCalendar';
 import { SystemWindow } from '../../ui/SystemWindow';
+import { MeasurementsPanel } from './MeasurementsPanel';
 import { Records } from './Records';
 import { RelicGrid } from './RelicGrid';
 import { StatPanel } from './StatPanel';
@@ -79,6 +80,7 @@ export function Profile() {
         </SystemWindow>
       )}
 
+      <MeasurementsPanel state={state} />
       <Records timelines={timelines} />
     </main>
   );

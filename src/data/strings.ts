@@ -93,9 +93,11 @@ export const SYSTEM = {
     stats: 'STATS',
     records: 'SYSTEM RECORDS',
     bodyweight: 'BODY WEIGHT',
+    measurements: 'MEASUREMENTS',
     noRecords: 'NO RECORDS YET. ENTER A GATE.',
     sessions: (n: number) => `${n} SESSION${n === 1 ? '' : 'S'}`,
     best: (kg: number, reps: number) => `BEST ${kg} KG × ${reps}`,
+    e1rm: (kg: number) => `e1RM ${kg} KG`,
   },
 
   bodyweight: {

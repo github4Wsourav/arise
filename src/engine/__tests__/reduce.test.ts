@@ -195,6 +195,38 @@ describe('reduce — Phase 3 derived fields', () => {
   });
 });
 
+describe('reduce — measurements & nutrition (charts-only)', () => {
+  it('keeps measurements per site, last-write-wins per date, sorted ascending', () => {
+    const events: AriseEvent[] = [
+      ev('measurement_logged', { site: 'waist', cm: 82, date: '2026-06-01' }),
+      ev('measurement_logged', { site: 'arm', cm: 38, date: '2026-06-01' }),
+      ev('measurement_logged', { site: 'waist', cm: 81, date: '2026-06-08' }, '2026-06-08T09:00:00.000Z'),
+      ev('measurement_logged', { site: 'waist', cm: 80.5, date: '2026-06-08' }, '2026-06-08T20:00:00.000Z'),
+    ];
+    const s = reduce(events, cfg, '2026-06-08');
+    expect(s.measurements.waist).toEqual([
+      { date: '2026-06-01', cm: 82 },
+      { date: '2026-06-08', cm: 80.5 },
+    ]);
+    expect(s.measurements.arm).toEqual([{ date: '2026-06-01', cm: 38 }]);
+    expect(s.totalXp).toBe(0); // charts-only, no XP
+  });
+
+  it('keeps nutrition totals per day, last-write-wins, sorted ascending', () => {
+    const events: AriseEvent[] = [
+      ev('nutrition_logged', { kcal: 2400, protein: 180, date: '2026-06-01' }),
+      ev('nutrition_logged', { kcal: 2600, protein: 200, date: '2026-06-01' }, '2026-06-01T22:00:00.000Z'),
+      ev('nutrition_logged', { kcal: 2500, protein: 190, date: '2026-06-02' }),
+    ];
+    const s = reduce(events, cfg, '2026-06-02');
+    expect(s.nutrition).toEqual([
+      { date: '2026-06-01', kcal: 2600, protein: 200 },
+      { date: '2026-06-02', kcal: 2500, protein: 190 },
+    ]);
+    expect(s.totalXp).toBe(0); // charts-only, no XP
+  });
+});
+
 describe('reduce — history import', () => {
   const importEvent = (id?: string) =>
     ev('history_imported', {

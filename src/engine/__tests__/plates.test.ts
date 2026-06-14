@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { platesForWeight, warmupRamp } from '../plates';
+import { epley1RM, platesForWeight, warmupRamp } from '../plates';
 
 describe('platesForWeight', () => {
   it('breaks down a barbell weight per side (greedy, heaviest first)', () => {
@@ -34,5 +34,17 @@ describe('warmupRamp', () => {
   });
   it('keeps the steps strictly increasing and below the work weight', () => {
     expect(warmupRamp(25).map((s) => s.weightKg)).toEqual([10, 15, 20]);
+  });
+});
+
+describe('epley1RM', () => {
+  it('returns the weight itself for a single rep', () => {
+    expect(epley1RM(100, 1)).toBe(100);
+  });
+  it('estimates with the Epley formula, rounded to 0.5', () => {
+    expect(epley1RM(100, 5)).toBe(116.5); // 100 * (1 + 5/30) = 116.66 → 116.5
+  });
+  it('caps reps at 12 so long sets do not over-estimate', () => {
+    expect(epley1RM(60, 20)).toBe(epley1RM(60, 12));
   });
 });

@@ -1151,6 +1151,32 @@ button {
   border-bottom: none;
 }
 
+/* ---- measurement site chips ----------------------------------------------- */
+.site-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+.site-chip {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-chip);
+  padding: 6px 12px;
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    border-color var(--t-mid) var(--ease-out);
+}
+.site-chip--on {
+  color: var(--aura-hi);
+  border-color: color-mix(in srgb, var(--aura) 50%, var(--line));
+  box-shadow: var(--glow-soft);
+}
+
 .record-meta {
   flex: 1;
   min-width: 0;

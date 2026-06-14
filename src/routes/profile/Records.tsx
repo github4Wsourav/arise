@@ -3,6 +3,7 @@
  * `buildTimelines` the reducer uses — the chart can never disagree with the XP).
  */
 import type { ExerciseSessionRecord } from '../../engine/types';
+import { epley1RM } from '../../engine/plates';
 import { SESSIONS } from '../../data/program';
 import { SYSTEM } from '../../data/strings';
 import { Sparkline } from '../../ui/Sparkline';
@@ -29,15 +30,16 @@ export function Records({ timelines }: Props) {
       )}
       {rows.map(({ id, name }) => {
         const records = timelines.get(id)!;
-        const best = records
-          .flatMap((r) => r.sets)
-          .reduce((a, b) => (b.weightKg > a.weightKg ? b : a));
+        const allSets = records.flatMap((r) => r.sets);
+        const best = allSets.reduce((a, b) => (b.weightKg > a.weightKg ? b : a));
+        const bestE1rm = Math.max(...allSets.map((s) => epley1RM(s.weightKg, s.reps)));
         return (
           <div className="record-row" key={id}>
             <div className="record-meta">
               <p className="record-name">{name}</p>
               <p className="record-line">
-                {SYSTEM.profile.sessions(records.length)} · {SYSTEM.profile.best(best.weightKg, best.reps)}
+                {SYSTEM.profile.sessions(records.length)} · {SYSTEM.profile.best(best.weightKg, best.reps)} ·{' '}
+                {SYSTEM.profile.e1rm(bestE1rm)}
               </p>
             </div>
             <Sparkline values={records.map(topWeight)} />
