@@ -158,9 +158,17 @@ body::after {
     opacity: var(--o);
   }
   100% {
-    transform: translate3d(var(--drift), -102vh, 0);
+    transform: translate3d(var(--drift), var(--rise, -102vh), 0);
     opacity: 0;
   }
+}
+
+/* Contained instance: motes rise within the character stage, IN FRONT of the art. */
+.particle-field--contained {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* above .character-img (z-index 2) */
+  --rise: -340px;
 }
 
 /* ---- 2. System Windows: glass + slow sheen + ornate metal frame ------------ */
@@ -823,25 +831,6 @@ html[data-tier='10'] .system-window::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ---- Arcane circle behind the character (dashboard hero + ceremony) --------
-   The asset is white-on-black, so `screen` drops the black and the runic lines
-   glow on the void. Slowly rotates. Used by both because both render CharacterImage. */
-.character-stage::before {
-  content: '';
-  position: absolute;
-  inset: -6%;
-  z-index: 0;
-  background: url('/assets/fx/magic-circle.webp') center / contain no-repeat;
-  mix-blend-mode: screen;
-  opacity: 0.4;
-  pointer-events: none;
-  animation: spin-slow 60s linear infinite;
-}
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -863,8 +852,7 @@ html[data-tier='10'] .system-window::before {
   .ceremony-stage::before,
   .ceremony-new,
   .sync-dot--syncing .dot,
-  .cal-cell,
-  .character-stage::before {
+  .cal-cell {
     animation: none !important;
   }
   .xp-fill::after,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { TierManifest } from './manifest';
 import { imageUrlForLevel, tierForLevel, withinTierProgress } from './manifest';
+import { ParticleField } from '../ui/ParticleField';
 import { AuraPlaceholder } from './AuraPlaceholder';
 
 interface Props {
@@ -31,6 +32,7 @@ export function CharacterImage({ level, manifest }: Props) {
           draggable={false}
         />
       )}
+      <ParticleField contained />
     </div>
   );
 }
