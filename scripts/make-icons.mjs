@@ -12,6 +12,7 @@ const iconsDir = path.join(here, '..', 'public', 'icons');
 const source = await readFile(path.join(iconsDir, 'icon-source.png'));
 
 const targets = [
+  { file: 'favicon.png', size: 64, pad: 0 }, // browser tab
   { file: 'icon-192.png', size: 192, pad: 0 },
   { file: 'icon-512.png', size: 512, pad: 0 },
   // maskable: content within the inner safe zone (OS crops corners to a circle/squircle)
