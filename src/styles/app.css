@@ -1177,6 +1177,57 @@ button {
   box-shadow: var(--glow-soft);
 }
 
+/* ---- provisions (nutrition) ----------------------------------------------- */
+.prov-note {
+  margin: 0 0 14px;
+}
+.prov-row {
+  margin-bottom: 16px;
+}
+.prov-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.prov-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.prov-v {
+  font-family: var(--font-numeral);
+  font-size: 15px;
+  color: var(--aura-hi);
+}
+.prov-v small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.prov-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.prov-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aura-deep), var(--aura) 70%, var(--aura-hi));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--aura) 55%, transparent);
+  transition: width 0.4s var(--ease-out);
+}
+.prov-stepper {
+  justify-content: center;
+}
+.prov-log-btn {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px;
+}
+
 .record-meta {
   flex: 1;
   min-width: 0;

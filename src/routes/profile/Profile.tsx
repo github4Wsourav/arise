@@ -10,6 +10,7 @@ import { Sparkline } from '../../ui/Sparkline';
 import { StreakCalendar } from '../../ui/StreakCalendar';
 import { SystemWindow } from '../../ui/SystemWindow';
 import { MeasurementsPanel } from './MeasurementsPanel';
+import { ProvisionsPanel } from './ProvisionsPanel';
 import { Records } from './Records';
 import { RelicGrid } from './RelicGrid';
 import { StatPanel } from './StatPanel';
@@ -80,6 +81,7 @@ export function Profile() {
         </SystemWindow>
       )}
 
+      <ProvisionsPanel state={state} />
       <MeasurementsPanel state={state} />
       <Records timelines={timelines} />
     </main>
