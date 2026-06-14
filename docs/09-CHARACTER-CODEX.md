@@ -45,10 +45,12 @@ parts **2 and 3** as you climb. That's the whole system.
 > exact face, build and features in every image. Full-body, standing, three-quarter view,
 > centred. **He wears a torn ash-grey travelling cloak over simple dark garb, hollow-cheeked but
 > with hardening resolve.** **Almost no aura yet — a single thin wisp of pale-white light at the
-> chest; hunched, wary, worn.** Dark-fantasy character splash art, painterly semi-realism,
-> dramatic volumetric rim-light from the aura, intricate, cinematic, radiating aura. Plain
-> pure-black (or transparent) background — no scenery, floor, room, text or logos. No modern
-> clothing, no held objects. Portrait 4:5, 1024×1280.
+> chest; hunched, wary, worn.** Masterfully hand-painted dark-fantasy character art — traditional
+> painterly digital painting with confident visible brushwork, luminous glazes and exquisite
+> rendering of light, gallery-quality concept art in the manner of a master oil painter. Dramatic
+> volumetric rim-light from the aura, deep atmosphere, cinematic, radiating aura. Plain pure-black
+> (or transparent) background only — no scenery, floor, room, text or logos. No modern clothing,
+> no held objects. Portrait 4:5, 1024×1280.
 
 *(Bold just shows you which parts came from where: normal = Character Core + Style Suffix,
 **first bold** = the tier Look, **second bold** = the level line. Don't actually bold anything —
@@ -60,11 +62,13 @@ just paste it as plain text.)*
 > that glow **vivid violet**, pale skin, a faint old scar through the left eyebrow. The same exact
 > face, build and features in every image. Full-body, standing, three-quarter view, centred.
 > **He wears sleek violet-trimmed black armor with a torn battle-mantle catching the aura-wind.**
-> **Violet energy coils up both arms like serpents of light.** Dark-fantasy character splash art,
-> painterly semi-realism, dramatic volumetric rim-light
-> from the aura, intricate, cinematic, radiating overwhelming aura. Plain pure-black (or
-> transparent) background — no scenery, floor, room, text or logos. No modern clothing, no held
-> objects. Portrait 4:5, 1024×1280.
+> **Violet energy coils up both arms like serpents of light.** Masterfully hand-painted
+> dark-fantasy character art — traditional painterly digital painting with confident visible
+> brushwork, luminous glazes and exquisite rendering of light, gallery-quality concept art in the
+> manner of a master oil painter. Dramatic volumetric rim-light from the aura, deep atmosphere,
+> cinematic, radiating overwhelming aura. Plain pure-black (or transparent) background only — no
+> scenery, floor, room, text or logos. No modern clothing, no held objects. Portrait 4:5,
+> 1024×1280.
 
 For any other level: keep the first and last sentences identical, change the eye-glow colour only
 when you enter a new tier, and swap in that tier's Look + that level's line. Done.
@@ -110,11 +114,14 @@ different Hunter — just keep them identical across all 100)*:
 
 **STYLE SUFFIX — paste at the END of every prompt:**
 
-> Dark-fantasy character splash art, painterly semi-realism, dramatic volumetric rim-light from
-> the aura, intricate rendering, cinematic and powerful, "radiating overwhelming aura". Plain
-> fully-transparent or pure-black background — no scenery, floor, room, text, logos or UI. The
-> character carries no mundane objects (only aura-formed constructs where noted) and wears no
-> modern clothing. Portrait 4:5, 1024×1280.
+> Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting
+> with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of
+> light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a
+> master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep
+> atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent
+> or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears
+> no modern clothing and holds no mundane objects (only aura-formed constructs where noted).
+> Portrait 4:5, 1024×1280.
 
 **Wardrobe arc (so the silhouette evolves logically):** torn ash-grey travelling cloak over
 simple dark garb (T1) → cleaner fitted dark coat with faint light-veins (T2) → a lean
@@ -300,3 +307,67 @@ starlight, a crown of white fire; a deity, utterly composed.
   the PNGs in and ping me).
 - **Extending past 100:** append tiers/levels to `public/assets/characters/tiers.json` (no code
   change); reuse this codex's structure for the new tiers.
+
+---
+
+## 5. Ready-to-paste keyframe prompts (one per tier)
+
+Fully assembled — **copy a whole block and paste it straight into Nano Banana 2**. Style is set
+to **masterful hand-painting**. Save each as the filename shown. Do these 11 first; for the
+in-between levels, take the nearest block and swap its one "aura/level" sentence for that level's
+line in §3 (keep everything else identical, attach the previous image as reference).
+
+**Lv 1 — Tier 1, E-Rank** → save as `lvl_001.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow pale ash-white, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears a torn ash-grey travelling cloak over simple dark garb, hollow-cheeked but with hardening resolve. Almost no aura yet — a single thin wisp of pale-white light at the chest; he stands hunched, wary, worn. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects. Portrait 4:5, 1024x1280.
+```
+
+**Lv 11 — Tier 2, D-Rank** → save as `lvl_011.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow pale sky-blue, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears a cleaner fitted dark coat with faint blue light-veins glowing beneath the skin, his stance straighter and steadier. His aura has turned pale sky-blue at the core while a white halo still surrounds his body. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects. Portrait 4:5, 1024x1280.
+```
+
+**Lv 21 — Tier 3, C-Rank** → save as `lvl_021.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow cobalt blue, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears a lean dark-leather combat array with a half-hood, a sharper, bladelike silhouette. His aura has condensed into hard-edged cobalt light that traces his outline like a drawn blade. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects. Portrait 4:5, 1024x1280.
+```
+
+**Lv 31 — Tier 4, B-Rank** → save as `lvl_031.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow electric cobalt-blue, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears obsidian plate armor over the leathers, glowing rune-lines awakening across it. His cobalt aura ignites into electric-blue flame, the first rune-lines burning on the chestplate. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects. Portrait 4:5, 1024x1280.
+```
+
+**Lv 41 — Tier 5, A-Rank** → save as `lvl_041.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow vivid violet, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears sleek violet-trimmed black armor with a torn battle-mantle catching the aura-wind. His aura erupts vivid violet from within the old blue, surging far past every previous limit. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects. Portrait 4:5, 1024x1280.
+```
+
+**Lv 51 — Tier 6, S-Rank** → save as `lvl_051.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow deep shadow-violet, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears layered shadow-robes, the mantle a living cloak of dark smoke. His violet aura churns into a slow vortex of shadow-violet around him, faceless summoned shadow-figures (energy, not gore) gathering silently at his back. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed shadow constructs). Portrait 4:5, 1024x1280.
+```
+
+**Lv 61 — Tier 7, Shadow Lord** → save as `lvl_061.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow purple flame, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears regal black-and-violet armor; vast wings of living shadow stretch behind him and a thin crown of purple flame settles above his brow. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed constructs). Portrait 4:5, 1024x1280.
+```
+
+**Lv 71 — Tier 8, Monarch Candidate** → save as `lvl_071.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow bright void-violet, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears ornate monarch's armor, with space itself fraying and warping at his edges, rippling outward in bright void-violet energy. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed constructs). Portrait 4:5, 1024x1280.
+```
+
+**Lv 81 — Tier 9, Cosmic Sovereign** → save as `lvl_081.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow with lavender starlight, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears a mantle woven of nebula and constellations, crowned in starlight. His aura has become a swirling lavender galaxy, stars and tiny worlds wheeling slowly around his body. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed constructs). Portrait 4:5, 1024x1280.
+```
+
+**Lv 91 — Tier 10, Absolute God of Shadows** → save as `lvl_091.webp`
+```
+A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow radiant white, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. He wears vestments of pure void and white starlight, crowned in white fire — utterly composed, already a deity. His aura splits into two layers: an inner white radiance over an outer endless black void. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed constructs). Portrait 4:5, 1024x1280.
+```
+
+**Lv 100 — Tier 10, the final form** → save as `lvl_100.webp`
+```
+A single consistent character — the Ashbound, now a god: a lean, sharp-featured young man, mid-twenties, with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes that glow radiant white, pale skin, a faint old scar through the left eyebrow. The same exact face, build and features in every image. Full-body, standing, three-quarter view, centred. The final form: a calm figure of pure white light enthroned in infinite black, robed in pure void and white starlight, crowned in white fire, wings of pure white light spread against the absolute dark — overwhelming yet utterly serene, the absolute end of the climb. Masterfully hand-painted dark-fantasy character art — a traditional painterly digital painting with confident visible brushwork, rich texture and luminous glazes, exquisite rendering of light and form, exceptional draftsmanship, gallery-quality concept art in the manner of a master oil painter and classical illustrator. Dramatic volumetric rim-light from the aura, deep atmospheric depth, cinematic and powerful, radiating overwhelming aura. Plain fully-transparent or pure-black background only — no scenery, floor, room, text, logos or UI. The character wears no modern clothing and holds no objects (only aura-formed constructs). Portrait 4:5, 1024x1280.
+```
