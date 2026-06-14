@@ -15,22 +15,59 @@ escalating from mortal ash to a god of the void.
 
 ## 0. How to generate (read first)
 
-- **Tool:** Gemini Nano Banana 2. The hard part of 100 images is **consistency** — solve it
-  with **reference images**: generate `lvl_001` from the prompt, then for every next level feed
-  the **previous level's image as a reference** and say *"same character and style, evolve only
-  as follows: …"*. Re-anchor to a tier "keyframe" every 10 levels so drift doesn't accumulate.
-- **Two pieces clip onto every prompt:** the **Character Core** (§2) at the start and the
-  **Style Suffix** (§2) at the end. The per-level lines in §3 are just the *delta* — what's new
-  at that level.
-- **Background:** ask for a **transparent** background. If the model won't do clean alpha, use
-  **pure black (#000000)** — it blends into the app's near-black stage and the magic-circle /
-  aura show around the figure. Never a scene/floor/room behind the character.
-- **Dimensions:** **1024 × 1280 (4:5 portrait)**. Full-body, standing, centered, three-quarter
-  angle. Export PNG → convert to **webp** (tell me and I'll batch-convert like the fx assets).
-- **Priority order:** generate the **tier keyframes first** — levels **1, 11, 21, 31, 41, 51,
-  61, 71, 81, 91** (and 100). That's 11 images that make every tier look distinct immediately;
-  fill the in-between levels later. Within a tier the changes are gradual, so missing ones fall
-  back to the nearest tier look + the procedural aura.
+### The fixed facts
+- **Tool:** Gemini Nano Banana 2.
+- **Size:** 1024 × 1280 (4:5 portrait), full-body, standing, centred.
+- **Background:** ask for **transparent**; if it can't, use **pure black (#000000)**. Never a
+  room/floor/scenery behind the figure.
+- **Files:** save each as `lvl_001.webp` … `lvl_100.webp` in `public/assets/characters/`. PNG is
+  fine to start — hand them over and I'll batch-convert to webp.
+- **Do these 11 first** (one per tier, so every tier looks distinct right away): levels **1, 11,
+  21, 31, 41, 51, 61, 71, 81, 91, 100**. Fill the in-between levels whenever.
+- **Stay consistent:** make level 1, then for every later level **attach the previous level's
+  image as a reference** and tell the model *"same character and style — change only: «that
+  level's line»."*
+
+### How to build ONE prompt — glue 4 parts together, in this order
+1. **Character Core** — copy the block in §2, and **replace `[AURA]`** with this tier's colour
+   (the colour list is at the bottom of §2).
+2. **This tier's "Look"** — the *Look:* sentence at the top of the tier's section in §3.
+3. **This level's change** — the single `Lv N —` line in §3.
+4. **Style Suffix** — copy the block in §2 as-is.
+
+Parts **1 and 4 never change** (except swapping the aura colour each new tier). You only swap
+parts **2 and 3** as you climb. That's the whole system.
+
+### ✅ Worked example — the FULL prompt for **Level 1** (copy this shape)
+> A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties,
+> with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes
+> that glow **pale ash-white**, pale skin, a faint old scar through the left eyebrow. The same
+> exact face, build and features in every image. Full-body, standing, three-quarter view,
+> centred. **He wears a torn ash-grey travelling cloak over simple dark garb, hollow-cheeked but
+> with hardening resolve.** **Almost no aura yet — a single thin wisp of pale-white light at the
+> chest; hunched, wary, worn.** Dark-fantasy character splash art, painterly semi-realism,
+> dramatic volumetric rim-light from the aura, intricate, cinematic, radiating aura. Plain
+> pure-black (or transparent) background — no scenery, floor, room, text or logos. No modern
+> clothing, no held objects. Portrait 4:5, 1024×1280.
+
+*(Bold just shows you which parts came from where: normal = Character Core + Style Suffix,
+**first bold** = the tier Look, **second bold** = the level line. Don't actually bold anything —
+just paste it as plain text.)*
+
+### ✅ Worked example — the FULL prompt for **Level 47** (tier 5, violet)
+> A single consistent character — the Ashbound: a lean, sharp-featured young man, mid-twenties,
+> with tousled jet-black hair carrying one streak of ash-white, calm and unshakable piercing eyes
+> that glow **vivid violet**, pale skin, a faint old scar through the left eyebrow. The same exact
+> face, build and features in every image. Full-body, standing, three-quarter view, centred.
+> **He wears sleek violet-trimmed black armor with a torn battle-mantle catching the aura-wind.**
+> **Violet energy coils up both arms like serpents of light.** Dark-fantasy character splash art,
+> painterly semi-realism, dramatic volumetric rim-light
+> from the aura, intricate, cinematic, radiating overwhelming aura. Plain pure-black (or
+> transparent) background — no scenery, floor, room, text or logos. No modern clothing, no held
+> objects. Portrait 4:5, 1024×1280.
+
+For any other level: keep the first and last sentences identical, change the eye-glow colour only
+when you enter a new tier, and swap in that tier's Look + that level's line. Done.
 
 ---
 
