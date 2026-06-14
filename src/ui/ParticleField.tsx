@@ -7,7 +7,7 @@ import type { CSSProperties } from 'react';
  * they recolor per tier. Rendered once in the root Shell, fixed behind all content.
  * Disabled under prefers-reduced-motion (see .particle-field in system-fx.css).
  */
-const COUNT = 28;
+const COUNT = 48;
 
 interface Mote {
   left: number;
@@ -23,11 +23,11 @@ export function ParticleField() {
     () =>
       Array.from({ length: COUNT }, () => ({
         left: Math.random() * 100,
-        size: 2 + Math.random() * 3.5,
-        duration: 16 + Math.random() * 16,
-        delay: -Math.random() * 32, // negative → already mid-flight on first paint
+        size: 2.5 + Math.random() * 4,
+        duration: 15 + Math.random() * 15,
+        delay: -Math.random() * 30, // negative → already mid-flight on first paint
         drift: (Math.random() * 2 - 1) * 70,
-        opacity: 0.18 + Math.random() * 0.4,
+        opacity: 0.32 + Math.random() * 0.46,
       })),
     [],
   );

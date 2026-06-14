@@ -139,7 +139,9 @@ body::after {
     color-mix(in srgb, var(--aura) 60%, transparent) 55%,
     transparent 75%
   );
-  box-shadow: 0 0 6px color-mix(in srgb, var(--aura) 55%, transparent);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--aura) 70%, transparent),
+    0 0 3px var(--aura-hi);
   opacity: 0;
   will-change: transform, opacity;
   animation: mote-rise var(--dur) linear var(--delay) infinite;
