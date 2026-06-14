@@ -111,17 +111,19 @@ export function Dashboard() {
             </Link>
           </nav>
         </div>
-        <img
-          className="brand-hero"
-          src="/assets/brand/arise-wordmark.png"
-          alt={SYSTEM.appName}
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            const fb = e.currentTarget.nextElementSibling;
-            if (fb instanceof HTMLElement) fb.classList.remove('visually-hidden');
-          }}
-        />
-        <h1 className="app-title brand-fallback visually-hidden">{SYSTEM.appName}</h1>
+        <div className="brand-card">
+          <img
+            className="brand-hero"
+            src="/assets/brand/arise-wordmark.png"
+            alt={SYSTEM.appName}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              const fb = e.currentTarget.nextElementSibling;
+              if (fb instanceof HTMLElement) fb.classList.remove('visually-hidden');
+            }}
+          />
+          <h1 className="app-title brand-fallback visually-hidden">{SYSTEM.appName}</h1>
+        </div>
       </header>
       <div className="span-2">
         <SystemCommentary state={state} />

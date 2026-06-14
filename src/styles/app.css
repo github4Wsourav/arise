@@ -58,18 +58,22 @@ button {
   font-size: 9px;
 }
 
-/* The ARISE wordmark logo — neon-on-dark asset composited with `screen` so its
-   dark plate vanishes into the void; the edges fade via mask. */
+/* The ARISE wordmark, framed as a banner card so its own dark plate is contained
+   (no edge-mismatch against the void) and it matches the System panels. */
+.brand-card {
+  position: relative;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  box-shadow: var(--glow-soft);
+}
+
 .brand-hero {
   display: block;
   width: 100%;
-  max-width: 340px;
-  margin: 0 auto;
-  max-height: 132px;
-  object-fit: contain;
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 78% 72% at 50% 50%, #000 52%, transparent 88%);
-  mask-image: radial-gradient(ellipse 78% 72% at 50% 50%, #000 52%, transparent 88%);
+  aspect-ratio: 1376 / 470;
+  object-fit: cover;
+  object-position: center;
 }
 
 .visually-hidden {
