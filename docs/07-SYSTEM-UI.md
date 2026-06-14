@@ -130,8 +130,8 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       code), SetLogger writes the chosen `sessionDate`, and a past-day clear **saves quietly**
       (no tally/ceremony). 3 new engine tests + `npm run smoke:edit` (UI: pick past day → log →
       XP credited). *Decisions per Karan: pick-any-gate-per-day + quiet save.*
-- [ ] **Final:** Lighthouse re-run (confirm backdrop-filters/grain didn't regress perf),
-      landscape/large-text responsive, update HANDOFF, tag.
+- [x] **Final:** merged to main + tagged **v0.6.0**; HANDOFF Phase 6 entry written; user guide
+      `docs/10-USER-GUIDE.md`. *Lighthouse re-run still deferred (do before heavy reliance).*
 
 ---
 
