@@ -117,7 +117,7 @@ button {
 /* ---- character card --------------------------------------------------------- */
 .character-stage {
   position: relative;
-  height: 240px;
+  height: 300px;
   border-radius: var(--r-card);
   background:
     radial-gradient(ellipse 90% 60% at 50% 100%, var(--panel-2), transparent 70%),
