@@ -60,6 +60,9 @@ button {
 
 /* The ARISE wordmark, framed as a banner card so its own dark plate is contained
    (no edge-mismatch against the void) and it matches the System panels. */
+/* Full-width banner card. Designed for a 3:1 header asset whose dark field bleeds
+   to all four edges and whose wordmark sits centred with margin — so cover fills
+   the card with no plate/seam and nothing important is cropped. See docs/08 §4. */
 .brand-card {
   position: relative;
   border-radius: var(--r-card);
@@ -71,7 +74,7 @@ button {
 .brand-hero {
   display: block;
   width: 100%;
-  aspect-ratio: 1376 / 470;
+  aspect-ratio: 3 / 1;
   object-fit: cover;
   object-position: center;
 }

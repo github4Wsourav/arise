@@ -126,10 +126,38 @@ fill, no text or letters in any real language, no watermark. Export PNG with tra
 
 ---
 
-## 4. Brand & app icon (optional)  ·  `public/assets/brand/` + `public/icons/`
+## 4. Brand & app icon  ·  `public/assets/brand/` + `public/icons/`
 
-The header wordmark is **already in** (`public/assets/brand/arise-wordmark.png`). Optional: a
-custom app/PWA icon to replace the procedural one.
+### 4a. Header wordmark banner  ·  `public/assets/brand/arise-wordmark.png` (overwrite)
+
+The header is a **full-width 3:1 banner card**. The current logo's wordmark sits too large and
+its opaque plate doesn't frame cleanly. Generate a replacement built as a **banner** (not a
+floating logo): the dark field bleeds to all four edges and the wordmark sits centred with
+breathing room, so it fills the card with no seam and nothing gets cropped.
+
+- **Dimensions:** **1500 × 500 px (3:1)**, landscape. Same filename, so it just drops in.
+- **Critical:** the word must read exactly **A-R-I-S-E** (image models often misspell — call it
+  out and check the result).
+
+**Prompt:**
+```
+A wide 3:1 title banner for a dark-fantasy fitness RPG. The single word "ARISE" (exactly five
+letters: A R I S E) centred in the frame, in a bold, jagged, cracked-obsidian-and-chrome metal
+typeface with sharp spiky points, fractured cracks across the letters, and an intense violet
+energy glow / aura radiating around them. The wordmark occupies roughly the centre 55% of the
+width, with comfortable empty margin on the left, right, top and bottom. Background: a seamless
+near-black field (#07060E) with faint purple energy cracks and a soft dark vignette, extending
+all the way to every edge — no border, no frame, no panel. High contrast so it pops on a dark
+screen. No other text, no characters, no people, no watermark, no UI. 1500x500, 3:1 landscape.
+```
+
+> If your model can export a **transparent PNG** (alpha), even better — generate the same
+> wordmark on a transparent background instead of the dark field, name it the same, and tell me;
+> I'll drop the card frame and float it directly on the void.
+
+### 4b. App / PWA icon (optional)  ·  `public/icons/`
+
+A custom app/PWA icon to replace the procedural one.
 
 **Prompt template** (fill `[MARK]`):
 ```
