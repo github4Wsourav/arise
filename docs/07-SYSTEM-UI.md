@@ -106,6 +106,13 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       tier aura inner-glow, sparkline drop-shadow glow. *Verified in system smoke.*
 - [x] **Responsive pass** — wide-screen void glow boost + wordmark scale; column stays
       phone-width (correct for a gym PWA); safe-area already handled. *Landscape/large-text TODO.*
+- [x] **Custom assets + content (round 3):** original SVG icon set (`src/ui/icons.tsx`,
+      stat icons STR/VIT/AGI/REC + gate/flame, `currentColor` → aura, MIT, no third-party
+      art) wired into both stat panels; **streak made visual** as a 13-week training heatmap
+      (`src/ui/StreakCalendar.tsx`, derived from `trainingDates` + roster, on dashboard +
+      profile); filmic grain overlay + card top-corner sheen; tokens-driven **breathing-room
+      pass** (`--panel-pad`/`--panel-gap`, wider gutter + max-w). *Verified: 114 tests, build,
+      3 smokes; cohesive tiers 1/3/8.*
 - [ ] **Final:** Lighthouse re-run (confirm backdrop-filters didn't regress perf),
       landscape/large-text responsive, update HANDOFF, tag. *(reduced-motion guard + high-tier
       seed cohesion + smokes already verified each pass.)*

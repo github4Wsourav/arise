@@ -40,6 +40,18 @@ export const SYSTEM = {
     rec: 'REC',
   },
 
+  record: {
+    label: 'TRAINING LOG',
+    streak: 'WEEK STREAK',
+    multiplier: 'MULTIPLIER',
+    best: 'BEST EVER',
+    trained: 'TRAINED',
+    rest: 'REST',
+    shift: 'SHIFT',
+    missed: 'MISSED',
+    cell: (iso: string, status: string) => `${iso} · ${status.toUpperCase()}`,
+  },
+
   quests: {
     label: 'DAILY QUESTS',
     xp: (n: number) => `+${n} XP`,

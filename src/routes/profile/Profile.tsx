@@ -7,6 +7,7 @@ import { SYSTEM } from '../../data/strings';
 import { equipTitle, useEquippedTitle } from '../../store/title';
 import { useEvents, useGameState } from '../../store/useGameState';
 import { Sparkline } from '../../ui/Sparkline';
+import { StreakCalendar } from '../../ui/StreakCalendar';
 import { SystemWindow } from '../../ui/SystemWindow';
 import { Records } from './Records';
 import { RelicGrid } from './RelicGrid';
@@ -63,6 +64,7 @@ export function Profile() {
       </header>
 
       <StatPanel state={state} />
+      <StreakCalendar state={state} />
       <TitlePicker titles={state.titles} />
       <RelicGrid state={state} />
       <TierGallery manifest={manifest} currentTierIndex={state.tierIndex} />

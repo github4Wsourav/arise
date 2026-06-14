@@ -42,8 +42,10 @@
   --r-card: 14px;
   --r-chip: 10px;
   --r-input: 8px;
-  --gutter: 14px;
-  --max-w: 560px;
+  --gutter: 16px;
+  --max-w: 600px;
+  --panel-pad: 18px; /* inner padding of every System window */
+  --panel-gap: 18px; /* vertical rhythm between panels */
 
   /* ---- glow + motion system (docs/07-SYSTEM-UI.md) -------------------------
      All glows derive from the tier-bound aura, so the HUD recolors on rank-up. */
