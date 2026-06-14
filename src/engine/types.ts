@@ -20,6 +20,8 @@ export type EventType =
   | 'shift_confirmed'
   | 'rest_honored'
   | 'bodyweight_logged'
+  | 'measurement_logged'
+  | 'nutrition_logged'
   | 'history_imported';
 
 export interface SetPayload {
@@ -53,6 +55,20 @@ export interface BodyweightPayload {
   date: string;
 }
 
+/** A body measurement (waist, chest, arm, …) in cm — charts-only, LWW per site+date. */
+export interface MeasurementPayload {
+  site: string;
+  cm: number;
+  date: string;
+}
+
+/** A day's nutrition total — charts-only, LWW per date (you update the running total). */
+export interface NutritionPayload {
+  kcal: number;
+  protein: number;
+  date: string;
+}
+
 export interface ImportedLogEntry {
   exerciseId: string;
   date: string;
@@ -75,9 +91,13 @@ export type PayloadFor<T extends EventType> = T extends 'set_logged' | 'set_amen
         ? DatePayload
         : T extends 'bodyweight_logged'
           ? BodyweightPayload
-          : T extends 'history_imported'
-            ? HistoryImportedPayload
-            : never;
+          : T extends 'measurement_logged'
+            ? MeasurementPayload
+            : T extends 'nutrition_logged'
+              ? NutritionPayload
+              : T extends 'history_imported'
+                ? HistoryImportedPayload
+                : never;
 
 export interface AriseEvent<T extends EventType = EventType> {
   /** uuidv7 — time-ordered, generated on the originating device */
@@ -206,6 +226,10 @@ export interface GameState {
   lastTrainingDate?: string | undefined;
   /** bodyweight log, sorted by date ascending */
   bodyweights: Array<{ date: string; kg: number }>;
+  /** body measurements per site (cm), each sorted by date ascending */
+  measurements: Record<string, Array<{ date: string; cm: number }>>;
+  /** nutrition totals per day, sorted by date ascending */
+  nutrition: Array<{ date: string; kcal: number; protein: number }>;
   /** every PR boss ever defeated, sorted (date, exerciseId, milestone) */
   bossesDefeated: BossDefeat[];
   /** encounters currently announced (next milestone within one clean session) */

@@ -7,8 +7,11 @@ import type { GameState } from '../../engine/types';
 import { appendEvent } from '../../store/append';
 import { dateIso, daysBetween } from '../../store/dates';
 import { useGameState } from '../../store/useGameState';
+import { Art } from '../../ui/Art';
 import { CharacterCard } from '../../ui/CharacterCard';
+import { STAT_ICON } from '../../ui/icons';
 import { RosterStrip } from '../../ui/RosterStrip';
+import { StreakCalendar } from '../../ui/StreakCalendar';
 import { SyncDot } from '../../ui/SyncDot';
 import { SystemText } from '../../ui/SystemText';
 import { SystemWindow } from '../../ui/SystemWindow';
@@ -21,7 +24,8 @@ function TodayPanel({ state }: { state: GameState }) {
   if (today.type === 'gym' && today.session) {
     const session = SESSIONS[today.session];
     return (
-      <SystemWindow label={SYSTEM.dashboard.todayGate}>
+      <SystemWindow label={SYSTEM.dashboard.todayGate} className="system-window--gate">
+        <Art className="gate-art" src={`/assets/gates/${session.id}.webp`} />
         <h3 className="gate-name">{session.gateName}</h3>
         <p className="gate-focus">{session.focus}</p>
         <Link to="/gate/$sessionId" params={{ sessionId: session.id }} className="cta cta--link">
@@ -120,20 +124,22 @@ export function Dashboard() {
         <QuestPanel state={state} />
         <SystemWindow label="HUNTER PROFILE">
           <div className="stat-row">
-            {(['str', 'vit', 'agi', 'rec'] as const).map((k) => (
-              <div className="stat-cell" key={k}>
-                <div className="k">{SYSTEM.stats[k]}</div>
-                <div className="v">{state.stats[k]}</div>
-              </div>
-            ))}
+            {(['str', 'vit', 'agi', 'rec'] as const).map((k) => {
+              const Icon = STAT_ICON[k];
+              return (
+                <div className="stat-cell" key={k}>
+                  <Icon className="stat-icon" />
+                  <div className="k">{SYSTEM.stats[k]}</div>
+                  <div className="v">{state.stats[k]}</div>
+                </div>
+              );
+            })}
           </div>
-          <p className="streak-line system-text system-text--muted">
-            [{SYSTEM.dashboard.streak(state.streakWeeks, state.multiplier)}]
-          </p>
-          <p className="window-label" style={{ margin: 0, textAlign: 'center' }}>
+          <p className="window-label" style={{ margin: '14px 0 0', textAlign: 'center' }}>
             {tier.arc}
           </p>
         </SystemWindow>
+        <StreakCalendar state={state} />
       </div>
     </main>
   );

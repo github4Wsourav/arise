@@ -23,14 +23,26 @@ page.on('console', (msg) => {
 page.on('pageerror', (err) => errors.push(String(err)));
 page.on('response', (res) => {
   // missing character art is expected: the aura placeholder is the designed fallback
-  if (res.status() === 404 && !res.url().includes('/assets/characters/')) notFound.push(res.url());
+  if (res.status() === 404 && !res.url().includes('/assets/')) notFound.push(res.url());
 });
 
 await page.goto('http://localhost:5173', { waitUntil: 'networkidle' });
 await page.getByText('STATUS WINDOW').waitFor({ timeout: 15_000 });
 
+// the tier name decodes (scrambles → resolves) on mount; wait for it to settle
+const stableTierName = async () => {
+  let prev = await page.locator('.tier-name').textContent();
+  for (let i = 0; i < 30; i++) {
+    await page.waitForTimeout(80);
+    const cur = await page.locator('.tier-name').textContent();
+    if (cur === prev) return cur;
+    prev = cur;
+  }
+  return prev;
+};
+
 const level1 = await page.locator('.level-numeral').textContent();
-const tier1 = await page.locator('.tier-name').textContent();
+const tier1 = await stableTierName();
 console.log(`boot state: LV ${level1} — ${tier1}`);
 await page.screenshot({ path: 'screenshots/dashboard-lv1.png', fullPage: true });
 
@@ -43,7 +55,7 @@ await page.waitForFunction(
 );
 
 const levelN = await page.locator('.level-numeral').textContent();
-const tierN = await page.locator('.tier-name').textContent();
+const tierN = await stableTierName();
 const aura = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--aura').trim());
 const dataTier = await page.evaluate(() => document.documentElement.dataset.tier);
 console.log(`seeded state: LV ${levelN} — ${tierN} · data-tier=${dataTier} · --aura=${aura}`);

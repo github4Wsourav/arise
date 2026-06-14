@@ -13,7 +13,8 @@
     "icons": "node scripts/make-icons.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:gate": "node scripts/smoke-gate.mjs",
-    "smoke:system": "node scripts/smoke-system.mjs"
+    "smoke:system": "node scripts/smoke-system.mjs",
+    "smoke:edit": "node scripts/smoke-edit.mjs"
   },
   "dependencies": {
     "@fontsource/martian-mono": "^5.2.7",
@@ -24,6 +25,7 @@
     "@tanstack/react-router": "^1.170.15",
     "dexie": "^4.4.3",
     "dexie-react-hooks": "^4.4.0",
+    "motion": "^12.40.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

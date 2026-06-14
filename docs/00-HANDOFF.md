@@ -30,6 +30,81 @@ picking up the project starts here, then reads `01-PRD.md` → `02-GDD.md` →
 
 ---
 
+## Phase 6 — Ascension Polish: System UI, Assets & Gym Utilities · completed 2026-06-14 · tag v0.6.0
+
+### What shipped
+- **The "System UI" overhaul** (`src/styles/system-fx.css`, `docs/07-SYSTEM-UI.md`): a
+  holographic dark-fantasy skin, all driven by the tier `--aura` token so the whole interface
+  recolours per tier. Living void (drifting aura field + scan-grid + grain), glass panels,
+  ornate **metal frame** around every panel (asset-driven `border-image` on `.system-window`
+  `::before`, behind content via `isolation`, **per-tier `filter` tint** white→blue→violet→void),
+  slow **sheen** (replaced all pulsing), entrance choreography, tier-name **decode** effect
+  (`DecodeText`), segmented XP meter, animated **particle motes** (`ui/ParticleField.tsx`, CSS),
+  and a spinning **magic circle** behind the character (screen-blended asset). Reduced-motion
+  honored throughout.
+- **Type system → Jim Nightshade** everywhere (self-hosted, SIL OFL, `size-adjust: 128%`).
+  Header is a **text** wordmark in the nav (no image banner).
+- **Real assets wired** (Karan-generated, drop-in): per-tier backgrounds `tier-1..10.webp`
+  (blurred backdrop, swaps per threshold), gate art `gates/{push,pull,legs}.webp` (hero +
+  dashboard banner), `fx/panel-frame.png`, `fx/magic-circle.webp`, crown **app icon**
+  (`public/icons/icon-source.png` → `npm run icons`, pipeline repointed from svg to png).
+  Heavy PNGs converted to webp via `sharp`.
+- **Motion library** (`motion`/framer-motion) added for route-entrance transitions + the
+  gate-picker `AnimatePresence`; app wrapped in `<MotionConfig reducedMotion="user">`.
+- **Edit past days' workouts:** roster strip → tap any day → gate picker → `/gate/$sessionId?date=…`.
+  GateView derives state from `reduce(events, cfg, date)` (engine already buckets by date — no new
+  engine code); past clears save quietly. `npm run smoke:edit` + 3 engine tests.
+- **Four gym utilities:** **rest timer** (`store/restTimer.ts` + `ui/RestTimer.tsx`, fires on a
+  logged set, buzzes at 0), **plate calc + warm-up ramp** (`engine/plates.ts`, set logger,
+  barbell-gated), **e1RM** (Epley, in Records), and two **charts-only data features** —
+  **measurements** (`measurement_logged`) and **nutrition/Provisions** (`nutrition_logged`),
+  both plumbed types→reduce→GameState like bodyweight, with profile panels.
+- **Docs:** `08-ASSETS.md` (every asset's prompt/path/name), `09-CHARACTER-CODEX.md` (lore + 100
+  per-level character prompts), `10-USER-GUIDE.md` (how to use the app). Character stage bumped
+  240→300px for portrait art.
+
+### Decisions made (and why)
+- **CSS-first, but Motion where CSS is weak.** The whole skin is CSS (zero JS cost, GPU-cheap);
+  added `motion` only for enter/exit + route transitions. **Declined shadcn** (Tailwind/Radix
+  generic kit would fight the bespoke design).
+- **One frame asset, tinted per tier** via CSS `filter` (hue-rotate / desaturate) rather than 10
+  colour variants — keeps the aura-bound consistency with a single 215 KB asset.
+- **Measurements & nutrition are charts-only** (no XP) — the honesty law forbids paying XP for
+  anything but training/recovery. They follow the `bodyweight_logged` LWW-per-date pattern.
+- **Past-day edits are date-driven, not a new mechanism** — `reduce(events, cfg, date)` already
+  exposed everything needed, so the feature is UI + a search param only.
+
+### Architecture / schema changes
+- **Two new charts-only event types:** `measurement_logged` (site, cm, date) and
+  `nutrition_logged` (kcal, protein, date). Added to `EventType`/`PayloadFor`, `Facts`, the
+  reducer cases, and `GameState` (`measurements`, `nutrition`). No XP impact; no Dexie/Supabase
+  schema change (same `events` table). Gate route gained an optional validated `?date=` search
+  param. New modules: `engine/plates.ts`, `store/restTimer.ts`, `ui/{RestTimer,PlateTools,
+  ParticleField,DecodeText,CountUp,Art,icons}.tsx`, `styles/{fonts,system-fx}.css`,
+  `routes/profile/{ProvisionsPanel,MeasurementsPanel}.tsx`.
+- Tests: 129 total (engine: plates, e1RM, measurements/nutrition reducers, past-day editing).
+
+### Known issues & deliberate deferrals
+- **Lighthouse not re-run** for this release (the glass blurs/grain/border-image add GPU work).
+  Re-run before relying on it as the daily driver; budget was 93/95/100 at v0.5.0.
+- **Character art is empty** — `lvl_001..100.webp` not generated yet; the aura placeholder + magic
+  circle stand in. Codex (`docs/09`) has the prompts; stage is sized for 4:5 portraits.
+- Plate calc is barbell-gated by exercise **name** (no equipment field) — fine for this program
+  (only bench/hip-thrust load a bar); add an `equipment` field if the program grows.
+- Nutrition TDEE is a rough `bw×33 ± goal` estimate, labelled as such.
+- The Supabase backend still needs provisioning for live multi-device sync (Phase 4 checklist).
+
+### Instructions for whoever touches this next
+- All visual knobs are aura-token-driven and live in `tokens.css` / `system-fx.css`; per-tier
+  frame tints are `html[data-tier='N'] .system-window::before { filter: … }`.
+- New drop-in asset slots are documented in `docs/08-ASSETS.md`; webp-convert with `sharp` inline.
+- When character portraits land: drop `lvl_NNN.webp` in `public/assets/characters/`, then fine-
+  tune the `.character-stage` crop/scale to the real art.
+- Keep new logged data **charts-only** unless it represents honest training/recovery (GDD §2.3 /
+  the rejected-mechanics table).
+
+---
+
 ## Phase 5 — Endgame · completed 2026-06-12 · tag v0.5.0 (= v1 code-complete)
 
 ### What shipped

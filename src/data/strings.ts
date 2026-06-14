@@ -20,6 +20,7 @@ export const SYSTEM = {
   streakSevered: 'YOUR STREAK HAS BEEN SEVERED. THE MULTIPLIER RESETS. THE RECORDS REMAIN.',
 
   dashboard: {
+    online: 'SYSTEM ONLINE',
     todayGate: 'TODAY’S GATE',
     enterGate: 'ENTER GATE',
     gateSealed: 'GATE ACCESS UNLOCKS IN PHASE 2',
@@ -38,6 +39,25 @@ export const SYSTEM = {
     vit: 'VIT',
     agi: 'AGI',
     rec: 'REC',
+  },
+
+  roster: {
+    label: 'WEEKLY ROSTER — TAP A DAY TO TRAIN IT',
+    pick: (date: string) => `TRAIN THIS DAY · ${date}`,
+    editing: (date: string) => `EDITING A PAST GATE · ${date}`,
+    backfilled: 'LOGGED. THE RECORD UPDATES ITSELF.',
+  },
+
+  record: {
+    label: 'TRAINING LOG',
+    streak: 'WEEK STREAK',
+    multiplier: 'MULTIPLIER',
+    best: 'BEST EVER',
+    trained: 'TRAINED',
+    rest: 'REST',
+    shift: 'SHIFT',
+    missed: 'MISSED',
+    cell: (iso: string, status: string) => `${iso} · ${status.toUpperCase()}`,
   },
 
   quests: {
@@ -73,9 +93,12 @@ export const SYSTEM = {
     stats: 'STATS',
     records: 'SYSTEM RECORDS',
     bodyweight: 'BODY WEIGHT',
+    measurements: 'MEASUREMENTS',
+    provisions: 'PROVISIONS',
     noRecords: 'NO RECORDS YET. ENTER A GATE.',
     sessions: (n: number) => `${n} SESSION${n === 1 ? '' : 'S'}`,
     best: (kg: number, reps: number) => `BEST ${kg} KG × ${reps}`,
+    e1rm: (kg: number) => `e1RM ${kg} KG`,
   },
 
   bodyweight: {
@@ -97,6 +120,10 @@ export const SYSTEM = {
     log: 'LOG',
     save: 'SAVE',
     set: (n: number) => `S${n}`,
+    restLabel: 'RECOVER',
+    restDone: 'GO — NEXT SET',
+    load: 'LOAD',
+    warmup: 'WARM-UP',
   },
 
   tally: {

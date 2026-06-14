@@ -14,6 +14,7 @@ import { SESSIONS } from '../../data/program';
 import { SYSTEM } from '../../data/strings';
 import { requestSync } from '../../store/sync';
 import { engineCfg, useEvents } from '../../store/useGameState';
+import { CountUp } from '../../ui/CountUp';
 import { XPBar } from '../../ui/XPBar';
 import { Ceremony } from './Ceremony';
 
@@ -135,7 +136,12 @@ export function TallyScreen({ sessionId, date, onClose }: Props) {
         </div>
         <div className="tally-total">
           <span>{SYSTEM.tally.total}</span>
-          <span className="tally-xp">+{tally.total}</span>
+          <CountUp
+            to={tally.total}
+            prefix="+"
+            className="tally-xp"
+            delay={(gateLines.length + (tally.multiplier > 1 ? 1 : 0) + bossLines.length) * 90 + 250}
+          />
         </div>
         {announcements.map((b) => (
           <p className="system-text boss-announce" key={b.exerciseId}>

@@ -50,6 +50,11 @@ The app is designed around a **tier manifest** (`tiers.json`) and convention-bas
 until then a procedural aura placeholder renders for every level. The system is extensible
 beyond level 100 by appending manifest entries — no code changes.
 
+**Gate art** follows the same drop-in contract: place `assets/gates/<sessionId>.webp` and it
+appears as the banner on the dashboard's gate panel and as the hero inside the gate. Until a
+file exists the slot is silently absent (the `Art` component hides itself on a 404) — no code
+changes, no broken images. Session ids are the keys of `SESSIONS` in `src/data/program.ts`.
+
 ## License
 
 [MIT](LICENSE)

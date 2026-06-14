@@ -5,15 +5,23 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--bg);
+}
+
 html,
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 13.5px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+/* body is transparent so the per-tier backdrop (html::before) shows through */
+body {
+  background: transparent;
 }
 
 #root {
@@ -37,19 +45,20 @@ button {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin: 4px 0 12px;
+  gap: 12px;
+  margin: 6px 0 18px;
 }
 
+/* ARISE as a compact wordmark in the nav bar, in the provided display script */
 .app-title {
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 28px;
-  letter-spacing: 0.04em;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.02em;
   margin: 0;
-  background: linear-gradient(135deg, var(--aura-deep), var(--aura) 55%, var(--aura-hi));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--aura-hi);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--aura) 55%, transparent);
 }
 
 /* ---- System voice ---------------------------------------------------------- */
@@ -80,11 +89,11 @@ button {
 /* ---- System window (panel with the magic-UI tell) -------------------------- */
 .system-window {
   background: var(--panel);
-  border: 1px solid var(--line);
+  border: none; /* the ornate metal frame (system-fx ::before) is the border */
   border-radius: var(--r-card);
-  padding: 14px;
+  padding: var(--panel-pad);
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: var(--panel-gap);
 }
 
 .system-window::after {
@@ -102,13 +111,13 @@ button {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--faint);
-  margin: 0 0 10px;
+  margin: 0 0 14px;
 }
 
 /* ---- character card --------------------------------------------------------- */
 .character-stage {
   position: relative;
-  height: 240px;
+  height: 300px;
   border-radius: var(--r-card);
   background:
     radial-gradient(ellipse 90% 60% at 50% 100%, var(--panel-2), transparent 70%),
@@ -179,7 +188,7 @@ button {
 }
 
 .level-numeral {
-  font-family: var(--font-display);
+  font-family: var(--font-numeral);
   font-weight: 700;
   font-size: 34px;
   color: var(--aura-hi);
@@ -194,12 +203,13 @@ button {
 }
 
 .tier-name {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 23px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
   color: var(--aura);
-  margin: 8px 0 0;
+  text-shadow: 0 0 16px color-mix(in srgb, var(--aura) 35%, transparent);
+  margin: 6px 0 0;
 }
 
 /* ---- XP bar ------------------------------------------------------------------ */
@@ -258,11 +268,72 @@ button {
 }
 
 /* ---- roster strip -------------------------------------------------------------- */
+.roster-block {
+  margin-bottom: var(--panel-gap);
+}
+
 .roster {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 7px;
+}
+
+.roster-chip:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.roster-chip--open {
+  outline: 2px solid var(--aura);
+  outline-offset: 1px;
+}
+
+/* gate picker (tap a day → choose a gate for that date) */
+.gate-picker {
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--panel-2);
+  border: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  border-radius: var(--r-card);
+}
+
+.gate-picker-label {
+  margin: 0 0 12px;
+}
+
+.gate-picker-options {
+  display: grid;
+  gap: 8px;
+}
+
+.gate-picker-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 13px;
+  border-radius: var(--r-input);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--aura-hi);
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--aura) 35%, var(--line));
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+}
+
+.gate-picker-btn:hover {
+  box-shadow: var(--glow-soft);
+}
+
+.gate-picker-btn:active {
+  transform: scale(0.98);
+}
+
+.editing-banner {
+  color: var(--warn);
+  margin: 4px 0 8px;
 }
 
 .roster-chip {
@@ -313,6 +384,21 @@ button {
   margin: 0 0 12px;
 }
 
+/* ---- gate art slot (drop-in banner; silently absent until art exists) -------- */
+.gate-art {
+  display: block;
+  width: calc(100% + 2 * var(--panel-pad));
+  margin: 0 calc(-1 * var(--panel-pad)) 12px;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  object-position: center 35%;
+  border-top: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  border-bottom: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  box-shadow: inset 0 -40px 48px -32px var(--panel);
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, #000 78%, transparent);
+}
+
 .cta {
   display: block;
   width: 100%;
@@ -349,15 +435,25 @@ button {
 .stat-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
 .stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
   text-align: center;
   background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: var(--r-chip);
-  padding: 8px 4px;
+  padding: 12px 6px;
+}
+
+.stat-icon {
+  color: var(--aura);
+  opacity: 0.9;
+  margin-bottom: 1px;
 }
 
 .stat-cell .k {
@@ -438,6 +534,18 @@ button {
 }
 
 /* ---- gate ------------------------------------------------------------------------- */
+.gate-hero {
+  display: block;
+  width: calc(100% + 2 * var(--gutter));
+  margin: 0 calc(-1 * var(--gutter)) 6px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center 30%;
+  border-bottom: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, #000 70%, transparent);
+}
+
 .gate-head {
   display: flex;
   justify-content: space-between;
@@ -661,6 +769,109 @@ button {
   margin: 6px 0 0;
 }
 
+/* ---- plate loadout + warm-up ramp (set logger) ---------------------------- */
+.plate-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 2px;
+}
+.plate-load {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--aura-hi);
+}
+.plate-load-k {
+  color: var(--faint);
+}
+.plate-load small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.warmup-toggle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--aura);
+  border: 1px solid color-mix(in srgb, var(--aura) 35%, var(--line));
+  border-radius: var(--r-chip);
+  padding: 4px 9px;
+}
+.warmup-sets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.warmup-set {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-chip);
+  padding: 3px 8px;
+}
+.warmup-set small {
+  font-size: 8px;
+}
+
+/* ---- rest timer (fixed bar at the top while resting between sets) ---------- */
+.rest-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px var(--gutter);
+  padding-top: calc(12px + env(safe-area-inset-top));
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid color-mix(in srgb, var(--aura) 45%, var(--line));
+  overflow: hidden;
+}
+.rest-fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--aura) 22%, transparent);
+  transition: width 0.95s linear;
+}
+.rest-label {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--aura);
+}
+.rest-time {
+  font-family: var(--font-numeral);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--aura-hi);
+  text-shadow: var(--text-glow);
+}
+.rest-dismiss {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  color: var(--muted);
+}
+.rest-timer--done {
+  border-bottom-color: var(--ok);
+}
+.rest-timer--done .rest-label {
+  color: var(--ok);
+}
+
 .gate-foot {
   position: sticky;
   bottom: 0;
@@ -777,7 +988,7 @@ button {
   justify-content: center;
   align-items: baseline;
   gap: 14px;
-  font-family: var(--font-display);
+  font-family: var(--font-numeral);
   font-weight: 700;
 }
 
@@ -797,8 +1008,8 @@ button {
 }
 
 .ceremony-tier {
-  font-size: 13px;
-  margin-top: 10px;
+  font-size: 26px;
+  margin-top: 12px;
 }
 
 .ceremony-arc {
@@ -938,6 +1149,83 @@ button {
 
 .record-row:last-child {
   border-bottom: none;
+}
+
+/* ---- measurement site chips ----------------------------------------------- */
+.site-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+.site-chip {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-chip);
+  padding: 6px 12px;
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    border-color var(--t-mid) var(--ease-out);
+}
+.site-chip--on {
+  color: var(--aura-hi);
+  border-color: color-mix(in srgb, var(--aura) 50%, var(--line));
+  box-shadow: var(--glow-soft);
+}
+
+/* ---- provisions (nutrition) ----------------------------------------------- */
+.prov-note {
+  margin: 0 0 14px;
+}
+.prov-row {
+  margin-bottom: 16px;
+}
+.prov-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.prov-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.prov-v {
+  font-family: var(--font-numeral);
+  font-size: 15px;
+  color: var(--aura-hi);
+}
+.prov-v small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.prov-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.prov-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aura-deep), var(--aura) 70%, var(--aura-hi));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--aura) 55%, transparent);
+  transition: width 0.4s var(--ease-out);
+}
+.prov-stepper {
+  justify-content: center;
+}
+.prov-log-btn {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px;
 }
 
 .record-meta {

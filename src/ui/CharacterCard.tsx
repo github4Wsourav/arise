@@ -3,6 +3,7 @@ import type { TierManifest } from '../character/manifest';
 import { CharacterImage } from '../character/CharacterImage';
 import { SYSTEM } from '../data/strings';
 import { useEquippedTitle } from '../store/title';
+import { DecodeText } from './DecodeText';
 import { XPBar } from './XPBar';
 import { TierTease } from './TierTease';
 
@@ -20,7 +21,9 @@ export function CharacterCard({ state, manifest }: Props) {
       <div className="character-meta">
         <span className="level-label">{SYSTEM.dashboard.level}</span>
         <span className="level-numeral">{state.level}</span>
-        <p className="tier-name">{tier.name}</p>
+        <p className="tier-name">
+          <DecodeText text={tier.name} />
+        </p>
       </div>
       {title && title !== tier.name && <p className="equipped-title">「{title}」</p>}
       <XPBar xpIntoLevel={state.xpIntoLevel} xpToNext={state.xpToNext} totalXp={state.totalXp} />

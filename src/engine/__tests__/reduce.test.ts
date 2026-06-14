@@ -195,6 +195,38 @@ describe('reduce — Phase 3 derived fields', () => {
   });
 });
 
+describe('reduce — measurements & nutrition (charts-only)', () => {
+  it('keeps measurements per site, last-write-wins per date, sorted ascending', () => {
+    const events: AriseEvent[] = [
+      ev('measurement_logged', { site: 'waist', cm: 82, date: '2026-06-01' }),
+      ev('measurement_logged', { site: 'arm', cm: 38, date: '2026-06-01' }),
+      ev('measurement_logged', { site: 'waist', cm: 81, date: '2026-06-08' }, '2026-06-08T09:00:00.000Z'),
+      ev('measurement_logged', { site: 'waist', cm: 80.5, date: '2026-06-08' }, '2026-06-08T20:00:00.000Z'),
+    ];
+    const s = reduce(events, cfg, '2026-06-08');
+    expect(s.measurements.waist).toEqual([
+      { date: '2026-06-01', cm: 82 },
+      { date: '2026-06-08', cm: 80.5 },
+    ]);
+    expect(s.measurements.arm).toEqual([{ date: '2026-06-01', cm: 38 }]);
+    expect(s.totalXp).toBe(0); // charts-only, no XP
+  });
+
+  it('keeps nutrition totals per day, last-write-wins, sorted ascending', () => {
+    const events: AriseEvent[] = [
+      ev('nutrition_logged', { kcal: 2400, protein: 180, date: '2026-06-01' }),
+      ev('nutrition_logged', { kcal: 2600, protein: 200, date: '2026-06-01' }, '2026-06-01T22:00:00.000Z'),
+      ev('nutrition_logged', { kcal: 2500, protein: 190, date: '2026-06-02' }),
+    ];
+    const s = reduce(events, cfg, '2026-06-02');
+    expect(s.nutrition).toEqual([
+      { date: '2026-06-01', kcal: 2600, protein: 200 },
+      { date: '2026-06-02', kcal: 2500, protein: 190 },
+    ]);
+    expect(s.totalXp).toBe(0); // charts-only, no XP
+  });
+});
+
 describe('reduce — history import', () => {
   const importEvent = (id?: string) =>
     ev('history_imported', {
@@ -279,6 +311,48 @@ describe('reduce — levels are monotonic under append', () => {
       expect(level).toBeGreaterThanOrEqual(lastLevel);
       lastLevel = level;
     }
+  });
+});
+
+describe('reduce — editing a past day (date-aware gate)', () => {
+  // The "edit a previous day's workout" feature relies entirely on reduce(events, cfg, date):
+  // the gate for `date` reads that day's sets as today-of-record and the day before as prev.
+  it('exposes the chosen date as the session-of-record and the prior session as prev', () => {
+    const events = [
+      ...logSession('bench', '2026-06-01', [[60, 8], [60, 8]]),
+      ...logSession('bench', '2026-06-08', [[62.5, 6], [62.5, 6]]),
+    ];
+
+    const atLater = reduce(events, cfg, '2026-06-08');
+    expect(atLater.todayByExercise.bench?.date).toBe('2026-06-08');
+    expect(atLater.prevByExercise.bench?.date).toBe('2026-06-01');
+
+    // opening the earlier day's gate: it is its own session-of-record, nothing before it
+    const atEarlier = reduce(events, cfg, '2026-06-01');
+    expect(atEarlier.todayByExercise.bench?.date).toBe('2026-06-01');
+    expect(atEarlier.prevByExercise.bench).toBeUndefined();
+  });
+
+  it('counts a session back-filled onto a past date (replay recomputes totals)', () => {
+    const base = logSession('bench', '2026-06-08', [[60, 8], [60, 8]]);
+    const before = reduce(base, cfg, '2026-06-09').totalXp;
+
+    // shift moved → user logs a different gate (curl/pull) on an earlier day
+    const withPast = [...base, ...logSession('curl', '2026-06-01', [[20, 12], [20, 12]])];
+    const after = reduce(withPast, cfg, '2026-06-09').totalXp;
+
+    expect(after).toBeGreaterThan(before); // the honest back-filled work is credited
+    expect(reduce(withPast, cfg, '2026-06-09').trainingDates).toContain('2026-06-01');
+  });
+
+  it('amending a set on a past date is last-write-wins for that day', () => {
+    const events: AriseEvent[] = [
+      ...logSession('bench', '2026-06-01', [[60, 8], [60, 8]]),
+      // a week later the user reopens 06-01 and corrects set 0 up to 62.5
+      ev('set_amended', { exerciseId: 'bench', setIndex: 0, weightKg: 62.5, reps: 8, sessionDate: '2026-06-01' }, '2026-06-08T10:00:00.000Z'),
+    ];
+    const day = reduce(events, cfg, '2026-06-01');
+    expect(day.todayByExercise.bench?.sets[0]).toEqual({ weightKg: 62.5, reps: 8 });
   });
 });
 

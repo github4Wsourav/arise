@@ -10,12 +10,15 @@ import type { ExerciseSessionRecord, LoggedSet } from '../../engine/types';
 import { GRADE_GLYPH, gradeSet } from '../../engine/grade';
 import { SYSTEM } from '../../data/strings';
 import { appendEvent } from '../../store/append';
-import { dateIso } from '../../store/dates';
+import { startRest } from '../../store/restTimer';
+import { PlateTools } from '../../ui/PlateTools';
 
 interface Props {
   exercise: Exercise;
   prev?: ExerciseSessionRecord | undefined;
   today?: ExerciseSessionRecord | undefined;
+  /** the session date these sets are logged to (today, or a past day being edited) */
+  date: string;
 }
 
 interface Draft {
@@ -52,7 +55,7 @@ function Stepper({
   );
 }
 
-export function SetLogger({ exercise, prev, today }: Props) {
+export function SetLogger({ exercise, prev, today, date }: Props) {
   const { scheme } = exercise;
   const loggedCount = today?.sets.length ?? 0;
   const [editing, setEditing] = useState<number | null>(null);
@@ -79,8 +82,9 @@ export function SetLogger({ exercise, prev, today }: Props) {
       setIndex: i,
       weightKg: draft.weightKg,
       reps: draft.reps,
-      sessionDate: dateIso(),
+      sessionDate: date,
     });
+    if (!amend) startRest(exercise.scheme.restSec); // rest only starts on a fresh log
     setEditing(null);
     setDraft(null);
   };
@@ -128,9 +132,14 @@ export function SetLogger({ exercise, prev, today }: Props) {
     ? `${SYSTEM.gate.last}: ${Math.max(...prev.sets.map((s) => s.weightKg))}kg × (${prev.sets.map((s) => s.reps).join(',')}) · ${prev.date}`
     : SYSTEM.gate.firstEncounter;
 
+  const targetWeight =
+    draft?.weightKg ?? today?.sets[loggedCount - 1]?.weightKg ?? prev?.sets[0]?.weightKg ?? 20;
+  const barbell = /barbell/i.test(exercise.name);
+
   return (
     <div className="set-logger">
       {rows}
+      <PlateTools weightKg={targetWeight} barbell={barbell} />
       <p className="set-last">[{lastLine}]</p>
     </div>
   );

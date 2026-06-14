@@ -20,7 +20,7 @@ page.on('console', (msg) => {
 });
 page.on('pageerror', (err) => errors.push(String(err)));
 page.on('response', (res) => {
-  if (res.status() === 404 && !res.url().includes('/assets/characters/')) notFound.push(res.url());
+  if (res.status() === 404 && !res.url().includes('/assets/')) notFound.push(res.url());
 });
 
 await page.goto('http://localhost:5173', { waitUntil: 'networkidle' });
@@ -53,7 +53,15 @@ console.log(`progress: ${progress.trim()}`);
 
 await page.getByRole('button', { name: 'CLEAR GATE' }).click();
 await page.getByText('GATE CLEARED:').waitFor({ timeout: 10_000 });
-const total = await page.locator('.tally-total .tally-xp').textContent();
+// the total counts up (CountUp) — wait for it to settle before reading/capturing
+const totalLoc = page.locator('.tally-total .tally-xp');
+let total = await totalLoc.textContent();
+for (let i = 0; i < 40; i++) {
+  await page.waitForTimeout(100);
+  const next = await totalLoc.textContent();
+  if (next === total && next !== '+0') break;
+  total = next;
+}
 console.log(`tally total: ${total}`);
 await page.screenshot({ path: 'screenshots/gate-tally.png', fullPage: true });
 

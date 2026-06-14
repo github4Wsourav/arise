@@ -1,26 +1,40 @@
 import { useMemo, useState } from 'react';
-import { Link, useParams } from '@tanstack/react-router';
+import { Link, useNavigate, useParams, useSearch } from '@tanstack/react-router';
 import { bossEpithet } from '../../engine/bosses';
 import { bossShortName } from '../../data/endgame';
+import { reduce } from '../../engine/reduce';
 import { SESSIONS } from '../../data/program';
 import { SYSTEM } from '../../data/strings';
 import { sessionActivation } from '../../data/types';
 import { getManifest } from '../../character/manifest';
-import { useGameState } from '../../store/useGameState';
+import { engineCfg, useEvents } from '../../store/useGameState';
 import { appendEvent } from '../../store/append';
 import { dateIso } from '../../store/dates';
 import { BodyHeatmap } from '../../body/BodyHeatmap';
+import { Art } from '../../ui/Art';
+import { RestTimer } from '../../ui/RestTimer';
 import { SystemText } from '../../ui/SystemText';
 import { ExerciseCard } from './ExerciseCard';
 import { TallyScreen } from './TallyScreen';
 
 export function GateView() {
   const { sessionId } = useParams({ from: '/gate/$sessionId' });
+  const { date: dateParam } = useSearch({ from: '/gate/$sessionId' });
+  const date = dateParam ?? dateIso();
+  const isPast = date !== dateIso();
   const session = SESSIONS[sessionId];
-  const state = useGameState();
+  const events = useEvents();
+  const navigate = useNavigate();
   const manifest = getManifest();
   const [expanded, setExpanded] = useState<string | null>(null);
   const [tallyOpen, setTallyOpen] = useState(false);
+
+  // derive the gate's state AS OF `date` — reduce already buckets sessions by date,
+  // so a past day exposes its own sets + the session before it for prefill/grading.
+  const state = useMemo(
+    () => (events ? reduce(events, engineCfg(), date) : undefined),
+    [events, date],
+  );
 
   const activation = useMemo(() => {
     if (!session) return {};
@@ -39,19 +53,24 @@ export function GateView() {
   const cleared = state.clearedToday.includes(sessionId);
 
   const clearGate = async () => {
-    await appendEvent('gate_cleared', { sessionId, sessionDate: dateIso() });
-    setTallyOpen(true);
+    await appendEvent('gate_cleared', { sessionId, sessionDate: date });
+    // editing a past day saves quietly (no tally/ceremony for an old clear)
+    if (isPast) void navigate({ to: '/' });
+    else setTallyOpen(true);
   };
 
   return (
     <main className="gate">
+      <RestTimer />
       <header className="gate-head">
         <Link to="/" className="gate-back system-text system-text--muted">
           {SYSTEM.gate.back}
         </Link>
         <span className="rank-badge">{tier.id.toUpperCase()}</span>
       </header>
+      <Art className="gate-hero" src={`/assets/gates/${session.id}.webp`} />
       <h1 className="gate-name">{session.gateName}</h1>
+      {isPast && <p className="system-text editing-banner">[{SYSTEM.roster.editing(date)}]</p>}
       <SystemText>{session.why.toUpperCase()}</SystemText>
       {state.pendingBosses
         .filter((b) => b.sessionId === sessionId)
@@ -76,6 +95,7 @@ export function GateView() {
             onToggle={() => setExpanded(expanded === ex.id ? null : ex.id)}
             prev={state.prevByExercise[ex.id]}
             today={state.todayByExercise[ex.id]}
+            date={date}
           />
         ))}
       </div>
@@ -96,7 +116,7 @@ export function GateView() {
         )}
       </footer>
 
-      {tallyOpen && <TallyScreen sessionId={sessionId} date={dateIso()} onClose={() => setTallyOpen(false)} />}
+      {tallyOpen && <TallyScreen sessionId={sessionId} date={date} onClose={() => setTallyOpen(false)} />}
     </main>
   );
 }
