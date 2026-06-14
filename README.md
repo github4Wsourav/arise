@@ -22,9 +22,15 @@ accounts and cross-device sync.
 | 0 | Design & documentation | ✅ Complete |
 | 1 | Foundation (engine, character, dashboard) | ✅ Complete (`v0.1.0`) |
 | 2 | The Gate (workout tracking, XP, level-ups) | ✅ Complete (`v0.2.0`) |
-| 3 | The System Awakens (quests, streaks, stats) | ⬜ Not started |
-| 4 | Ascension (auth, sync, multi-device) | ⬜ Not started |
-| 5 | Endgame (bosses, relics, polish, deploy) | ⬜ Not started |
+| 3 | The System Awakens (quests, streaks, stats) | ✅ Complete (`v0.3.0`) |
+| 4 | Ascension (auth, sync, multi-device) | ✅ Complete (`v0.4.0`) |
+| 5 | Endgame (bosses, relics, polish, deploy) | ✅ Complete (`v0.5.0`) = v1 |
+| 6 | Ascension Polish (System UI, assets, gym utilities) | ✅ Complete (`v0.6.0`) |
+
+**The build/feature plan is complete.** What remains is content + ops, not code:
+generate the 100 character portraits (see [`docs/09-CHARACTER-CODEX.md`](docs/09-CHARACTER-CODEX.md)),
+provision Supabase for live sync, and deploy ([`docs/06-DEPLOY.md`](docs/06-DEPLOY.md)). A how-to-use
+guide is in [`docs/10-USER-GUIDE.md`](docs/10-USER-GUIDE.md).
 
 ## Documentation
 
