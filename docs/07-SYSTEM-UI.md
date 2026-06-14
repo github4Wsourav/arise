@@ -91,9 +91,9 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       is gated behind `prefers-reduced-motion: no-preference` so the visible state is the default;
       smoke-system waits 1s for entrance to settle before the profile capture.*
 - [x] **App header / title** — wordmark glow + nav hover. *(SyncDot states done too.)*
-- [x] **CharacterCard / status window** — glass + glow + brackets + level-numeral glow (via
-      foundation). *Decode effect on tier name still TODO.*
-- [x] **XPBar** — shimmer fill + glowing leading edge (foundation). *Segmented ticks TODO.*
+- [x] **CharacterCard / status window** — glass + glow + brackets + level-numeral glow + tier
+      name **decode effect** (`DecodeText`, scramble→resolve on mount, reduced-motion safe).
+- [x] **XPBar** — shimmer fill + glowing leading edge + **segmented tick power-meter**.
 - [x] **RosterStrip** — chip glow states + today-pulse (foundation).
 - [x] **Today / Gate panel** — gate banner frame (Art) + CTA flare.
 - [x] **Daily Quests** — quest ◇→◆ claim pop, manual CLAIM flare.
@@ -106,8 +106,9 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       tier aura inner-glow, sparkline drop-shadow glow. *Verified in system smoke.*
 - [x] **Responsive pass** — wide-screen void glow boost + wordmark scale; column stays
       phone-width (correct for a gym PWA); safe-area already handled. *Landscape/large-text TODO.*
-- [ ] **Final:** Lighthouse re-run, reduced-motion audit, high-tier seed cohesion, smokes,
-      update HANDOFF + README, tag.
+- [ ] **Final:** Lighthouse re-run (confirm backdrop-filters didn't regress perf),
+      landscape/large-text responsive, update HANDOFF, tag. *(reduced-motion guard + high-tier
+      seed cohesion + smokes already verified each pass.)*
 
 ---
 

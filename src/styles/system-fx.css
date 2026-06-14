@@ -199,6 +199,24 @@ body::after {
   }
 }
 
+/* XP track reads as a segmented power meter (ticks etched over the fill). */
+.xp-track {
+  position: relative;
+}
+.xp-track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 8px,
+    color-mix(in srgb, var(--bg) 60%, transparent) 8px,
+    color-mix(in srgb, var(--bg) 60%, transparent) 9px
+  );
+}
+
 /* ---- 4. Micro-interactions ------------------------------------------------ */
 /* Primary CTA: glow lift on hover, a press flare on tap. */
 .cta {
