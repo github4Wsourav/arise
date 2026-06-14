@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { AnimatePresence, motion } from 'motion/react';
 import { DOW_TO_KEY, SESSIONS, WEEK } from '../data/program';
 import { SYSTEM } from '../data/strings';
 import { addDays, dateIso, mondayOf } from '../store/dates';
@@ -48,25 +49,35 @@ export function RosterStrip() {
         })}
       </div>
 
-      {openDate && (
-        <div className="gate-picker">
-          <p className="window-label gate-picker-label">[{SYSTEM.roster.pick(openDate)}]</p>
-          <div className="gate-picker-options">
-            {GATES.map((g) => (
-              <Link
-                key={g.id}
-                to="/gate/$sessionId"
-                params={{ sessionId: g.id }}
-                search={{ date: openDate }}
-                className="gate-picker-btn"
-                onClick={() => setOpenDate(null)}
-              >
-                {g.gateName}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {openDate && (
+          <motion.div
+            key="gate-picker"
+            className="gate-picker"
+            initial={{ opacity: 0, height: 0, marginTop: 0, paddingTop: 0, paddingBottom: 0 }}
+            animate={{ opacity: 1, height: 'auto', marginTop: 12, paddingTop: 16, paddingBottom: 16 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0, paddingTop: 0, paddingBottom: 0 }}
+            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <p className="window-label gate-picker-label">[{SYSTEM.roster.pick(openDate)}]</p>
+            <div className="gate-picker-options">
+              {GATES.map((g) => (
+                <Link
+                  key={g.id}
+                  to="/gate/$sessionId"
+                  params={{ sessionId: g.id }}
+                  search={{ date: openDate }}
+                  className="gate-picker-btn"
+                  onClick={() => setOpenDate(null)}
+                >
+                  {g.gateName}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
