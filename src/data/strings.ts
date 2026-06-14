@@ -117,6 +117,8 @@ export const SYSTEM = {
     log: 'LOG',
     save: 'SAVE',
     set: (n: number) => `S${n}`,
+    restLabel: 'RECOVER',
+    restDone: 'GO — NEXT SET',
   },
 
   tally: {

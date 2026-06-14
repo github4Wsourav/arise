@@ -12,6 +12,7 @@ import { appendEvent } from '../../store/append';
 import { dateIso } from '../../store/dates';
 import { BodyHeatmap } from '../../body/BodyHeatmap';
 import { Art } from '../../ui/Art';
+import { RestTimer } from '../../ui/RestTimer';
 import { SystemText } from '../../ui/SystemText';
 import { ExerciseCard } from './ExerciseCard';
 import { TallyScreen } from './TallyScreen';
@@ -60,6 +61,7 @@ export function GateView() {
 
   return (
     <main className="gate">
+      <RestTimer />
       <header className="gate-head">
         <Link to="/" className="gate-back system-text system-text--muted">
           {SYSTEM.gate.back}

@@ -10,6 +10,7 @@ import type { ExerciseSessionRecord, LoggedSet } from '../../engine/types';
 import { GRADE_GLYPH, gradeSet } from '../../engine/grade';
 import { SYSTEM } from '../../data/strings';
 import { appendEvent } from '../../store/append';
+import { startRest } from '../../store/restTimer';
 
 interface Props {
   exercise: Exercise;
@@ -82,6 +83,7 @@ export function SetLogger({ exercise, prev, today, date }: Props) {
       reps: draft.reps,
       sessionDate: date,
     });
+    if (!amend) startRest(exercise.scheme.restSec); // rest only starts on a fresh log
     setEditing(null);
     setDraft(null);
   };
