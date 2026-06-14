@@ -11,6 +11,7 @@ import { GRADE_GLYPH, gradeSet } from '../../engine/grade';
 import { SYSTEM } from '../../data/strings';
 import { appendEvent } from '../../store/append';
 import { startRest } from '../../store/restTimer';
+import { PlateTools } from '../../ui/PlateTools';
 
 interface Props {
   exercise: Exercise;
@@ -131,9 +132,14 @@ export function SetLogger({ exercise, prev, today, date }: Props) {
     ? `${SYSTEM.gate.last}: ${Math.max(...prev.sets.map((s) => s.weightKg))}kg × (${prev.sets.map((s) => s.reps).join(',')}) · ${prev.date}`
     : SYSTEM.gate.firstEncounter;
 
+  const targetWeight =
+    draft?.weightKg ?? today?.sets[loggedCount - 1]?.weightKg ?? prev?.sets[0]?.weightKg ?? 20;
+  const barbell = /barbell/i.test(exercise.name);
+
   return (
     <div className="set-logger">
       {rows}
+      <PlateTools weightKg={targetWeight} barbell={barbell} />
       <p className="set-last">[{lastLine}]</p>
     </div>
   );

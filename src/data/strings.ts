@@ -119,6 +119,8 @@ export const SYSTEM = {
     set: (n: number) => `S${n}`,
     restLabel: 'RECOVER',
     restDone: 'GO — NEXT SET',
+    load: 'LOAD',
+    warmup: 'WARM-UP',
   },
 
   tally: {

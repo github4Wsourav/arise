@@ -769,6 +769,57 @@ button {
   margin: 6px 0 0;
 }
 
+/* ---- plate loadout + warm-up ramp (set logger) ---------------------------- */
+.plate-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 2px;
+}
+.plate-load {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--aura-hi);
+}
+.plate-load-k {
+  color: var(--faint);
+}
+.plate-load small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.warmup-toggle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--aura);
+  border: 1px solid color-mix(in srgb, var(--aura) 35%, var(--line));
+  border-radius: var(--r-chip);
+  padding: 4px 9px;
+}
+.warmup-sets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.warmup-set {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-chip);
+  padding: 3px 8px;
+}
+.warmup-set small {
+  font-size: 8px;
+}
+
 /* ---- rest timer (fixed bar at the top while resting between sets) ---------- */
 .rest-timer {
   position: fixed;
