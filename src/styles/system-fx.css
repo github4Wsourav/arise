@@ -54,6 +54,24 @@ html[data-tier='10']::before {
   background-image: url('/assets/backgrounds/tier-10.webp');
 }
 
+/* Faint drifting dust motes (transparent asset), behind everything, slowly adrift. */
+html::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  background: url('/assets/fx/particles.webp') center / cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  animation: drift 55s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  to {
+    transform: translateY(-14px) scale(1.04);
+  }
+}
+
 /* Drifting aura glow field. Fixed, GPU-cheap (transform/opacity only). */
 body::before {
   content: '';
@@ -777,8 +795,29 @@ html[data-tier='10'] .system-window::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ---- Arcane circle behind the character (dashboard hero + ceremony) --------
+   The asset is white-on-black, so `screen` drops the black and the runic lines
+   glow on the void. Slowly rotates. Used by both because both render CharacterImage. */
+.character-stage::before {
+  content: '';
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  background: url('/assets/fx/magic-circle.webp') center / contain no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: spin-slow 60s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */
 @media (prefers-reduced-motion: reduce) {
+  html::after,
   body::before,
   body::after,
   .system-window,
@@ -794,7 +833,8 @@ html[data-tier='10'] .system-window::before {
   .ceremony-stage::before,
   .ceremony-new,
   .sync-dot--syncing .dot,
-  .cal-cell {
+  .cal-cell,
+  .character-stage::before {
     animation: none !important;
   }
   .xp-fill::after,
