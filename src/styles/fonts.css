@@ -9,4 +9,8 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* Jim Nightshade has a small x-height, so it reads ~25% smaller than the sans/
+     mono it replaced. size-adjust scales every glyph up uniformly — one knob fixes
+     the apparent size everywhere without touching any per-element px value. */
+  size-adjust: 128%;
 }
