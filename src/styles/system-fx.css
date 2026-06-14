@@ -171,16 +171,17 @@ body::after {
   background-image:
     linear-gradient(
       115deg,
-      transparent 38%,
+      transparent 45%,
       color-mix(in srgb, var(--aura-hi) 8%, transparent) 50%,
-      transparent 62%
+      transparent 55%
     ),
     radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--aura-hi) 7%, transparent), transparent 55%);
   background-size:
-    220% 100%,
+    200% 100%,
     100% 100%;
+  /* start fully off the left; the keyframe ends fully off the right → seamless loop */
   background-position:
-    135% 0,
+    230% 0,
     0 0;
   background-repeat: no-repeat;
   -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
@@ -193,7 +194,7 @@ body::after {
 @keyframes panel-sheen {
   to {
     background-position:
-      -35% 0,
+      -130% 0,
       0 0;
   }
 }
@@ -204,7 +205,7 @@ body::after {
   .system-window {
     animation:
       rise-in var(--t-slow) var(--ease-system) both,
-      panel-sheen 13s ease-in-out infinite;
+      panel-sheen 14s linear infinite;
   }
   .system-window:nth-of-type(1) {
     animation-delay: 0ms;
@@ -356,17 +357,19 @@ html[data-tier='10'] .system-window::before {
   pointer-events: none;
   background: linear-gradient(
     115deg,
-    transparent 40%,
+    transparent 45%,
     color-mix(in srgb, #fff 26%, transparent) 50%,
-    transparent 60%
+    transparent 55%
   );
-  background-size: 240% 100%;
-  background-position: 150% 0;
-  animation: sheen-slide 5.5s ease-in-out infinite;
+  background-size: 200% 100%;
+  background-position: 230% 0;
+  background-repeat: no-repeat;
+  animation: sheen-slide 6s linear infinite;
 }
+/* sweeps from fully off the left to fully off the right → seamless loop, no snap */
 @keyframes sheen-slide {
   to {
-    background-position: -40% 0;
+    background-position: -130% 0;
   }
 }
 
@@ -397,13 +400,14 @@ html[data-tier='10'] .system-window::before {
   pointer-events: none;
   background: linear-gradient(
     115deg,
-    transparent 42%,
+    transparent 45%,
     color-mix(in srgb, var(--aura) 38%, transparent) 50%,
-    transparent 58%
+    transparent 55%
   );
-  background-size: 240% 100%;
-  background-position: 150% 0;
-  animation: sheen-slide 4.8s ease-in-out infinite;
+  background-size: 200% 100%;
+  background-position: 230% 0;
+  background-repeat: no-repeat;
+  animation: sheen-slide 5.5s linear infinite;
 }
 
 /* Steppers / small buttons: tactile press. */
