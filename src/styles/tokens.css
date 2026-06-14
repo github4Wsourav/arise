@@ -45,7 +45,7 @@
   --r-input: 8px;
   --gutter: 18px;
   --max-w: 600px;
-  --panel-pad: 22px; /* inner padding of every System window */
+  --panel-pad: 28px; /* inner padding of every System window (clears the metal frame) */
   --panel-gap: 22px; /* vertical rhythm between panels */
 
   /* ---- glow + motion system (docs/07-SYSTEM-UI.md) -------------------------

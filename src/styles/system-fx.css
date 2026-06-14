@@ -189,9 +189,14 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  border: 44px solid transparent;
+  border: 30px solid transparent;
   border-image: url('/assets/fx/panel-frame.png') 185 stretch;
   pointer-events: none;
+}
+
+/* the ornate frame is the only border now — drop the inner aura line (app.css ::after) */
+.system-window::after {
+  display: none;
 }
 
 /* Tint the violet frame toward the tier aura (white → blue → violet → void). */

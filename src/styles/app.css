@@ -89,7 +89,7 @@ button {
 /* ---- System window (panel with the magic-UI tell) -------------------------- */
 .system-window {
   background: var(--panel);
-  border: 1px solid var(--line);
+  border: none; /* the ornate metal frame (system-fx ::before) is the border */
   border-radius: var(--r-card);
   padding: var(--panel-pad);
   position: relative;
