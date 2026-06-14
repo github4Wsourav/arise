@@ -43,64 +43,22 @@ button {
 /* ---- header -------------------------------------------------------------- */
 .app-header {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
   margin: 6px 0 18px;
 }
 
-.app-nav-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.app-eyebrow {
-  font-size: 9px;
-}
-
-/* The ARISE wordmark, framed as a banner card so its own dark plate is contained
-   (no edge-mismatch against the void) and it matches the System panels. */
-/* Full-width banner card. Designed for a 3:1 header asset whose dark field bleeds
-   to all four edges and whose wordmark sits centred with margin — so cover fills
-   the card with no plate/seam and nothing important is cropped. See docs/08 §4. */
-.brand-card {
-  position: relative;
-  border-radius: var(--r-card);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
-  box-shadow: var(--glow-soft);
-}
-
-.brand-hero {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 1;
-  object-fit: cover;
-  object-position: center;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
+/* ARISE as a compact wordmark in the nav bar, in the provided display script */
 .app-title {
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 28px;
-  letter-spacing: 0.04em;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.02em;
   margin: 0;
-  background: linear-gradient(135deg, var(--aura-deep), var(--aura) 55%, var(--aura-hi));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--aura-hi);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--aura) 55%, transparent);
 }
 
 /* ---- System voice ---------------------------------------------------------- */
