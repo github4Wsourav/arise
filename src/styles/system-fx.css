@@ -180,17 +180,18 @@ body::after {
   }
 }
 
-/* Ornate corner brackets — thick metallic-violet L's at each corner with a glow,
-   masked from an inset border (inspired by the framed-panel reference). */
+/* Ornate corner brackets — double metallic-violet L's at each corner with a glow,
+   masked from an inset double-border (inspired by the framed-panel reference).
+   When a corner-frame asset is dropped in (docs/08 §3), border-image takes over. */
 .system-window::before {
   content: '';
   position: absolute;
   inset: 5px;
   border-radius: 2px;
-  border: 2px solid color-mix(in srgb, var(--aura-hi) 55%, var(--aura));
+  border: 4px double color-mix(in srgb, var(--aura-hi) 55%, var(--aura));
   pointer-events: none;
   opacity: 0.9;
-  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--aura) 60%, transparent));
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--aura) 55%, transparent));
   -webkit-mask:
     linear-gradient(#000 0 0) top left,
     linear-gradient(#000 0 0) top right,
@@ -201,8 +202,8 @@ body::after {
     linear-gradient(#000 0 0) top right,
     linear-gradient(#000 0 0) bottom left,
     linear-gradient(#000 0 0) bottom right;
-  -webkit-mask-size: 24px 24px;
-  mask-size: 24px 24px;
+  -webkit-mask-size: 26px 26px;
+  mask-size: 26px 26px;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }

@@ -108,6 +108,33 @@ Transparent PNGs layered as effects. Optional — the app is complete without th
 push the "magic UI" feel. The single hardest requirement: a **truly transparent** background
 (alpha), or they'll show as dark boxes.
 
+### 3a. Ornate panel frame  ·  `public/assets/fx/panel-frame.png`  ← do this one next
+
+This is the asset that gives the panels true riveted-metal corners (the reference look). It
+drives a CSS `border-image`, so it must be built as a **9-slice frame**: ornate corners, thin
+connecting edges, **fully transparent center and exterior**. When you drop it in, I'll wire
+`border-image` on `.system-window` and tune the slice to your asset (~5-line change).
+
+- **Dimensions:** **600 × 600 px**, square, PNG with real alpha.
+- **Layout (critical for border-image):** four **identical ornate corner pieces** mirrored into
+  each corner, each occupying about the outer **150 px** of its corner. The four **edges**
+  between corners are a thin, simple, horizontally/vertically **repeatable** rail (or fully
+  transparent). The entire **center is transparent** (the panel content shows through). Nothing
+  in the middle.
+
+**Prompt:**
+```
+A square UI panel frame for a dark-fantasy game, on a FULLY TRANSPARENT background (alpha). Four
+identical ornate corner brackets, one in each corner, mirrored symmetrically: angular
+riveted-metal / dark-obsidian corner plates with a violet neon energy edge-glow, sharp fantasy
+points. The corners are connected by a thin simple straight metal rail along each edge. The
+entire centre is empty and transparent — only the border frame is drawn, no panel fill, no
+background, no text, no characters, no watermark. Crisp, high-contrast, game-UI HUD style.
+600x600 square, transparent PNG.
+```
+
+### 3b. Other overlays
+
 **Prompt template** (fill `[MOTIF]`, then append the global negative prompt):
 ```
 [MOTIF], rendered as thin bright glowing line-art with a soft outer glow, on a FULLY
@@ -177,10 +204,11 @@ Hand over `icon-source.png` and I'll regenerate the 192/512/maskable icons (`npm
 ## Status & priority
 
 - [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in and verified loading. ✅
-- [ ] **`gates/push.webp`** (Crimson Forge) — next biggest win; the gate you train first.
-- [ ] `gates/pull.webp`, `gates/legs.webp`.
+- [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in and verified (Crimson Forge hero looks great). ✅
+- [ ] **`fx/panel-frame.png`** (§3a) — ornate riveted-metal panel corners; ping me and I'll wire `border-image`. ← next
 - [ ] `fx/magic-circle.png` (then ping me to wire it), other overlays.
 - [ ] `icon-source.png` (custom PWA icon).
+- [ ] `brand/arise-wordmark.png` banner (§4a) — only if you ever want an image hero back; the text wordmark is the current header.
 
 Drop any of these in `public/assets/...` and ping me — I'll verify they load and tune
 blur / opacity / fade / blend to taste.
