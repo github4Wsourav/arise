@@ -40,6 +40,11 @@ const indexRoute = createRoute({
 const gateRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/gate/$sessionId',
+  // optional ?date=YYYY-MM-DD lets you open/edit a previous day's gate (shifts move)
+  validateSearch: (search: Record<string, unknown>): { date?: string } => {
+    const date = search.date;
+    return typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) ? { date } : {};
+  },
   component: GateView,
 });
 

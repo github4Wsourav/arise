@@ -41,6 +41,13 @@ export const SYSTEM = {
     rec: 'REC',
   },
 
+  roster: {
+    label: 'WEEKLY ROSTER — TAP A DAY TO TRAIN IT',
+    pick: (date: string) => `TRAIN THIS DAY · ${date}`,
+    editing: (date: string) => `EDITING A PAST GATE · ${date}`,
+    backfilled: 'LOGGED. THE RECORD UPDATES ITSELF.',
+  },
+
   record: {
     label: 'TRAINING LOG',
     streak: 'WEEK STREAK',

@@ -10,12 +10,13 @@ import type { ExerciseSessionRecord, LoggedSet } from '../../engine/types';
 import { GRADE_GLYPH, gradeSet } from '../../engine/grade';
 import { SYSTEM } from '../../data/strings';
 import { appendEvent } from '../../store/append';
-import { dateIso } from '../../store/dates';
 
 interface Props {
   exercise: Exercise;
   prev?: ExerciseSessionRecord | undefined;
   today?: ExerciseSessionRecord | undefined;
+  /** the session date these sets are logged to (today, or a past day being edited) */
+  date: string;
 }
 
 interface Draft {
@@ -52,7 +53,7 @@ function Stepper({
   );
 }
 
-export function SetLogger({ exercise, prev, today }: Props) {
+export function SetLogger({ exercise, prev, today, date }: Props) {
   const { scheme } = exercise;
   const loggedCount = today?.sets.length ?? 0;
   const [editing, setEditing] = useState<number | null>(null);
@@ -79,7 +80,7 @@ export function SetLogger({ exercise, prev, today }: Props) {
       setIndex: i,
       weightKg: draft.weightKg,
       reps: draft.reps,
-      sessionDate: dateIso(),
+      sessionDate: date,
     });
     setEditing(null);
     setDraft(null);

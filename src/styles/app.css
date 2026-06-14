@@ -302,11 +302,72 @@ button {
 }
 
 /* ---- roster strip -------------------------------------------------------------- */
+.roster-block {
+  margin-bottom: var(--panel-gap);
+}
+
 .roster {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 7px;
-  margin-bottom: var(--panel-gap);
+}
+
+.roster-chip:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.roster-chip--open {
+  outline: 2px solid var(--aura);
+  outline-offset: 1px;
+}
+
+/* gate picker (tap a day → choose a gate for that date) */
+.gate-picker {
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--panel-2);
+  border: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  border-radius: var(--r-card);
+}
+
+.gate-picker-label {
+  margin: 0 0 12px;
+}
+
+.gate-picker-options {
+  display: grid;
+  gap: 8px;
+}
+
+.gate-picker-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 13px;
+  border-radius: var(--r-input);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--aura-hi);
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--aura) 35%, var(--line));
+  transition:
+    box-shadow var(--t-mid) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+}
+
+.gate-picker-btn:hover {
+  box-shadow: var(--glow-soft);
+}
+
+.gate-picker-btn:active {
+  transform: scale(0.98);
+}
+
+.editing-banner {
+  color: var(--warn);
+  margin: 4px 0 8px;
 }
 
 .roster-chip {

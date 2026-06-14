@@ -12,9 +12,11 @@ interface Props {
   onToggle: () => void;
   prev?: ExerciseSessionRecord | undefined;
   today?: ExerciseSessionRecord | undefined;
+  /** the date this gate is logging to (today, or a past day being edited) */
+  date: string;
 }
 
-export function ExerciseCard({ exercise, expanded, done, onToggle, prev, today }: Props) {
+export function ExerciseCard({ exercise, expanded, done, onToggle, prev, today, date }: Props) {
   return (
     <div className={`exercise-card${done ? ' exercise-card--done' : ''}`}>
       <button type="button" className="exercise-head" onClick={onToggle} aria-expanded={expanded}>
@@ -37,7 +39,7 @@ export function ExerciseCard({ exercise, expanded, done, onToggle, prev, today }
           <p className="cue-text">{exercise.mindMuscle}</p>
           <p className="cue-label">[{SYSTEM.gate.form}]</p>
           <p className="cue-text">{exercise.form}</p>
-          <SetLogger exercise={exercise} prev={prev} today={today} />
+          <SetLogger exercise={exercise} prev={prev} today={today} date={date} />
         </div>
       )}
     </div>

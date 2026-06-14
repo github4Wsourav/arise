@@ -13,7 +13,8 @@
     "icons": "node scripts/make-icons.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:gate": "node scripts/smoke-gate.mjs",
-    "smoke:system": "node scripts/smoke-system.mjs"
+    "smoke:system": "node scripts/smoke-system.mjs",
+    "smoke:edit": "node scripts/smoke-edit.mjs"
   },
   "dependencies": {
     "@fontsource/martian-mono": "^5.2.7",

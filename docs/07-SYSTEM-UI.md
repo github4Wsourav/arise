@@ -123,10 +123,13 @@ Track progress here. `[x]` = done & verified in a smoke/screenshot.
       steady glow (no pulsing). **Airier spacing** (`--panel-pad` 22 / `--panel-gap` 22 / gutter
       18). **Asset-generation guide** for Karan: `docs/08-ASSETS.md` (prompts + paths + names
       for all backgrounds/gates/overlays; character art excluded — separate pipeline).
-- [ ] **Edit past days' workouts (NEXT — functional, not cosmetic):** let the user open and
-      log/amend a *previous* day's session (shifts change). Needs: date-aware gate route, a way
-      to pick the day+session from the roster, SetLogger writing the chosen `sessionDate`, and a
-      convergence/replay test. Do this as its own commit with a test — it touches the event core.
+- [x] **Edit past days' workouts (functional):** the roster strip is now interactive — tap any
+      day (today or earlier; future locked) → a **gate picker** (any of the 3 gates, for shift
+      swaps) → opens `/gate/$sessionId?date=YYYY-MM-DD`. GateView derives its state from
+      `reduce(events, cfg, date)` (the engine already buckets sessions by date — no new engine
+      code), SetLogger writes the chosen `sessionDate`, and a past-day clear **saves quietly**
+      (no tally/ceremony). 3 new engine tests + `npm run smoke:edit` (UI: pick past day → log →
+      XP credited). *Decisions per Karan: pick-any-gate-per-day + quiet save.*
 - [ ] **Final:** Lighthouse re-run (confirm backdrop-filters/grain didn't regress perf),
       landscape/large-text responsive, update HANDOFF, tag.
 
