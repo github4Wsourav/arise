@@ -207,7 +207,8 @@ Hand over `icon-source.png` and I'll regenerate the 192/512/maskable icons (`npm
 - [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in and verified (Crimson Forge hero looks great). ✅
 - [ ] **`fx/panel-frame.png`** (§3a) — ornate riveted-metal panel corners; ping me and I'll wire `border-image`. ← next
 - [ ] `fx/magic-circle.png` (then ping me to wire it), other overlays.
-- [ ] `icon-source.png` (custom PWA icon).
+- [x] **`icon-source.png`** — crown sigil app icon in; `npm run icons` regenerated the
+      192/512/maskable/apple set. (Source is 256² — a 1024² re-export would sharpen the 512.)
 - [ ] `brand/arise-wordmark.png` banner (§4a) — only if you ever want an image hero back; the text wordmark is the current header.
 
 Drop any of these in `public/assets/...` and ping me — I'll verify they load and tune
