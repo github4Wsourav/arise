@@ -121,8 +121,9 @@ body::after {
   }
 }
 
-/* ---- 2. System Windows: glass + slow sheen + HUD brackets ------------------ */
+/* ---- 2. System Windows: glass + slow sheen + ornate metal frame ------------ */
 .system-window {
+  isolation: isolate; /* contain the ::before frame (z-index: -1) within the panel */
   background-color: var(--panel-glass);
   /* layer 1 = the slow travelling sheen; layer 2 = a fixed top-corner glass glint */
   background-image:
@@ -180,32 +181,35 @@ body::after {
   }
 }
 
-/* Ornate corner brackets — double metallic-violet L's at each corner with a glow,
-   masked from an inset double-border (inspired by the framed-panel reference).
-   When a corner-frame asset is dropped in (docs/08 §3), border-image takes over. */
+/* Ornate metal frame (asset-driven, 9-slice border-image). Lives on ::before,
+   behind the content (z-index -1, contained by the panel's isolation), so a
+   per-tier `filter` can tint the violet art toward each tier's aura. */
 .system-window::before {
   content: '';
   position: absolute;
-  inset: 5px;
-  border-radius: 2px;
-  border: 4px double color-mix(in srgb, var(--aura-hi) 55%, var(--aura));
+  inset: 0;
+  z-index: -1;
+  border: 44px solid transparent;
+  border-image: url('/assets/fx/panel-frame.png') 185 stretch;
   pointer-events: none;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--aura) 55%, transparent));
-  -webkit-mask:
-    linear-gradient(#000 0 0) top left,
-    linear-gradient(#000 0 0) top right,
-    linear-gradient(#000 0 0) bottom left,
-    linear-gradient(#000 0 0) bottom right;
-  mask:
-    linear-gradient(#000 0 0) top left,
-    linear-gradient(#000 0 0) top right,
-    linear-gradient(#000 0 0) bottom left,
-    linear-gradient(#000 0 0) bottom right;
-  -webkit-mask-size: 26px 26px;
-  mask-size: 26px 26px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+}
+
+/* Tint the violet frame toward the tier aura (white → blue → violet → void). */
+html[data-tier='1'] .system-window::before {
+  filter: saturate(0.22) brightness(1.35);
+}
+html[data-tier='2'] .system-window::before {
+  filter: hue-rotate(-28deg) saturate(0.9) brightness(1.1);
+}
+html[data-tier='3'] .system-window::before {
+  filter: hue-rotate(-42deg) saturate(1) brightness(1.05);
+}
+html[data-tier='4'] .system-window::before {
+  filter: hue-rotate(-46deg) saturate(1.05);
+}
+/* tiers 5–9 are violet — the asset's native colour, no filter */
+html[data-tier='10'] .system-window::before {
+  filter: saturate(0.15) brightness(1.5);
 }
 
 @keyframes rise-in {
