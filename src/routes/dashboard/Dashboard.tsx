@@ -12,6 +12,7 @@ import { CharacterCard } from '../../ui/CharacterCard';
 import { STAT_ICON } from '../../ui/icons';
 import { RosterStrip } from '../../ui/RosterStrip';
 import { StreakCalendar } from '../../ui/StreakCalendar';
+import { Sparkles } from '../../ui/Sparkles';
 import { SyncDot } from '../../ui/SyncDot';
 import { SystemText } from '../../ui/SystemText';
 import { SystemWindow } from '../../ui/SystemWindow';
@@ -99,20 +100,25 @@ export function Dashboard() {
   return (
     <main className="dashboard">
       <header className="app-header span-2">
-        <h1 className="app-title">{SYSTEM.appName}</h1>
-        <nav className="app-nav">
-          <SyncDot />
+        <Sparkles />
+        <div className="app-header__side app-header__side--left">
           <Link to="/profile" className="profile-link system-text">
             [{SYSTEM.profile.link}]
           </Link>
+        </div>
+        <div className="app-header__center">
+          <h1 className="app-title">{SYSTEM.appName}</h1>
+          <div className="app-greeting">
+            <SystemCommentary state={state} />
+          </div>
+        </div>
+        <div className="app-header__side app-header__side--right">
+          <SyncDot />
           <Link to="/settings" className="profile-link system-text">
             [{SYSTEM.settings.link}]
           </Link>
-        </nav>
+        </div>
       </header>
-      <div className="span-2">
-        <SystemCommentary state={state} />
-      </div>
       <div className="span-2 aura-divider" aria-hidden="true">
         <span className="aura-divider__emblem" />
       </div>

@@ -36,6 +36,9 @@
   --aura-2-hi: #ffd79a;
   --aura-intensity: 0.15;
 
+  /* recolours the violet ornate-frame asset to a deep, rich antique gold (all tiers) */
+  --frame-gold: sepia(1) saturate(3.2) hue-rotate(-2deg) brightness(1.12) contrast(1.22);
+
   /* type — Jim Nightshade everywhere (per request); originals kept as fallbacks */
   --font-display: 'Jim Nightshade', 'Unbounded', cursive;
   --font-numeral: 'Jim Nightshade', 'Unbounded', sans-serif;

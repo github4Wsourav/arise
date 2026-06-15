@@ -40,25 +40,93 @@ button {
   padding: 0;
 }
 
-/* ---- header -------------------------------------------------------------- */
+/* ---- header: a HUD command bar — PROFILE · ARISE · SYSTEM ------------------- */
 .app-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 6px 0 18px;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  /* sit a little lower so the page has breathing room up top; bottom margin is 0
+     so the divider's own (symmetric) margins set the gap on either side of it */
+  margin: 16px 0 0;
+  padding: 20px 30px 22px;
+  border-radius: var(--r-card);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 60%, transparent),
+    color-mix(in srgb, var(--panel) 20%, transparent)
+  );
+  backdrop-filter: blur(10px) saturate(1.15);
+  box-shadow:
+    var(--glow-soft),
+    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 16%, transparent);
+  overflow: hidden;
+  isolation: isolate;
+  animation: rise-in var(--t-slow) var(--ease-system) both;
+}
+/* the same ornate gold frame the panels wear, now around the command bar */
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 22px solid transparent;
+  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  filter: var(--frame-gold);
+  pointer-events: none;
+}
+/* the gold frame's travelling specular shine (mirrors .system-window::after) */
+.app-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border: 22px solid transparent;
+  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  filter: var(--frame-gold) brightness(1.75) saturate(0.72);
+  -webkit-mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
+  mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
+  -webkit-mask-size: 280% 100%;
+  mask-size: 280% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: frame-shine 6.5s linear infinite;
 }
 
-/* ARISE as a compact wordmark in the nav bar, in the provided display script */
+/* ARISE as a shimmering, two-tone holographic wordmark */
 .app-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 34px;
+  font-size: clamp(30px, 8.5vw, 42px);
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   margin: 0;
-  color: var(--aura-hi);
-  text-shadow: var(--text-glow);
+  background: linear-gradient(
+    100deg,
+    var(--aura) 0%,
+    var(--aura-hi) 26%,
+    var(--aura-2-hi) 46%,
+    var(--aura-hi) 64%,
+    var(--aura) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--aura) 55%, transparent))
+    drop-shadow(0 0 4px color-mix(in srgb, var(--aura-2) 45%, transparent));
+  animation: title-shimmer 7s ease-in-out infinite;
+}
+@keyframes title-shimmer {
+  0% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -130% 0;
+  }
 }
 
 /* ---- System voice ---------------------------------------------------------- */
@@ -603,10 +671,11 @@ button {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
-  color: var(--aura);
-  border: 1px solid color-mix(in srgb, var(--aura) 40%, var(--line));
+  color: var(--aura-2);
+  border: 1px solid color-mix(in srgb, var(--aura-2) 45%, var(--line));
   border-radius: var(--r-chip);
   padding: 4px 8px;
+  box-shadow: 0 0 11px color-mix(in srgb, var(--aura-2) 26%, transparent);
 }
 
 .exercise-list {
@@ -800,7 +869,10 @@ button {
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--bg);
-  background: linear-gradient(135deg, var(--aura), var(--aura-hi));
+  background: linear-gradient(110deg, var(--aura-2), var(--aura) 52%, var(--aura-hi));
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--aura) 40%, transparent),
+    0 0 14px color-mix(in srgb, var(--aura-2) 28%, transparent);
 }
 
 .set-last {
@@ -1138,12 +1210,21 @@ button {
   min-height: 32px;
   padding: 0 10px;
   border-radius: var(--r-chip);
-  border: 1px solid color-mix(in srgb, var(--aura) 40%, var(--line));
-  color: var(--aura);
+  border: 1px solid color-mix(in srgb, var(--aura-2) 55%, var(--line));
+  color: var(--aura-2-hi);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   white-space: nowrap;
+  transition:
+    color 150ms var(--ease-out),
+    background 150ms var(--ease-out),
+    box-shadow 150ms var(--ease-out);
+}
+.quest-claim:hover {
+  color: var(--bg);
+  background: linear-gradient(110deg, var(--aura-2), var(--aura) 55%, var(--aura-hi));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--aura-2) 40%, transparent);
 }
 
 .quest-bw {
@@ -1257,8 +1338,10 @@ button {
 }
 .prov-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--aura-deep), var(--aura) 70%, var(--aura-hi));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--aura) 55%, transparent);
+  background: linear-gradient(90deg, var(--aura-2), var(--aura) 58%, var(--aura-hi));
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--aura) 50%, transparent),
+    0 0 10px color-mix(in srgb, var(--aura-2) 38%, transparent);
   transition: width 0.4s var(--ease-out);
 }
 .prov-stepper {
@@ -1301,14 +1384,15 @@ button {
 
 .sparkline polyline {
   fill: none;
-  stroke: var(--aura);
+  stroke: var(--aura-2);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--aura-2) 55%, transparent));
 }
 
 .sparkline circle {
-  fill: var(--aura-hi);
+  fill: var(--aura-2-hi);
 }
 
 .sparkline--wide {
@@ -1326,10 +1410,72 @@ button {
 }
 
 /* ---- settings / auth / import --------------------------------------------------------- */
-.app-nav {
+.app-header__side {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+.app-header__side--left {
+  justify-self: start;
+}
+.app-header__side--right {
+  justify-self: end;
+  justify-content: flex-end;
+}
+.app-header__center {
+  justify-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  text-align: center;
+}
+/* the System greeting now lives in the bar, beneath the wordmark */
+.app-greeting {
+  max-width: 100%;
+  min-width: 0;
+}
+.app-greeting .system-text {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: color-mix(in srgb, var(--aura) 72%, var(--muted));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* nav entries: plain System text (no chip outline), with an underline + glow on hover */
+.app-header .profile-link {
+  position: relative;
+  padding: 4px 2px;
+  color: var(--aura);
+  transition:
+    color 160ms var(--ease-out),
+    text-shadow 160ms var(--ease-out);
+}
+.app-header .profile-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--aura-2);
+  box-shadow: 0 0 6px var(--aura-2);
+  transform: translateX(-50%);
+  transition: width 200ms var(--ease-out);
+}
+.app-header .profile-link:hover {
+  color: var(--aura-hi);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--aura-2) 55%, transparent);
+}
+.app-header .profile-link:hover::after {
+  width: 100%;
 }
 
 .sync-dot {
@@ -1450,6 +1596,7 @@ button {
 
 .relic {
   border: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
+  border-top: 1px solid color-mix(in srgb, var(--aura-2) 32%, var(--line));
   border-radius: var(--r-chip);
   background: var(--panel-2);
   padding: 10px;
@@ -1459,8 +1606,9 @@ button {
 }
 
 .relic-glyph {
-  color: var(--aura-hi);
+  color: var(--aura-2);
   font-size: 16px;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--aura-2) 50%, transparent));
 }
 
 .relic-name {
@@ -1487,9 +1635,10 @@ button {
 }
 
 .tier-slot-aura {
-  height: 52px;
+  position: relative;
+  height: 64px;
   border-radius: var(--r-chip);
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--aura-2) 22%, var(--line));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1497,6 +1646,34 @@ button {
   font-size: 18px;
   color: var(--faint);
   background: var(--panel-2);
+  overflow: hidden;
+}
+
+/* reached tiers reveal the Hunter portrait */
+.tier-slot-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* future tiers stay locked: dark plate + lock glyph, no portrait */
+.tier-slot--classified .tier-slot-aura {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--panel-2),
+    var(--panel-2) 7px,
+    color-mix(in srgb, var(--panel) 60%, #000) 7px,
+    color-mix(in srgb, var(--panel) 60%, #000) 14px
+  );
+}
+.tier-slot-lock {
+  width: 22px;
+  height: 22px;
+  color: var(--faint);
+  opacity: 0.7;
 }
 
 .tier-slot-name {
@@ -1529,7 +1706,28 @@ button {
 }
 
 /* ---- motion preferences ----------------------------------------------------------- */
+/* tighten the command bar on phones so the greeting keeps room beside the wordmark */
+@media (max-width: 560px) {
+  .app-header {
+    padding: 15px 24px 17px;
+    gap: 12px;
+  }
+  .app-greeting .system-text {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .app-header,
+  .app-header::after,
+  .app-title {
+    animation: none;
+  }
+  /* keep the wordmark legible without the moving gradient */
+  .app-title {
+    background-position: 50% 0;
+  }
   .aura-particle {
     animation: none;
   }

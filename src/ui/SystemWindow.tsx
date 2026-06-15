@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Sparkles } from './Sparkles';
 
 interface Props {
   label?: string;
@@ -10,6 +11,7 @@ interface Props {
 export function SystemWindow({ label, className, children }: Props) {
   return (
     <section className={`system-window${className ? ` ${className}` : ''}`}>
+      <Sparkles />
       {label && <h2 className="window-label">[{label}]</h2>}
       {children}
     </section>

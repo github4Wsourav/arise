@@ -252,8 +252,8 @@ body::after {
 }
 
 /* Ornate metal frame (asset-driven, 9-slice border-image). Lives on ::before,
-   behind the content (z-index -1, contained by the panel's isolation), so a
-   per-tier `filter` can tint the violet art toward each tier's aura. */
+   behind the content (z-index -1, contained by the panel's isolation). The violet
+   asset is recoloured to a single ornate GOLD on every tier (--frame-gold). */
 .system-window::before {
   content: '';
   position: absolute;
@@ -261,44 +261,38 @@ body::after {
   z-index: -1;
   border: 30px solid transparent;
   border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  filter: var(--frame-gold);
   pointer-events: none;
 }
 
-/* the ornate frame is the only border now — drop the inner aura line (app.css ::after) */
+/* a brighter copy of the frame, masked to a thin diagonal band that travels along
+   it — gives the gold a real, moving specular shine (replaces app.css's inner line) */
 .system-window::after {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 30px solid transparent;
+  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  filter: var(--frame-gold) brightness(1.75) saturate(0.72);
+  -webkit-mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
+  mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
+  -webkit-mask-size: 280% 100%;
+  mask-size: 280% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: frame-shine 6.5s linear infinite;
+  pointer-events: none;
 }
-
-/* Tint the violet frame toward each tier's aura, matching the character art:
-   teal → sapphire → azure → indigo → violet → amethyst → orchid → magenta →
-   cosmic-lavender → radiance. (The asset is ~278° violet; hue-rotate per tier.) */
-html[data-tier='1'] .system-window::before {
-  filter: hue-rotate(-106deg) saturate(1.15) brightness(1.08);
-}
-html[data-tier='2'] .system-window::before {
-  filter: hue-rotate(-60deg) saturate(1.05) brightness(1.02);
-}
-html[data-tier='3'] .system-window::before {
-  filter: hue-rotate(-82deg) saturate(1.1) brightness(1.06);
-}
-html[data-tier='4'] .system-window::before {
-  filter: hue-rotate(-28deg) saturate(1.08);
-}
-html[data-tier='5'] .system-window::before {
-  filter: hue-rotate(-14deg) saturate(1.08);
-}
-/* tier 6 is the asset's native violet — no rotation */
-html[data-tier='7'] .system-window::before {
-  filter: hue-rotate(12deg) saturate(1.12) brightness(1.04);
-}
-html[data-tier='8'] .system-window::before {
-  filter: hue-rotate(36deg) saturate(1.2) brightness(1.08);
-}
-html[data-tier='9'] .system-window::before {
-  filter: hue-rotate(-20deg) saturate(0.85) brightness(1.2);
-}
-html[data-tier='10'] .system-window::before {
-  filter: hue-rotate(-30deg) saturate(0.3) brightness(1.6);
+@keyframes frame-shine {
+  from {
+    mask-position: 145% 0;
+    -webkit-mask-position: 145% 0;
+  }
+  to {
+    mask-position: -145% 0;
+    -webkit-mask-position: -145% 0;
+  }
 }
 
 @keyframes rise-in {
@@ -871,6 +865,36 @@ html[data-tier='10'] .system-window::before {
 }
 
 
+/* ---- Twinkling gold sparkles near each ornate frame ------------------------ */
+.sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* above the frame (::before/::after at -1), below the panel content */
+  pointer-events: none;
+}
+.sparkle {
+  position: absolute;
+  fill: #ffe6a3;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+  filter: drop-shadow(0 0 3px #ffce6e);
+  animation-name: twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+  }
+  45%,
+  55% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(35deg);
+  }
+}
+
 /* ---- Aura divider: ornate filigree silhouette, filled with the tier aura --- */
 /* Centered emblem at its NATURAL proportions, flanked by thin tapering rules — reads
    as a proportional divider rather than a stretched badge. The ::before/::after draw
@@ -878,7 +902,7 @@ html[data-tier='10'] .system-window::before {
 .aura-divider {
   position: relative;
   height: 52px;
-  margin: 6px auto 12px;
+  margin: 16px auto; /* equal space above and below the divider */
   width: min(98%, 560px);
   display: flex;
   align-items: center;
@@ -933,6 +957,9 @@ html[data-tier='10'] .system-window::before {
   body::before,
   body::after,
   .system-window,
+  .system-window::after,
+  .app-header::after,
+  .sparkle,
   .cta:not(:disabled)::after,
   .roster-chip--today::after,
   .xp-fill::after,
