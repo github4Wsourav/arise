@@ -113,7 +113,9 @@ export function Dashboard() {
       <div className="span-2">
         <SystemCommentary state={state} />
       </div>
-      <div className="span-2 aura-divider" aria-hidden="true" />
+      <div className="span-2 aura-divider" aria-hidden="true">
+        <span className="aura-divider__emblem" />
+      </div>
 
       <SystemWindow label="STATUS WINDOW">
         <CharacterCard state={state} manifest={manifest} />

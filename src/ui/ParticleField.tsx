@@ -15,6 +15,7 @@ interface Mote {
   delay: number;
   drift: number;
   opacity: number;
+  alt: boolean;
 }
 
 export function ParticleField({ contained = false, count }: { contained?: boolean; count?: number }) {
@@ -28,6 +29,7 @@ export function ParticleField({ contained = false, count }: { contained?: boolea
         delay: -Math.random() * 30, // negative → already mid-flight on first paint
         drift: (Math.random() * 2 - 1) * 70,
         opacity: 0.32 + Math.random() * 0.46,
+        alt: Math.random() < 0.34, // ~1/3 carry the secondary hue
       })),
     [n],
   );
@@ -37,7 +39,7 @@ export function ParticleField({ contained = false, count }: { contained?: boolea
       {motes.map((m, i) => (
         <span
           key={i}
-          className="mote"
+          className={`mote${m.alt ? ' mote--alt' : ''}`}
           style={
             {
               left: `${m.left}%`,

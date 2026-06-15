@@ -31,6 +31,9 @@
   --aura: #c9d4e0;
   --aura-hi: #eaf0f6;
   --aura-deep: #39414c;
+  /* secondary tier hue (two-tone accents) — overridden by applyTierTheme() */
+  --aura-2: #f2a23c;
+  --aura-2-hi: #ffd79a;
   --aura-intensity: 0.15;
 
   /* type — Jim Nightshade everywhere (per request); originals kept as fallbacks */

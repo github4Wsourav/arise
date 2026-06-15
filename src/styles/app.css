@@ -249,8 +249,11 @@ button {
 .xp-fill {
   height: 100%;
   border-radius: 5px;
-  background: linear-gradient(90deg, var(--aura-deep), var(--aura) 70%, var(--aura-hi));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--aura) 60%, transparent);
+  /* two-tone: the tier's secondary hue flows into the primary aura */
+  background: linear-gradient(90deg, var(--aura-2), var(--aura) 58%, var(--aura-hi));
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--aura) 55%, transparent),
+    0 0 10px color-mix(in srgb, var(--aura-2) 40%, transparent);
   transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -411,15 +414,23 @@ button {
 .gate-art {
   display: block;
   width: calc(100% + 2 * var(--panel-pad));
-  margin: 0 calc(-1 * var(--panel-pad)) 12px;
+  margin: -4px calc(-1 * var(--panel-pad)) 8px;
   aspect-ratio: 16 / 7;
   object-fit: cover;
   object-position: center 35%;
-  border-top: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
-  border-bottom: 1px solid color-mix(in srgb, var(--aura) 30%, var(--line));
-  box-shadow: inset 0 -40px 48px -32px var(--panel);
-  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
-  mask-image: linear-gradient(180deg, #000 78%, transparent);
+  /* deepen the top + bottom so the banner dissolves into the panel rather than
+     hard-clipping against the ornate frame */
+  box-shadow:
+    inset 0 44px 46px -34px var(--panel),
+    inset 0 -44px 50px -32px var(--panel);
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 17%,
+    #000 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(180deg, transparent 0%, #000 17%, #000 80%, transparent 100%);
 }
 
 .cta {
@@ -432,8 +443,10 @@ button {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--bg);
-  background: linear-gradient(135deg, var(--aura), var(--aura-hi));
-  box-shadow: 0 0 14px color-mix(in srgb, var(--aura) 45%, transparent);
+  background: linear-gradient(110deg, var(--aura-2), var(--aura) 52%, var(--aura-hi));
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--aura) 42%, transparent),
+    0 0 16px color-mix(in srgb, var(--aura-2) 30%, transparent);
 }
 
 .cta:disabled {
@@ -914,7 +927,7 @@ button {
 
 .gate-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--aura-deep), var(--aura));
+  background: linear-gradient(90deg, var(--aura-2), var(--aura));
   transition: width 0.4s ease-out;
 }
 

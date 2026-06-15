@@ -64,10 +64,14 @@ export function withinTierProgress(level: number, tier: TierDef): number {
 export function applyTierTheme(tierIndex: number, m: TierManifest): void {
   const tier = m.tiers[Math.min(tierIndex, m.tiers.length - 1)];
   const [aura, hi, deep] = tier.aura.colors;
+  // secondary hue from the tier art → two-tone UI (falls back to the primary aura)
+  const [accent, accentHi] = tier.aura.accent ?? [aura, hi];
   const root = document.documentElement;
   root.dataset.tier = String(tierIndex + 1);
   root.style.setProperty('--aura', aura);
   root.style.setProperty('--aura-hi', hi);
   root.style.setProperty('--aura-deep', deep);
+  root.style.setProperty('--aura-2', accent);
+  root.style.setProperty('--aura-2-hi', accentHi);
   root.style.setProperty('--aura-intensity', String(tier.aura.intensity));
 }

@@ -7,7 +7,7 @@
       "name": "The E-Rank Awakening",
       "levels": [1, 10],
       "statMultiplier": 1.0,
-      "aura": { "theme": "teal-wisp", "colors": ["#1FCBB8", "#86FFEC", "#0B3B36"], "intensity": 0.42 },
+      "aura": { "theme": "teal-wisp", "colors": ["#1FCBB8", "#86FFEC", "#0B3B36"], "accent": ["#F2A23C", "#FFD79A"], "intensity": 0.42 },
       "arc": "Nobody believed the weakest hunter would return to the gate. He returned anyway — and the System opened one eye."
     },
     {
@@ -15,7 +15,7 @@
       "name": "The D-Rank Vanguard",
       "levels": [11, 20],
       "statMultiplier": 1.2,
-      "aura": { "theme": "sapphire", "colors": ["#3A78E8", "#9FC4FF", "#14306E"], "intensity": 0.5 },
+      "aura": { "theme": "sapphire", "colors": ["#3A78E8", "#9FC4FF", "#14306E"], "accent": ["#E8C24E", "#FFE6A8"], "intensity": 0.5 },
       "arc": "The pale vapor at his feet has turned blue. Other hunters have started to ask what changed. The honest answer: every single session."
     },
     {
@@ -23,7 +23,7 @@
       "name": "The C-Rank Assassin",
       "levels": [21, 30],
       "statMultiplier": 1.5,
-      "aura": { "theme": "azure", "colors": ["#22AEE8", "#8FE0FF", "#0F3A6E"], "intensity": 0.56 },
+      "aura": { "theme": "azure", "colors": ["#22AEE8", "#8FE0FF", "#0F3A6E"], "accent": ["#9B6BF0", "#C9A8FF"], "intensity": 0.56 },
       "arc": "He no longer enters gates hoping to survive them. He enters to clear them. The azure glow does not flicker anymore."
     },
     {
@@ -31,7 +31,7 @@
       "name": "The B-Rank Elite",
       "levels": [31, 40],
       "statMultiplier": 1.9,
-      "aura": { "theme": "indigo", "colors": ["#6A50E8", "#B0A0FF", "#281A6E"], "intensity": 0.63 },
+      "aura": { "theme": "indigo", "colors": ["#6A50E8", "#B0A0FF", "#281A6E"], "accent": ["#2FC8E8", "#9CECFF"], "intensity": 0.63 },
       "arc": "Runes burn along the dark armor now. The ground cracks where he plants his feet. The System has stopped issuing warnings — it issues challenges."
     },
     {
@@ -39,7 +39,7 @@
       "name": "The A-Rank Vanguard",
       "levels": [41, 50],
       "statMultiplier": 2.4,
-      "aura": { "theme": "violet-eruption", "colors": ["#8A4FE8", "#C79CFF", "#3A1A6E"], "intensity": 0.7 },
+      "aura": { "theme": "violet-eruption", "colors": ["#8A4FE8", "#C79CFF", "#3A1A6E"], "accent": ["#F05CC8", "#FFAEE6"], "intensity": 0.7 },
       "arc": "Blue gave way to violet, the colour of something the rankings were not designed to measure. The guilds keep his file open on every desk."
     },
     {
@@ -47,7 +47,7 @@
       "name": "The S-Rank Necromancer",
       "levels": [51, 60],
       "statMultiplier": 3.0,
-      "aura": { "theme": "amethyst-shadow", "colors": ["#A33FE0", "#D49CFF", "#3A0F66"], "intensity": 0.78 },
+      "aura": { "theme": "amethyst-shadow", "colors": ["#A33FE0", "#D49CFF", "#3A0F66"], "accent": ["#36C8DE", "#9CECFF"], "intensity": 0.78 },
       "arc": "The shadows answer him now. Every gate he has ever cleared marches silently behind him — the work was never lost, it was enlisted."
     },
     {
@@ -55,7 +55,7 @@
       "name": "The Shadow Lord Awakening",
       "levels": [61, 70],
       "statMultiplier": 3.8,
-      "aura": { "theme": "orchid-flame", "colors": ["#C24FE4", "#E5A0FF", "#420F66"], "intensity": 0.85 },
+      "aura": { "theme": "orchid-flame", "colors": ["#C24FE4", "#E5A0FF", "#420F66"], "accent": ["#F0A83C", "#FFD79A"], "intensity": 0.85 },
       "arc": "A crown of violet flame is forming above his head, and wings of shadow stretch where a tired man once stood. The System addresses him differently now."
     },
     {
@@ -63,7 +63,7 @@
       "name": "The Monarch Candidate",
       "levels": [71, 80],
       "statMultiplier": 4.8,
-      "aura": { "theme": "magenta-warp", "colors": ["#E24FC8", "#FFA0EC", "#5E1A52"], "intensity": 0.92 },
+      "aura": { "theme": "magenta-warp", "colors": ["#E24FC8", "#FFA0EC", "#5E1A52"], "accent": ["#F0C24E", "#FFE6A8"], "intensity": 0.92 },
       "arc": "Reality bends politely out of his way. There are only a handful of beings at this altitude, and none of them got here by accident."
     },
     {
@@ -71,7 +71,7 @@
       "name": "The Cosmic Sovereign",
       "levels": [81, 90],
       "statMultiplier": 6.0,
-      "aura": { "theme": "cosmic-lavender", "colors": ["#B89CFF", "#E6D4FF", "#2A1A6E"], "intensity": 0.96 },
+      "aura": { "theme": "cosmic-lavender", "colors": ["#B89CFF", "#E6D4FF", "#2A1A6E"], "accent": ["#6CD8FF", "#BFF0FF"], "intensity": 0.96 },
       "arc": "His aura is no longer a glow; it is a weather system of stars. The gates that once tested him now open in deference."
     },
     {
@@ -79,7 +79,7 @@
       "name": "The Absolute God of Shadows",
       "levels": [91, 100],
       "statMultiplier": 7.5,
-      "aura": { "theme": "radiance", "colors": ["#EAF0FF", "#FFFFFF", "#5A6080"], "intensity": 1.0 },
+      "aura": { "theme": "radiance", "colors": ["#EAF0FF", "#FFFFFF", "#5A6080"], "accent": ["#FFD98F", "#FFF0C8"], "intensity": 1.0 },
       "arc": "There is no rank above this. There is only the radiance, the crown of light, and the quiet certainty of a body built one honest session at a time."
     }
   ]

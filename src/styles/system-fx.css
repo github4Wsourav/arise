@@ -151,6 +151,18 @@ body::after {
   will-change: transform, opacity;
   animation: mote-rise var(--dur) linear var(--delay) infinite;
 }
+/* a sprinkle of motes carry the tier's secondary hue, so the aura isn't monotone */
+.mote--alt {
+  background: radial-gradient(
+    circle,
+    var(--aura-2-hi),
+    color-mix(in srgb, var(--aura-2) 60%, transparent) 55%,
+    transparent 75%
+  );
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--aura-2) 70%, transparent),
+    0 0 3px var(--aura-2-hi);
+}
 @keyframes mote-rise {
   0% {
     transform: translate3d(0, 0, 0);
@@ -857,22 +869,57 @@ html[data-tier='10'] .system-window::before {
 
 
 /* ---- Aura divider: ornate filigree silhouette, filled with the tier aura --- */
+/* Centered emblem at its NATURAL proportions, flanked by thin tapering rules — reads
+   as a proportional divider rather than a stretched badge. The ::before/::after draw
+   the rules; the element itself masks the emblem (sized to its own aspect ratio). */
 .aura-divider {
-  height: 50px;
-  margin: 2px auto 6px;
-  width: min(92%, 440px);
+  position: relative;
+  height: 52px;
+  margin: 6px auto 12px;
+  width: min(98%, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--aura) 50%, transparent));
+}
+.aura-divider::before,
+.aura-divider::after {
+  content: '';
+  height: 2px;
+  /* leave room for the centered emblem (~ height * 2 wide) */
+  width: calc(50% - 58px);
+  border-radius: 2px;
+}
+.aura-divider::before {
   background: linear-gradient(
     90deg,
-    transparent 2%,
-    color-mix(in srgb, var(--aura) 65%, transparent) 26%,
-    var(--aura-hi) 50%,
-    color-mix(in srgb, var(--aura) 65%, transparent) 74%,
-    transparent 98%
+    transparent,
+    color-mix(in srgb, var(--aura-2) 55%, transparent) 55%,
+    var(--aura) 100%
   );
-  -webkit-mask: url('/assets/fx/divider.webp') center / contain no-repeat;
-  mask: url('/assets/fx/divider.webp') center / contain no-repeat;
-  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--aura) 55%, transparent));
-  opacity: 0.92;
+}
+.aura-divider::after {
+  background: linear-gradient(
+    270deg,
+    transparent,
+    color-mix(in srgb, var(--aura-2) 55%, transparent) 55%,
+    var(--aura) 100%
+  );
+}
+.aura-divider__emblem {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 108px;
+  background: linear-gradient(
+    100deg,
+    var(--aura-2) 8%,
+    var(--aura) 38%,
+    var(--aura-hi) 50%,
+    var(--aura) 62%,
+    var(--aura-2) 92%
+  );
+  -webkit-mask: url('/assets/fx/divider.webp') center / auto 100% no-repeat;
+  mask: url('/assets/fx/divider.webp') center / auto 100% no-repeat;
 }
 
 /* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */

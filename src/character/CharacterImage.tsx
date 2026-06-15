@@ -32,7 +32,7 @@ export function CharacterImage({ level, manifest }: Props) {
           draggable={false}
         />
       )}
-      <ParticleField contained />
+      <ParticleField contained count={38} />
     </div>
   );
 }

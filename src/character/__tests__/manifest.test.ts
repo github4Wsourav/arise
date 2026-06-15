@@ -99,5 +99,13 @@ describe('aura palette accessibility', () => {
         expect(contrast(hi, surface)).toBeGreaterThanOrEqual(4.5);
       }
     });
+
+    it(`${tier.id}: secondary accent stays visible (≥3:1) on app surfaces`, () => {
+      if (!tier.aura.accent) return;
+      const [accent] = tier.aura.accent;
+      for (const surface of Object.values(surfaces)) {
+        expect(contrast(accent, surface)).toBeGreaterThanOrEqual(3);
+      }
+    });
   }
 });

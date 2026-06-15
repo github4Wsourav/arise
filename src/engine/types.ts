@@ -147,6 +147,9 @@ export interface TierDef {
     theme: string;
     /** [accent, highlight, deep] hex colors */
     colors: [string, string, string];
+    /** optional [secondary, secondary-highlight] — a second hue pulled from the tier
+        art so the UI reads two-tone instead of monotone (decorative, not data-bound) */
+    accent?: [string, string];
     intensity: number;
   };
   arc: string;
