@@ -241,7 +241,7 @@ body::after {
   inset: 0;
   z-index: -1;
   border: 30px solid transparent;
-  border-image: url('/assets/fx/panel-frame.png') 185 stretch;
+  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
   pointer-events: none;
 }
 
