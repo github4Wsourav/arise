@@ -259,8 +259,9 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  border: 30px solid transparent;
-  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  /* big batwing corners stay intact (46% slice); the riveted rail tiles (round) */
+  border: 52px solid transparent;
+  border-image: url('/assets/fx/panel-frame-2.png') 46% round;
   filter: var(--frame-gold);
   pointer-events: none;
 }
@@ -272,9 +273,9 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  border: 30px solid transparent;
-  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
-  filter: var(--frame-gold) brightness(1.75) saturate(0.72);
+  border: 52px solid transparent;
+  border-image: url('/assets/fx/panel-frame-2.png') 46% round;
+  filter: var(--frame-gold) brightness(1.7) saturate(0.74);
   -webkit-mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
   mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
   -webkit-mask-size: 280% 100%;
@@ -369,16 +370,18 @@ body::after {
 .cta {
   transition:
     transform var(--t-fast) var(--ease-out),
-    box-shadow var(--t-mid) var(--ease-out),
-    filter var(--t-fast) var(--ease-out);
+    filter var(--t-mid) var(--ease-out);
 }
 .cta:not(:disabled):hover {
-  filter: brightness(1.08);
-  box-shadow: var(--glow-mid);
+  filter: brightness(1.08)
+    drop-shadow(0 0 16px color-mix(in srgb, var(--aura) 55%, transparent))
+    drop-shadow(0 0 7px color-mix(in srgb, var(--aura-2) 40%, transparent));
 }
 .cta:not(:disabled):active {
   transform: scale(0.97);
-  box-shadow: var(--glow-hard);
+  filter: brightness(1.12)
+    drop-shadow(0 0 22px color-mix(in srgb, var(--aura) 70%, transparent))
+    drop-shadow(0 0 10px color-mix(in srgb, var(--aura-hi) 60%, transparent));
 }
 /* A slow shimmer travels across primary buttons. */
 .cta {
@@ -535,9 +538,8 @@ body::after {
 /* When the gate is fully cleared the CTA is enabled — a steady ready-glow
    (the slow CTA shimmer + this glow read as "armed", no pulsing). */
 .gate-foot .cta:not(:disabled) {
-  box-shadow:
-    0 0 20px color-mix(in srgb, var(--aura) 50%, transparent),
-    0 0 6px var(--aura-hi);
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--aura) 55%, transparent))
+    drop-shadow(0 0 7px var(--aura-hi));
 }
 
 /* ---- Tally window: give it the HUD treatment + a counting total ----------- */

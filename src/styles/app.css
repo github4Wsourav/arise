@@ -71,8 +71,8 @@ button {
   position: absolute;
   inset: 0;
   z-index: -1;
-  border: 22px solid transparent;
-  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
+  border: 30px solid transparent;
+  border-image: url('/assets/fx/panel-frame-2.png') 46% round;
   filter: var(--frame-gold);
   pointer-events: none;
 }
@@ -83,9 +83,9 @@ button {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  border: 22px solid transparent;
-  border-image: url('/assets/fx/panel-frame.png') 165 stretch;
-  filter: var(--frame-gold) brightness(1.75) saturate(0.72);
+  border: 30px solid transparent;
+  border-image: url('/assets/fx/panel-frame-2.png') 46% round;
+  filter: var(--frame-gold) brightness(1.7) saturate(0.74);
   -webkit-mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
   mask-image: linear-gradient(115deg, transparent 43%, #000 49%, #000 51%, transparent 57%);
   -webkit-mask-size: 280% 100%;
@@ -506,22 +506,27 @@ button {
   display: block;
   width: 100%;
   min-height: 44px;
-  border-radius: var(--r-input);
+  /* ornate faceted edges; glow moves to drop-shadow so it follows the cut shape */
+  border-radius: 0;
+  clip-path: var(--clip-chamfer);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--bg);
   background: linear-gradient(110deg, var(--aura-2), var(--aura) 52%, var(--aura-hi));
+  /* inset bevel reads as faceted metal; outer glow via drop-shadow follows the cut */
   box-shadow:
-    0 0 14px color-mix(in srgb, var(--aura) 42%, transparent),
-    0 0 16px color-mix(in srgb, var(--aura-2) 30%, transparent);
+    inset 0 1.5px 0 color-mix(in srgb, #fff 36%, transparent),
+    inset 0 -3px 6px color-mix(in srgb, #2a1c04 45%, transparent);
+  filter: drop-shadow(0 0 11px color-mix(in srgb, var(--aura) 42%, transparent))
+    drop-shadow(0 0 5px color-mix(in srgb, var(--aura-2) 30%, transparent));
 }
 
 .cta:disabled {
   opacity: 0.45;
   cursor: not-allowed;
-  box-shadow: none;
+  filter: none;
 }
 
 .cta--link {
@@ -863,16 +868,19 @@ button {
 .log-btn {
   margin-left: auto;
   min-height: 38px;
-  padding: 0 14px;
-  border-radius: var(--r-input);
+  padding: 0 16px;
+  border-radius: 0;
+  clip-path: var(--clip-chamfer);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--bg);
   background: linear-gradient(110deg, var(--aura-2), var(--aura) 52%, var(--aura-hi));
   box-shadow:
-    0 0 12px color-mix(in srgb, var(--aura) 40%, transparent),
-    0 0 14px color-mix(in srgb, var(--aura-2) 28%, transparent);
+    inset 0 1.5px 0 color-mix(in srgb, #fff 34%, transparent),
+    inset 0 -3px 6px color-mix(in srgb, #2a1c04 45%, transparent);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--aura) 40%, transparent))
+    drop-shadow(0 0 5px color-mix(in srgb, var(--aura-2) 28%, transparent));
 }
 
 .set-last {

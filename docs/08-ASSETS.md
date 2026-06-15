@@ -221,7 +221,7 @@ and panels, so the whole app feels like it belongs in the same world.
 
 - [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in, visibility bumped. ✅
 - [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in (forge hero now frame-flush). ✅
-- [x] **`fx/panel-frame.png`** — wired as `border-image`, trimmed flush to the card edge. ✅
+- [x] **`fx/panel-frame-2.png`** — new dark-fantasy frame (gold batwing corners + riveted metal rail) wired as a 9-slice `border-image` (46% slice, `round` so the rail tiles, big corners). Replaces the recoloured violet `panel-frame.png`. ✅
 - [x] **`icon-source.png`** — crown app icon in (`npm run icons`). *(256² source → a 1024² re-export would sharpen the 512.)*
 - [x] **Character art `lvl_001–020.webp` + 9 tier keyframes (`021/031/…/091/100`)** — 29 in, de-watermarked. The 10 major-tier keyframes drove the in-app aura palette (see below). ⏳ filling the gaps.
 - [x] **`fx/ui-texture.webp`** — wired as a soft-light arcane-stone overlay across the whole void (`#root::after`). ✅

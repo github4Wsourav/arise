@@ -36,8 +36,20 @@
   --aura-2-hi: #ffd79a;
   --aura-intensity: 0.15;
 
-  /* recolours the violet ornate-frame asset to a deep, rich antique gold (all tiers) */
-  --frame-gold: sepia(1) saturate(3.2) hue-rotate(-2deg) brightness(1.12) contrast(1.22);
+  /* the new frame asset is already gold metal — just a subtle richness lift (all tiers) */
+  --frame-gold: saturate(1.08) brightness(1.04) contrast(1.03);
+
+  /* ornate cut-corner (chamfer) for buttons — angular, fantasy, not rounded */
+  --clip-chamfer: polygon(
+    9px 0,
+    calc(100% - 9px) 0,
+    100% 9px,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    9px 100%,
+    0 calc(100% - 9px),
+    0 9px
+  );
 
   /* type — Jim Nightshade everywhere (per request); originals kept as fallbacks */
   --font-display: 'Jim Nightshade', 'Unbounded', cursive;
