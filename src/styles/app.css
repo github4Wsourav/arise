@@ -391,8 +391,9 @@ button {
 }
 
 .roster-chip--today {
-  outline: 2px solid var(--aura);
+  outline: 2px solid var(--aura-2);
   outline-offset: 1px;
+  box-shadow: 0 0 9px color-mix(in srgb, var(--aura-2) 45%, transparent);
 }
 
 /* ---- today / stats / streak ----------------------------------------------------- */
@@ -487,9 +488,10 @@ button {
 }
 
 .stat-icon {
-  color: var(--aura);
-  opacity: 0.9;
+  color: var(--aura-2);
+  opacity: 0.95;
   margin-bottom: 1px;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--aura-2) 55%, transparent));
 }
 
 .stat-cell .k {
@@ -497,6 +499,10 @@ button {
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--faint);
+}
+
+.stat-cell {
+  border-top: 1px solid color-mix(in srgb, var(--aura-2) 28%, var(--line));
 }
 
 .stat-cell .v {
@@ -1558,5 +1564,23 @@ button {
   }
   .dashboard > .span-2 {
     grid-column: 1 / -1;
+  }
+  /* left column = character then calendar; right column = the work stack, spanning
+     both rows so the calendar fills the space that used to sit empty under the
+     character (instead of dropping to the very bottom of the page) */
+  .dash-main {
+    grid-column: 1;
+  }
+  .dash-side {
+    grid-column: 2;
+    grid-row: span 2;
+  }
+  .dash-cal {
+    grid-column: 1;
+  }
+  /* the wrappers are layout-only on desktop — let their panels own the spacing */
+  .dash-main > .system-window,
+  .dash-cal > .system-window {
+    margin-bottom: 0;
   }
 }

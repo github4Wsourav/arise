@@ -772,10 +772,13 @@ html[data-tier='10'] .system-window::before {
   gap: 3px;
 }
 .streak-stat--flame {
-  color: var(--aura);
+  color: var(--aura-2);
 }
 .streak-stat--flame svg {
-  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--aura) 60%, transparent));
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--aura-2) 65%, transparent));
+}
+.streak-stat--flame .streak-big {
+  color: var(--aura-2-hi);
 }
 .streak-big {
   font-family: var(--font-numeral);

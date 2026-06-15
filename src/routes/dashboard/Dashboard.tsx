@@ -117,11 +117,13 @@ export function Dashboard() {
         <span className="aura-divider__emblem" />
       </div>
 
-      <SystemWindow label="STATUS WINDOW">
-        <CharacterCard state={state} manifest={manifest} />
-      </SystemWindow>
+      <div className="dash-main">
+        <SystemWindow label="STATUS WINDOW">
+          <CharacterCard state={state} manifest={manifest} />
+        </SystemWindow>
+      </div>
 
-      <div>
+      <div className="dash-side">
         <RosterStrip />
         <TodayPanel state={state} />
         <QuestPanel state={state} />
@@ -142,6 +144,10 @@ export function Dashboard() {
             {tier.arc}
           </p>
         </SystemWindow>
+      </div>
+
+      {/* desktop: tucks under the character to fill the column; mobile: stays last */}
+      <div className="dash-cal">
         <StreakCalendar state={state} />
       </div>
     </main>
