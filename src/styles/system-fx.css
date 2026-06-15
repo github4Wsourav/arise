@@ -257,22 +257,36 @@ body::after {
   display: none;
 }
 
-/* Tint the violet frame toward the tier aura (white → blue → violet → void). */
+/* Tint the violet frame toward each tier's aura, matching the character art:
+   teal → sapphire → azure → indigo → violet → amethyst → orchid → magenta →
+   cosmic-lavender → radiance. (The asset is ~278° violet; hue-rotate per tier.) */
 html[data-tier='1'] .system-window::before {
-  filter: saturate(0.22) brightness(1.35);
+  filter: hue-rotate(-106deg) saturate(1.15) brightness(1.08);
 }
 html[data-tier='2'] .system-window::before {
-  filter: hue-rotate(-28deg) saturate(0.9) brightness(1.1);
+  filter: hue-rotate(-60deg) saturate(1.05) brightness(1.02);
 }
 html[data-tier='3'] .system-window::before {
-  filter: hue-rotate(-42deg) saturate(1) brightness(1.05);
+  filter: hue-rotate(-82deg) saturate(1.1) brightness(1.06);
 }
 html[data-tier='4'] .system-window::before {
-  filter: hue-rotate(-46deg) saturate(1.05);
+  filter: hue-rotate(-28deg) saturate(1.08);
 }
-/* tiers 5–9 are violet — the asset's native colour, no filter */
+html[data-tier='5'] .system-window::before {
+  filter: hue-rotate(-14deg) saturate(1.08);
+}
+/* tier 6 is the asset's native violet — no rotation */
+html[data-tier='7'] .system-window::before {
+  filter: hue-rotate(12deg) saturate(1.12) brightness(1.04);
+}
+html[data-tier='8'] .system-window::before {
+  filter: hue-rotate(36deg) saturate(1.2) brightness(1.08);
+}
+html[data-tier='9'] .system-window::before {
+  filter: hue-rotate(-20deg) saturate(0.85) brightness(1.2);
+}
 html[data-tier='10'] .system-window::before {
-  filter: saturate(0.15) brightness(1.5);
+  filter: hue-rotate(-30deg) saturate(0.3) brightness(1.6);
 }
 
 @keyframes rise-in {
@@ -827,17 +841,39 @@ html[data-tier='10'] .system-window::before {
 }
 
 
-/* ---- Filmic grain: one faint static overlay for depth --------------------- */
+/* ---- Arcane-stone texture: richer material over the whole void ------------- */
 #root::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  background:
+    url('/assets/fx/ui-texture.webp') center / 420px repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
 }
 
+
+/* ---- Aura divider: ornate filigree silhouette, filled with the tier aura --- */
+.aura-divider {
+  height: 50px;
+  margin: 2px auto 6px;
+  width: min(92%, 440px);
+  background: linear-gradient(
+    90deg,
+    transparent 2%,
+    color-mix(in srgb, var(--aura) 65%, transparent) 26%,
+    var(--aura-hi) 50%,
+    color-mix(in srgb, var(--aura) 65%, transparent) 74%,
+    transparent 98%
+  );
+  -webkit-mask: url('/assets/fx/divider.webp') center / contain no-repeat;
+  mask: url('/assets/fx/divider.webp') center / contain no-repeat;
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--aura) 55%, transparent));
+  opacity: 0.92;
+}
 
 /* ---- 5. Reduced motion: freeze the hologram, keep it legible -------------- */
 @media (prefers-reduced-motion: reduce) {

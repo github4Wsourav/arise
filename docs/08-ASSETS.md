@@ -223,8 +223,9 @@ and panels, so the whole app feels like it belongs in the same world.
 - [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in (forge hero now frame-flush). ✅
 - [x] **`fx/panel-frame.png`** — wired as `border-image`, trimmed flush to the card edge. ✅
 - [x] **`icon-source.png`** — crown app icon in (`npm run icons`). *(256² source → a 1024² re-export would sharpen the 512.)*
-- [x] **Character art `lvl_001–020.webp`** — 20 of 100 in, de-watermarked. ⏳ generating the rest.
-- [ ] **`fx/ui-texture.webp`** (§5) — the next big "match the art" win; ping me to wire it.
+- [x] **Character art `lvl_001–020.webp` + 9 tier keyframes (`021/031/…/091/100`)** — 29 in, de-watermarked. The 10 major-tier keyframes drove the in-app aura palette (see below). ⏳ filling the gaps.
+- [x] **`fx/ui-texture.webp`** — wired as a soft-light arcane-stone overlay across the whole void (`#root::after`). ✅
+- [x] **`fx/divider.png`** — converted to a white/alpha silhouette (`divider.webp`) and used as an aura-tinted CSS-masked section divider on the dashboard. ✅
 - ~~`fx/magic-circle.png`~~ — dropped (full character scenes replaced it).
 - [ ] `brand/arise-wordmark.png` banner (§4a) — optional; the text wordmark is the current header.
 

@@ -192,9 +192,11 @@ T10 feet dissolve into void and white light — he no longer stands, he simply *
 > **To use:** for any level, pull that tier's items from the rows above into the prompt's wardrobe
 > sentence. The 11 keyframes in §5 already bundle each tier's mantle + armor + crown + soul-shard.
 
-**[AURA] colour by tier** (fill the Core's `[AURA]` token): T1 pale ash-white · T2 pale sky
-blue · T3 cobalt blue · T4 electric cobalt-blue · T5 vivid violet · T6 deep shadow-violet ·
-T7 purple flame · T8 bright void-violet · T9 lavender-starlight · T10 white over violet-void.
+**[AURA] colour by tier** (fill the Core's `[AURA]` token). These are also the exact aura
+colours the **app binds as its live theme** — `tiers.json` recolours the whole UI to match the
+art at each tier, so keep new art on-palette: T1 luminous teal-jade · T2 sapphire blue · T3
+bright azure · T4 electric indigo · T5 vivid violet · T6 deep amethyst · T7 orchid purple-flame ·
+T8 bright magenta-violet · T9 cosmic lavender-starlight · T10 radiant white over violet-void.
 
 ---
 

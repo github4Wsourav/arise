@@ -10,7 +10,7 @@
 import { reduce } from '../engine/reduce';
 import type { AriseEvent, EventType, PayloadFor } from '../engine/types';
 import { ENGINE_PROGRAM, SESSIONS, WEEK } from '../data/program';
-import { getManifest } from '../character/manifest';
+import { getManifest, applyTierTheme } from '../character/manifest';
 import { db } from './../store/db';
 import { appendEvents } from '../store/append';
 import { addDays, dateIso, mondayOf } from '../store/dates';
@@ -126,6 +126,8 @@ async function state() {
 
 export function installDevTools(): void {
   if (!import.meta.env.DEV) return;
-  (window as unknown as Record<string, unknown>).arise = { seed, reset, state, db };
-  console.info('[ARISE:DEV] window.arise = { seed(level), reset(), state() }');
+  /** Preview any tier's theme without grinding to it — recolors the whole UI. */
+  const theme = (tierIndex: number) => applyTierTheme(tierIndex, getManifest());
+  (window as unknown as Record<string, unknown>).arise = { seed, reset, state, db, theme };
+  console.info('[ARISE:DEV] window.arise = { seed(level), reset(), state(), theme(tierIndex) }');
 }
