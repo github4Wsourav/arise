@@ -63,16 +63,21 @@ body::before {
   pointer-events: none;
   background:
     radial-gradient(
-      42% 38% at 28% 18%,
-      color-mix(in srgb, var(--aura) 26%, transparent),
+      46% 42% at 26% 14%,
+      color-mix(in srgb, var(--aura) 42%, transparent),
       transparent 70%
     ),
     radial-gradient(
-      48% 44% at 80% 88%,
-      color-mix(in srgb, var(--aura-deep) 60%, transparent),
+      52% 48% at 82% 90%,
+      color-mix(in srgb, var(--aura-deep) 85%, transparent),
       transparent 72%
+    ),
+    radial-gradient(
+      40% 30% at 50% 50%,
+      color-mix(in srgb, var(--aura) 14%, transparent),
+      transparent 75%
     );
-  filter: blur(36px) saturate(1.1);
+  filter: blur(40px) saturate(1.25);
   animation: aura-breathe 16s var(--ease-system) infinite alternate;
 }
 

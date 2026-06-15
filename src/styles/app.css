@@ -53,12 +53,12 @@ button {
 .app-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 34px;
   line-height: 1;
   letter-spacing: 0.02em;
   margin: 0;
   color: var(--aura-hi);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--aura) 55%, transparent);
+  text-shadow: var(--text-glow);
 }
 
 /* ---- System voice ---------------------------------------------------------- */
@@ -107,10 +107,11 @@ button {
 
 .window-label {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: color-mix(in srgb, var(--aura) 80%, var(--muted));
+  text-shadow: 0 0 12px color-mix(in srgb, var(--aura) 40%, transparent);
   margin: 0 0 14px;
 }
 
@@ -124,10 +125,13 @@ button {
     var(--bg);
   overflow: hidden;
   margin-bottom: 12px;
-  /* inner vignette + top sheen so the art reads like a framed painting */
+  border: 1px solid color-mix(in srgb, var(--aura) 45%, var(--line));
+  /* inner vignette + top sheen so the art reads like a framed painting, with an
+     outer aura glow so the hero pops */
   box-shadow:
     inset 0 0 60px 8px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 18%, transparent);
+    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 22%, transparent),
+    0 0 34px -2px color-mix(in srgb, var(--aura) 45%, transparent);
 }
 
 /* the painted scene fills the stage (no letterbox); cropped to keep the figure */
@@ -206,9 +210,10 @@ button {
 .level-numeral {
   font-family: var(--font-numeral);
   font-weight: 700;
-  font-size: 34px;
+  font-size: 42px;
   color: var(--aura-hi);
   line-height: 1;
+  text-shadow: var(--text-glow);
 }
 
 .level-label {
@@ -220,11 +225,11 @@ button {
 
 .tier-name {
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: 29px;
   line-height: 1.1;
   letter-spacing: 0.01em;
   color: var(--aura);
-  text-shadow: 0 0 16px color-mix(in srgb, var(--aura) 35%, transparent);
+  text-shadow: var(--text-glow);
   margin: 6px 0 0;
 }
 
@@ -391,8 +396,10 @@ button {
 .gate-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 22px;
-  margin: 2px 0 4px;
+  font-size: 30px;
+  color: var(--aura-hi);
+  text-shadow: var(--text-glow);
+  margin: 2px 0 6px;
 }
 
 .gate-focus {

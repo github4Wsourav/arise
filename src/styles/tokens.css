@@ -50,20 +50,21 @@
 
   /* ---- glow + motion system (docs/07-SYSTEM-UI.md) -------------------------
      All glows derive from the tier-bound aura, so the HUD recolors on rank-up. */
-  --glow-soft: 0 0 12px color-mix(in srgb, var(--aura) 22%, transparent);
-  --glow-mid: 0 0 18px color-mix(in srgb, var(--aura) 34%, transparent),
-    0 0 4px color-mix(in srgb, var(--aura) 50%, transparent);
-  --glow-hard: 0 0 28px color-mix(in srgb, var(--aura) 55%, transparent),
-    0 0 8px color-mix(in srgb, var(--aura-hi) 60%, transparent);
-  --text-glow: 0 0 14px color-mix(in srgb, var(--aura) 55%, transparent);
+  --glow-soft: 0 0 18px color-mix(in srgb, var(--aura) 34%, transparent);
+  --glow-mid: 0 0 26px color-mix(in srgb, var(--aura) 48%, transparent),
+    0 0 6px color-mix(in srgb, var(--aura) 65%, transparent);
+  --glow-hard: 0 0 40px color-mix(in srgb, var(--aura) 70%, transparent),
+    0 0 12px color-mix(in srgb, var(--aura-hi) 80%, transparent);
+  --text-glow: 0 0 20px color-mix(in srgb, var(--aura) 70%, transparent),
+    0 0 6px color-mix(in srgb, var(--aura-hi) 50%, transparent);
 
   /* glass surfaces — translucent so the living void shows through */
-  --panel-glass: color-mix(in srgb, var(--panel) 78%, transparent);
-  --blur-panel: 12px;
+  --panel-glass: color-mix(in srgb, var(--panel) 72%, transparent);
+  --blur-panel: 14px;
 
   /* HUD line work + atmosphere */
-  --hud: color-mix(in srgb, var(--aura) 60%, var(--line));
-  --scan: color-mix(in srgb, var(--aura) 6%, transparent);
+  --hud: color-mix(in srgb, var(--aura) 78%, var(--line));
+  --scan: color-mix(in srgb, var(--aura) 9%, transparent);
 
   /* motion curves + timings */
   --ease-system: cubic-bezier(0.16, 1, 0.3, 1);
