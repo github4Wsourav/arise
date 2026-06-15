@@ -201,15 +201,32 @@ Hand over `icon-source.png` and I'll regenerate the 192/512/maskable icons (`npm
 
 ---
 
+## 5. UI richness textures (optional — to match the painted character art)
+
+The character scenes are lush and painterly; the UI can feel cold next to them. One asset
+closes most of the gap: a **dark-fantasy surface texture** layered very faintly over the void
+and panels, so the whole app feels like it belongs in the same world.
+
+| File | Size | Purpose | Prompt |
+|------|------|---------|--------|
+| `fx/ui-texture.webp` | 1024×1024 | faint texture over the void + panels (warmth/depth) | `A seamless tileable dark-fantasy surface texture: aged arcane stone with faint carved runes and a whisper of violet patina, very dark and low-contrast, subtle, no obvious focal point, no text. Muted, atmospheric. 1024x1024 seamless tile.` |
+| `fx/divider.png` | 1200×80 | ornate flourish between sections (transparent) | `An ornate horizontal divider flourish: thin glowing violet filigree with a central gem motif, symmetrical, on a fully transparent background, no text. PNG with alpha.` |
+
+> Generate `ui-texture.webp` first and ping me — I'll layer it at low opacity over the
+> background and panels (a ~10-line change) and tune it with you.
+
+---
+
 ## Status & priority
 
-- [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in and verified loading. ✅
-- [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in and verified (Crimson Forge hero looks great). ✅
-- [ ] **`fx/panel-frame.png`** (§3a) — ornate riveted-metal panel corners; ping me and I'll wire `border-image`. ← next
-- [ ] `fx/magic-circle.png` (then ping me to wire it), other overlays.
-- [x] **`icon-source.png`** — crown sigil app icon in; `npm run icons` regenerated the
-      192/512/maskable/apple set. (Source is 256² — a 1024² re-export would sharpen the 512.)
-- [ ] `brand/arise-wordmark.png` banner (§4a) — only if you ever want an image hero back; the text wordmark is the current header.
+- [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in, visibility bumped. ✅
+- [x] **Gate art `gates/push|pull|legs.webp`** — all 3 in (forge hero now frame-flush). ✅
+- [x] **`fx/panel-frame.png`** — wired as `border-image`, trimmed flush to the card edge. ✅
+- [x] **`icon-source.png`** — crown app icon in (`npm run icons`). *(256² source → a 1024² re-export would sharpen the 512.)*
+- [x] **Character art `lvl_001–020.webp`** — 20 of 100 in, de-watermarked. ⏳ generating the rest.
+- [ ] **`fx/ui-texture.webp`** (§5) — the next big "match the art" win; ping me to wire it.
+- ~~`fx/magic-circle.png`~~ — dropped (full character scenes replaced it).
+- [ ] `brand/arise-wordmark.png` banner (§4a) — optional; the text wordmark is the current header.
 
 Drop any of these in `public/assets/...` and ping me — I'll verify they load and tune
 blur / opacity / fade / blend to taste.

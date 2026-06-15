@@ -18,8 +18,8 @@ html::before {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: blur(10px) saturate(1.05);
-  opacity: 0.42;
+  filter: blur(8px) saturate(1.2);
+  opacity: 0.55;
   transform: scale(1.08); /* push the blurred edges off-screen */
   transition: opacity 1.4s ease;
 }
@@ -192,11 +192,13 @@ body::after {
     230% 0,
     0 0;
   background-repeat: no-repeat;
-  -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
-  backdrop-filter: blur(var(--blur-panel)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(1.2);
+  backdrop-filter: blur(var(--blur-panel)) saturate(1.2);
   box-shadow:
+    0 14px 30px -16px rgba(0, 0, 0, 0.75),
     var(--glow-soft),
-    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 10%, transparent);
+    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 14%, transparent),
+    inset 0 -30px 50px -40px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes panel-sheen {

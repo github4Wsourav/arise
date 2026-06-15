@@ -117,22 +117,38 @@ button {
 /* ---- character card --------------------------------------------------------- */
 .character-stage {
   position: relative;
-  height: 300px;
+  height: 360px;
   border-radius: var(--r-card);
   background:
     radial-gradient(ellipse 90% 60% at 50% 100%, var(--panel-2), transparent 70%),
     var(--bg);
   overflow: hidden;
   margin-bottom: 12px;
+  /* inner vignette + top sheen so the art reads like a framed painting */
+  box-shadow:
+    inset 0 0 60px 8px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 color-mix(in srgb, var(--aura-hi) 18%, transparent);
 }
 
+/* the painted scene fills the stage (no letterbox); cropped to keep the figure */
 .character-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 26%;
   z-index: 2;
+}
+/* keep the inner vignette on top of the art for depth */
+.character-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: inset 0 0 70px 10px rgba(0, 0, 0, 0.5);
+  background: radial-gradient(120% 80% at 50% 0%, transparent 60%, rgba(0, 0, 0, 0.35));
 }
 
 .aura-stage {
