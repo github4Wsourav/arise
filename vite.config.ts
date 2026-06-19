@@ -35,6 +35,29 @@ export default defineConfig({
               expiration: { maxEntries: 150, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
+          {
+            // world/UI art (backgrounds, gates, fx, relics) — too big to precache,
+            // but cache on first view so the app is fully offline and snappy
+            urlPattern: /\/assets\/.*\.webp$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'world-art',
+              expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 180 },
+            },
+          },
+          {
+            // looping exercise demo clips (local public/assets/demos or a remote bucket).
+            // rangeRequests handles the 206 partial requests <video> makes, so a clip is
+            // streamed once then served from cache — no re-download per set, works offline.
+            urlPattern: /\.(?:mp4|webm)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'exercise-demos',
+              rangeRequests: true,
+              cacheableResponse: { statuses: [0, 200] },
+              expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 180 },
+            },
+          },
         ],
       },
     }),
