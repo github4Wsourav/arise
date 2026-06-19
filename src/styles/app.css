@@ -760,6 +760,13 @@ button {
   display: block;
 }
 
+.demo-video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
 .cue-label {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -1617,6 +1624,13 @@ button {
   color: var(--aura-2);
   font-size: 16px;
   filter: drop-shadow(0 0 5px color-mix(in srgb, var(--aura-2) 50%, transparent));
+}
+
+.relic-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .relic-name {

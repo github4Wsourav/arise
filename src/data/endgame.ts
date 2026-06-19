@@ -59,3 +59,20 @@ export function relicName(relic: Relic): string {
 export function relicKey(relic: Relic): string {
   return relic.kind === 'pr' ? `pr:${relic.exerciseId}:${relic.milestone}` : relic.kind;
 }
+
+/**
+ * Filename key for a relic's artwork — `public/assets/relics/<key>.webp`. Storied relics
+ * (streak, import, hand-named PRs) get their own image; ordinary PR milestones share one
+ * sigil per session type, so the whole art set is small. Missing files fall back to the
+ * procedural glyph in the UI, so art can be added one at a time.
+ */
+export function relicImageKey(relic: Relic): string {
+  if (relic.kind === 'streak10') return 'streak10';
+  if (relic.kind === 'import') return 'import';
+  const id = `${relic.exerciseId}:${relic.milestone}`;
+  if (id in NAMED_RELICS) return `pr-${relic.exerciseId}-${relic.milestone}`;
+  const session = Object.values(SESSIONS).find((s) =>
+    s.exercises.some((e) => e.id === relic.exerciseId),
+  );
+  return `pr-${session?.id ?? 'generic'}`;
+}

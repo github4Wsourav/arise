@@ -34,7 +34,7 @@ export function ExerciseCard({ exercise, expanded, done, onToggle, prev, today, 
 
       {expanded && (
         <div className="exercise-body">
-          <ExerciseDemo pose={exercise.pose} playing={expanded} />
+          <ExerciseDemo id={exercise.id} pose={exercise.pose} playing={expanded} />
           <p className="cue-label">[{SYSTEM.gate.mindMuscle}]</p>
           <p className="cue-text">{exercise.mindMuscle}</p>
           <p className="cue-label">[{SYSTEM.gate.form}]</p>

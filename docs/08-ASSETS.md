@@ -217,6 +217,65 @@ and panels, so the whole app feels like it belongs in the same world.
 
 ---
 
+## 6. Exercise demo videos  ·  `public/assets/demos/<id>.mp4`
+
+A short, **silent, seamless-loop** clip per exercise, shown on the exercise card in place of
+the procedural stick-figure animation. Each file is named after the exercise `id`. Any missing
+clip falls back to the animation automatically, so the set can be filled one at a time.
+
+| Session | Files (`<id>.mp4`) |
+|---|---|
+| Push | `bench` · `dbpress` · `incline` · `lateral` · `ohext` · `pushdown` |
+| Pull | `pulldown` · `chestrow` · `cablerow` · `facepull` · `ezcurl` · `hammer` |
+| Legs | `legpress` · `split` · `legcurl` · `legext` · `hipthrust` · `calf` |
+
+**Specs:** silent, mp4/H.264, side-on, consistent framing across the set, seamless loop.
+Keep them small — **they ship inside the deploy**, so aim < 2 MB each (re-encode if larger).
+To serve them off-repo instead (smaller deploy), upload to a Supabase Storage **public** bucket
+named `demos` (auto-detected from `VITE_SUPABASE_URL`) or set `VITE_DEMO_VIDEO_BASE` to a CDN.
+
+---
+
+## 7. Relics (trophy case)  ·  `public/assets/relics/<key>.webp`
+
+Relics render as glowing Unicode glyphs by default; drop a square webp in to replace any one
+with art. PR relics only mint at 50-kg milestones, and ordinary PRs share one sigil per session
+type, so the whole set is just **8 files**:
+
+| File | Relic | Earned by |
+|------|-------|-----------|
+| `streak10.webp` | Gatebreaker Sigil | a 10-week honored streak |
+| `import.webp` | Imported Soul | importing Shift + Lift history |
+| `pr-bench-100.webp` | Crimson Standard | 100 kg bench |
+| `pr-legpress-100.webp` | Iron Boots | 100 kg leg press |
+| `pr-hipthrust-100.webp` | Titanspine | 100 kg hip thrust |
+| `pr-push.webp` | generic Push sigil | any other Push milestone |
+| `pr-pull.webp` | generic Pull sigil | any other Pull milestone |
+| `pr-legs.webp` | generic Legs sigil | any other Legs milestone |
+
+Export **square 1:1, transparent background**, then convert to `.webp` (< 60 KB each).
+
+**Shared style base** (prepend to every prompt):
+> A single arcane relic icon for a dark-fantasy "System" RPG, centered, on a fully transparent
+> background, icon filling ~80% of the frame. Style: glowing neon-and-cracked-stone sigil,
+> holographic game-item emblem, intricate, soft inner glow with rim light, faint floating
+> embers, clean readable silhouette. Square 1:1.
+
+**Negative / avoid:** `text, words, letters, numbers, watermark, signature, logo, background
+scenery, frame, border, people, face, low-res, jpeg artifacts, clutter`
+
+**Per-relic subject line** (append to the style base):
+1. `streak10` — a circular dungeon-gate seal cracked and broken straight through the middle, brilliant white-blue energy bursting from the fracture, snapped chains, cold radiant light.
+2. `import` — a translucent spectral soul-orb cradled in a faint glowing rune circle, pale violet soul-smoke wisping upward, the ghostly imprint of an old ledger behind it.
+3. `pr-bench-100` — a crimson heraldic war-standard / banner emblazoned with a crossed-barbell crest, molten-red glow, ember sparks, forged-iron pole.
+4. `pr-legpress-100` — a pair of massive enchanted titan greaves / iron boots planted firm, glowing molten cobalt seams and runes across the plating.
+5. `pr-hipthrust-100` — a relic shaped as a titan's segmented spinal column standing upright, violet runic energy pulsing along each vertebra, power radiating from the base.
+6. `pr-push` — an angular hexagonal arcane seal with an upward-thrust arrow motif at its core, crimson-orange neon glow, forge sparks.
+7. `pr-pull` — a circular arcane seal with a downward hook-and-talon motif at its core, cold blue-violet neon glow, spectral mist.
+8. `pr-legs` — a triangular arcane seal with a planted pillar / mountain-root motif at its core, deep violet neon glow, grounded heavy energy.
+
+---
+
 ## Status & priority
 
 - [x] **Tier backgrounds `tier-1…10.webp`** — all 10 in, visibility bumped. ✅
@@ -227,6 +286,8 @@ and panels, so the whole app feels like it belongs in the same world.
 - [x] **`fx/ui-texture.webp`** — wired as a soft-light arcane-stone overlay across the whole void (`#root::after`). ✅
 - [x] **`fx/divider.png`** — converted to a white/alpha silhouette (`divider.webp`) and used as an aura-tinted CSS-masked section divider on the dashboard. ✅
 - ~~`fx/magic-circle.png`~~ — dropped (full character scenes replaced it).
+- [x] **Exercise demo videos `demos/<id>.mp4`** (§6) — all 18 in; play on the exercise card with animation fallback. ⚠️ ~149 MB total — re-encode smaller or move to a `demos` bucket before relying on it in production.
+- [ ] **Relics `relics/<key>.webp`** (§7) — 8 sigils; cards fall back to glyphs until added.
 - [ ] `brand/arise-wordmark.png` banner (§4a) — optional; the text wordmark is the current header.
 
 Drop any of these in `public/assets/...` and ping me — I'll verify they load and tune

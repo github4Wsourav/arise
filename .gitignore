@@ -7,6 +7,11 @@ dev-dist/
 coverage/
 screenshots/
 
+# Exercise demo clips — large video binaries kept out of git history. Served
+# locally from public/assets/demos/ in dev; host in a Supabase `demos` bucket
+# or CDN for production (see docs/08-ASSETS.md §6).
+public/assets/demos/
+
 # Environment / secrets — Supabase keys live here, never commit
 .env
 .env.*
