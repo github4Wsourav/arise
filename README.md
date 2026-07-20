@@ -10,14 +10,6 @@ measures you without flattery, and rewards only genuine progressive overload.
 **Product truth under the fantasy:** the character can only level up if your real lifts go up,
 so the only way to win the game is to actually get stronger.
 
-<p align="center">
-  <img src="docs/media/dashboard.webp" width="23%" alt="Dashboard — rank, character, today's gate, quests" />
-  <img src="docs/media/workout.webp" width="23%" alt="The Gate — muscle heatmap, exercise demo, set logger" />
-  <img src="docs/media/levelup.webp" width="23%" alt="Level-up ceremony" />
-  <img src="docs/media/profile.webp" width="23%" alt="Profile — stats, streak, relics, records" />
-</p>
-<p align="center"><sub>Dashboard · The Gate (workout) · Level-up ceremony · Profile — themes recolor per tier as you rank up.</sub></p>
-
 Arise is the ground-up successor to **Shift + Lift** (a single-user offline workout PWA). It
 keeps everything that app got right — shift-aware programming, the muscle heatmap, double
 progression, offline-first discipline — and wraps it in an honest RPG progression layer with
