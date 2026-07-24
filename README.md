@@ -2,26 +2,24 @@
 
 > **[THE SYSTEM HAS CHOSEN YOU.]**
 
-A fitness RPG where your character's body is a mirror of your real one. Every real training
-session feeds a 100-level evolution from E-Rank nobody to Absolute Shadow Deity, inspired by
-Solo Leveling. The app is "The System": a cold, omniscient interface that issues quests,
-measures you without flattery, and rewards only genuine progressive overload.
+A fitness RPG in which the character changes as the player gets stronger. Real training sessions
+drive a 100-level progression from E-Rank nobody to Absolute Shadow Deity, inspired by
+Solo Leveling. The app plays the role of "The System": a cold interface that issues quests,
+tracks progress, and rewards progressive overload.
 
-**Product truth under the fantasy:** the character can only level up if your real lifts go up,
-so the only way to win the game is to actually get stronger.
+The rule underneath the fantasy is simple: the character only levels up when the player's real
+lifts improve.
 
-Arise is the ground-up successor to **Shift + Lift** (a single-user offline workout PWA). It
-keeps everything that app got right — shift-aware programming, the muscle heatmap, double
-progression, offline-first discipline — and wraps it in an honest RPG progression layer with
-accounts and cross-device sync.
+Arise succeeds **Shift + Lift**, a single-user offline workout PWA. It keeps shift-aware
+programming, the muscle heatmap, double progression, and offline-first operation, then adds RPG
+progression, accounts, and cross-device sync.
 
 ## How it works
 
-The engine is **event-sourced**: logging a set or claiming a quest only ever *appends an event*
-to a local, offline-first log. Everything the game shows — your level, XP, stats, streak, bosses,
-relics — is **derived** by replaying that log through a pure reducer. Nothing game-state is ever
-stored or mutated directly, so it can't drift, and the same history always produces the same
-character.
+The engine is **event-sourced**. Logging a set or claiming a quest appends an event to a local,
+offline-first log. Level, XP, stats, streaks, bosses, and relics are derived by replaying that log
+through a pure reducer. Game state is never stored or mutated directly, so the same event history
+always produces the same character.
 
 ```mermaid
 flowchart TD
@@ -35,8 +33,8 @@ flowchart TD
     S <-->|"converge other devices"| D["phone · desktop"]
 ```
 
-<sub>The **event log is the only source of truth**; the derived state never syncs — only the log
-does, so devices converge by replaying the same events. `appendEvent` is the single write path.</sub>
+<sub>The **event log is the only source of truth**. Derived state is not synchronized. Devices
+converge by replaying the synchronized events, and `appendEvent` is the only write path.</sub>
 
 ## Status
 
@@ -50,26 +48,26 @@ does, so devices converge by replaying the same events. `appendEvent` is the sin
 | 5 | Endgame (bosses, relics, polish, deploy) | Complete (`v0.5.0`) = v1 |
 | 6 | Ascension Polish (System UI, assets, gym utilities) | Complete (`v0.6.0`) |
 
-**The build/feature plan is complete.** What remains is content + ops, not code:
+**The planned product features are complete.** The remaining work is content and operations:
 generate the 100 character portraits (see [`docs/09-CHARACTER-CODEX.md`](docs/09-CHARACTER-CODEX.md)),
 provision Supabase for live sync, and deploy ([`docs/06-DEPLOY.md`](docs/06-DEPLOY.md)). A how-to-use
 guide is in [`docs/10-USER-GUIDE.md`](docs/10-USER-GUIDE.md).
 
 ## Features
 
-- **Honest progression** — XP comes only from real outcomes: double progression, boss (PR)
+- **Progression tied to training:** XP comes only from real outcomes: double progression, boss (PR)
   clears, streaks, recovery. No XP-per-rep, no currency, no energy, no decay.
-- **The Gate** — a full workout flow per session (Push / Pull / Legs) with a live muscle
+- **The Gate:** a full workout flow per session (Push / Pull / Legs) with a live muscle
   heatmap, per-exercise form cues, and a one-tap set logger prefilled from last time.
-- **Exercise demos** — each exercise shows a looping video clip when available, falling back to
-  a procedural stick-figure animation — both gated on visibility for battery.
-- **Bosses & relics** — milestone weights become derived PR "encounters"; named milestones mint
+- **Exercise demos:** each exercise shows a looping video clip when available and falls back to
+  a procedural stick-figure animation. Both pause when not visible to save battery.
+- **Bosses & relics:** milestone weights become derived PR "encounters"; named milestones mint
   permanent relics in a trophy case. Nothing earned can be lost (it's all re-derived).
-- **System UI** — a holographic, per-tier-recoloring interface (living void, glass panels,
+- **System UI:** a holographic interface that changes color by tier, with a living void, glass panels,
   decode/shimmer effects), fully reduced-motion safe.
-- **Offline-first PWA** — installs to the home screen, works fully offline (cold start
+- **Offline-first PWA:** installs to the home screen, works fully offline (cold start
   included), and syncs across devices through Supabase when signed in.
-- **Gym utilities** — rest timer, plate calculator + warm-ups, e1RM, bodyweight, measurements,
+- **Gym utilities:** rest timer, plate calculator + warm-ups, e1RM, bodyweight, measurements,
   and nutrition tracking with charts.
 
 ## Stack (summary)
@@ -104,12 +102,12 @@ npm run build        # production build + service worker
 The app is designed around a **tier manifest** (`tiers.json`) and convention-based image paths
 (`assets/characters/lvl_NN.webp`). Images are generated separately and dropped in at any time;
 until then a procedural aura placeholder renders for every level. The system is extensible
-beyond level 100 by appending manifest entries — no code changes.
+beyond level 100 by appending manifest entries without changing the code.
 
 **Gate art** follows the same drop-in contract: place `assets/gates/<sessionId>.webp` and it
 appears as the banner on the dashboard's gate panel and as the hero inside the gate. Until a
-file exists the slot is silently absent (the `Art` component hides itself on a 404) — no code
-changes, no broken images. Session ids are the keys of `SESSIONS` in `src/data/program.ts`.
+file exists, the slot stays hidden because the `Art` component handles a 404. Session IDs are
+the keys of `SESSIONS` in `src/data/program.ts`.
 
 ## License
 
