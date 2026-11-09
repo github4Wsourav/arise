@@ -4,15 +4,18 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     VitePWA({
       registerType: 'prompt',
       includeAssets: ['assets/characters/tiers.json'],
       manifest: {
-        name: 'Arise',
+        name: 'Arise - Solo Leveling Fitness RPG',
         short_name: 'Arise',
         description: 'The System has chosen you. A fitness RPG powered by real training.',
+        start_url: './',
+        scope: './',
         theme_color: '#07090E',
         background_color: '#07090E',
         display: 'standalone',

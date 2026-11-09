@@ -12,7 +12,15 @@ import './styles/system-fx.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Outlet, RouterProvider, createRootRoute, createRoute, createRouter, useRouterState } from '@tanstack/react-router';
+import {
+  Outlet,
+  RouterProvider,
+  createHashHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  useRouterState,
+} from '@tanstack/react-router';
 import { MotionConfig, motion } from 'motion/react';
 import { registerSW } from 'virtual:pwa-register';
 import { loadManifest } from './character/manifest';
@@ -23,6 +31,7 @@ import { Dashboard } from './routes/dashboard/Dashboard';
 import { GateView } from './routes/gate/GateView';
 import { Profile } from './routes/profile/Profile';
 import { Settings } from './routes/settings/Settings';
+import { initGithubSync } from './store/githubSync';
 import { initSync } from './store/sync';
 import { useWatchers } from './store/watchers';
 
@@ -77,8 +86,11 @@ const settingsRoute = createRoute({
   component: Settings,
 });
 
+const hashHistory = createHashHistory();
+
 const router = createRouter({
   routeTree: rootRoute.addChildren([indexRoute, gateRoute, profileRoute, settingsRoute]),
+  history: hashHistory,
 });
 
 declare module '@tanstack/react-router' {
@@ -96,7 +108,8 @@ const updateSW = registerSW({
 async function boot() {
   await loadManifest(); // tiers are required before first render (theme + reducer config)
   installDevTools();
-  initSync(); // no-op without a configured backend
+  initSync(); // Supabase backend if configured
+  initGithubSync(); // GitHub cloud sync
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <MotionConfig reducedMotion="user">

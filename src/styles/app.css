@@ -1804,3 +1804,9 @@ button {
     margin-bottom: 0;
   }
 }
+
+
+.sync-dot--off .dot {
+  background: var(--ok);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--ok) 60%, transparent);
+}

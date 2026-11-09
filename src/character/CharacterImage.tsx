@@ -19,6 +19,11 @@ export function CharacterImage({ level, manifest }: Props) {
   useEffect(() => setFailed(false), [level]);
 
   const tier = tierForLevel(level, manifest);
+  const rawSrc = imageUrlForLevel(level, manifest);
+  const resolvedSrc =
+    rawSrc.startsWith('/') && import.meta.env.BASE_URL !== '/'
+      ? `${import.meta.env.BASE_URL}${rawSrc.slice(1)}`
+      : rawSrc;
 
   return (
     <div className="character-stage">
@@ -26,7 +31,7 @@ export function CharacterImage({ level, manifest }: Props) {
       {!failed && (
         <img
           className="character-img"
-          src={imageUrlForLevel(level, manifest)}
+          src={resolvedSrc}
           alt={`Hunter at level ${level} — ${tier.name}`}
           onError={() => setFailed(true)}
           draggable={false}

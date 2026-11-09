@@ -6,10 +6,12 @@ import { SYSTEM } from '../../data/strings';
 import type { GameState } from '../../engine/types';
 import { appendEvent } from '../../store/append';
 import { dateIso, daysBetween } from '../../store/dates';
+import { useGithubSyncConfig } from '../../store/githubSync';
 import { useGameState } from '../../store/useGameState';
 import { Art } from '../../ui/Art';
 import { CharacterCard } from '../../ui/CharacterCard';
 import { STAT_ICON } from '../../ui/icons';
+import { PwaInstallBanner } from '../../ui/PwaInstallBanner';
 import { RosterStrip } from '../../ui/RosterStrip';
 import { StreakCalendar } from '../../ui/StreakCalendar';
 import { Sparkles } from '../../ui/Sparkles';
@@ -88,10 +90,11 @@ function SystemCommentary({ state }: { state: GameState }) {
 export function Dashboard() {
   const state = useGameState();
   const manifest = getManifest();
+  const ghConfig = useGithubSyncConfig();
 
   useEffect(() => {
     if (state) applyTierTheme(state.tierIndex, manifest);
-  }, [state?.tierIndex, manifest, state]);
+  }, [state?.tierIndex, manifest]);
 
   if (!state) return null; // first IndexedDB read; sub-frame
 
@@ -119,8 +122,38 @@ export function Dashboard() {
           </Link>
         </div>
       </header>
+
       <div className="span-2 aura-divider" aria-hidden="true">
         <span className="aura-divider__emblem" />
+      </div>
+
+      <div className="span-2" style={{ maxWidth: 860, margin: '0 auto', width: '100%', padding: '0 8px' }}>
+        <PwaInstallBanner />
+        {!ghConfig && (
+          <div
+            style={{
+              padding: '6px 12px',
+              margin: '0 0 12px',
+              background: 'rgba(58, 120, 232, 0.08)',
+              border: '1px solid rgba(58, 120, 232, 0.3)',
+              borderRadius: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              flexWrap: 'wrap',
+              gap: 8,
+            }}
+          >
+            <span style={{ color: 'var(--fg)' }}>
+              💾 ALL TRAINING PROGRESS SAVED LOCALLY ON THIS DEVICE. No account needed.
+            </span>
+            <Link to="/settings" style={{ color: 'var(--aura)', textDecoration: 'none', fontWeight: 'bold' }}>
+              [OPTIONAL CLOUD SYNC]
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="dash-main">

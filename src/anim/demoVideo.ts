@@ -24,7 +24,8 @@ function resolveBase(): string {
   if (sb && sb.startsWith('https://') && !sb.includes('YOUR-PROJECT')) {
     return `${sb.replace(/\/+$/, '')}/storage/v1/object/public/demos`;
   }
-  return '/assets/demos';
+  const base = import.meta.env.BASE_URL ?? '/';
+  return base.endsWith('/') ? `${base}assets/demos` : `${base}/assets/demos`;
 }
 
 const BASE = resolveBase();

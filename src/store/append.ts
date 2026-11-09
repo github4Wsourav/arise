@@ -1,10 +1,12 @@
 /**
  * The ONLY write path for events. UI code never touches db.events directly — that
- * invariant keeps every fact uniform (id, device, clock) and keeps the Phase 4 sync
+ * invariant keeps every fact uniform (id, device, clock) and keeps the sync
  * queue trustworthy.
  */
 import type { AriseEvent, EventType, PayloadFor } from '../engine/types';
 import { db, getDeviceId, uuidv7 } from './db';
+import { requestGithubSync } from './githubSync';
+import { requestSync } from './sync';
 
 export const LOCAL_USER = 'local';
 
@@ -31,6 +33,8 @@ export async function appendEvent<T extends EventType>(
     schemaVersion: 1,
   };
   await db.events.add({ ...event, synced: 0 });
+  requestGithubSync();
+  void requestSync('append');
   return event;
 }
 
@@ -54,4 +58,6 @@ export async function appendEvents(
       };
     }),
   );
+  requestGithubSync();
+  void requestSync('append');
 }

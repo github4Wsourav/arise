@@ -1,5 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { SYSTEM } from '../../data/strings';
+import { GitHubSyncPanel } from './GitHubSyncPanel';
+import { PwaInstallPanel } from './PwaInstallPanel';
 import { Auth } from './Auth';
 import { Import } from './Import';
 
@@ -12,6 +14,8 @@ export function Settings() {
         </Link>
         <span className="rank-badge">{SYSTEM.settings.title}</span>
       </header>
+      <GitHubSyncPanel />
+      <PwaInstallPanel />
       <Auth />
       <Import />
     </main>

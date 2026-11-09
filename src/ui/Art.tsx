@@ -10,9 +10,14 @@ interface Props {
 }
 
 export function Art({ src, className, alt = '' }: Props) {
+  const resolvedSrc =
+    src.startsWith('/') && import.meta.env.BASE_URL !== '/'
+      ? `${import.meta.env.BASE_URL}${src.slice(1)}`
+      : src;
+
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       className={className}
       alt={alt}
       loading="lazy"

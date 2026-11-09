@@ -1,114 +1,104 @@
-# ARISE
+# ARISE — Solo Leveling Fitness RPG
 
 > **[THE SYSTEM HAS CHOSEN YOU.]**
 
-A fitness RPG in which the character changes as the player gets stronger. Real training sessions
-drive a 100-level progression from E-Rank nobody to Absolute Shadow Deity, inspired by
-Solo Leveling. The app plays the role of "The System": a cold interface that issues quests,
-tracks progress, and rewards progressive overload.
+A fitness RPG in which the character changes as the player gets stronger. Real training sessions drive a 100-level progression from E-Rank nobody to Absolute Shadow Deity, inspired by *Solo Leveling*. The app plays the role of "The System": a cold interface that issues quests, tracks progress, and rewards progressive overload.
 
-The rule underneath the fantasy is simple: the character only levels up when the player's real
-lifts improve.
+The rule underneath the fantasy is simple: **the character only levels up when the player's real lifts improve.**
 
-Arise succeeds **Shift + Lift**, a single-user offline workout PWA. It keeps shift-aware
-programming, the muscle heatmap, double progression, and offline-first operation, then adds RPG
-progression, accounts, and cross-device sync.
+---
 
-## How it works
+## ⚡ Key Highlights
 
-The engine is **event-sourced**. Logging a set or claiming a quest appends an event to a local,
-offline-first log. Level, XP, stats, streaks, bosses, and relics are derived by replaying that log
-through a pure reducer. Game state is never stored or mutated directly, so the same event history
-always produces the same character.
+- **100% Free to Run Anywhere:** Runs completely static on GitHub Pages, Vercel, Netlify, or local preview. Zero server hosting costs.
+- **Every User's Data Stored on GitHub:** No paid database or Supabase required. Users can link their personal GitHub account with a Personal Access Token (`gist` scope). All events, workouts, levels, and relics are automatically backed up and synchronized across phone and laptop via a private GitHub Gist.
+- **Installable Mobile PWA:** Works on iPhone (iOS Safari "Add to Home Screen"), Android (1-tap native install prompt), and desktop. Works **100% offline** at the gym—even in basements without cell signal. Once reconnected, it transmits logs to GitHub.
+- **All Original Features Intact:**
+  - 100-level RPG progression (E-Rank to Absolute Shadow Deity)
+  - The Gate: Push / Pull / Legs double progression training engine
+  - Plate calculator & Warm-up calculator
+  - Procedural skeleton stick figure animations + video exercise demos
+  - Rest timer with audio & vibration feedback
+  - Live anatomical muscle heatmap
+  - Boss encounters & Relic trophy showcase
+  - Quests & Streaks (Sanctuary rest days, daily workouts, PRs)
+  - Bodyweight, measurements, and nutrition tracking with charts
+  - Holographic System UI with tier-based aura color shifts and particle fields
+
+---
+
+## ☁️ GitHub Cloud Storage & Sync Engine
+
+Arise uses an **event-sourced architecture**. Every set logged, quest claimed, or measurement recorded appends an immutable event with a UUIDv7 timestamp.
 
 ```mermaid
 flowchart TD
-    A["You train — log a set, claim a quest"] -->|appendEvent| L[("Dexie · append-only event log<br/>IndexedDB, offline-first")]
-    P["program.ts — the training plan<br/>(never altered by the game)"] --> R
-    L --> R{{"reduce(events, program)"}}
-    R --> G["Derived GameState<br/>level · XP · stats · streak · bosses · relics"]
-    G --> U["React 19 'System' UI<br/>dashboard · gate · profile"]
-    U --> A
-    L <-->|"sync worker (when signed in)"| S[("Supabase<br/>Postgres + Auth")]
-    S <-->|"converge other devices"| D["phone · desktop"]
+    A["You train on Phone or Laptop<br/>(Log a set, claim a quest)"] -->|appendEvent| L[("Dexie · IndexedDB<br/>Local offline-first event log")]
+    L -->|reduce| G["Derived Game State<br/>Level · XP · Stats · Streaks · Relics"]
+    L <-->|"Auto-Sync (Background / 2s Debounce)"| GH[("Personal GitHub Account<br/>Private Gist: arise-system-data.json")]
+    GH <-->|"Sync to Other Devices"| D["Phone · Laptop · Tablet"]
 ```
 
-<sub>The **event log is the only source of truth**. Derived state is not synchronized. Devices
-converge by replaying the synchronized events, and `appendEvent` is the only write path.</sub>
+### How to Connect GitHub Sync:
+1. Open **[SETTINGS]** in the app.
+2. Under **GITHUB SYSTEM MATRIX**, click **[1-CLICK: GENERATE GITHUB TOKEN]** (opens GitHub with the `gist` permission pre-selected).
+3. Generate the token, copy it, and paste it into Arise.
+4. Click **[CONNECT GITHUB MATRIX]**.
+5. The System automatically creates a secret Gist `arise-system-data.json`.
+6. Whenever you train on your phone, changes automatically sync to GitHub. When you open Arise on your laptop, it pulls your latest progress and recalculates your level and stats immediately!
+7. You also get full data sovereignty: manual JSON backup download and restore are built-in.
 
-## Status
+---
 
-| Phase | Name | Status |
-|---|---|---|
-| 0 | Design & documentation | Complete |
-| 1 | Foundation (engine, character, dashboard) | Complete (`v0.1.0`) |
-| 2 | The Gate (workout tracking, XP, level-ups) | Complete (`v0.2.0`) |
-| 3 | The System Awakens (quests, streaks, stats) | Complete (`v0.3.0`) |
-| 4 | Ascension (auth, sync, multi-device) | Complete (`v0.4.0`) |
-| 5 | Endgame (bosses, relics, polish, deploy) | Complete (`v0.5.0`) = v1 |
-| 6 | Ascension Polish (System UI, assets, gym utilities) | Complete (`v0.6.0`) |
+## 📲 Install as an App on Your Phone
 
-**The planned product features are complete.** The remaining work is content and operations:
-generate the 100 character portraits (see [`docs/09-CHARACTER-CODEX.md`](docs/09-CHARACTER-CODEX.md)),
-provision Supabase for live sync, and deploy ([`docs/06-DEPLOY.md`](docs/06-DEPLOY.md)). A how-to-use
-guide is in [`docs/10-USER-GUIDE.md`](docs/10-USER-GUIDE.md).
+Arise is a Progressive Web App (PWA):
 
-## Features
+- **On Android (Chrome / Edge / Brave):** Tap the **"INSTALL APP NOW"** button in the dashboard header or settings to install it with native app icon and full-screen experience.
+- **On iPhone / iPad (Safari):**
+  1. Open the web app in Safari.
+  2. Tap the **Share** button (`⎋` box with arrow).
+  3. Scroll down and tap **Add to Home Screen** (`⊞`).
+  4. Tap **Add**.
+- Once installed, the app launches without browser bars, plays offline, and caches all sound effects and character portraits.
 
-- **Progression tied to training:** XP comes only from real outcomes: double progression, boss (PR)
-  clears, streaks, recovery. No XP-per-rep, no currency, no energy, no decay.
-- **The Gate:** a full workout flow per session (Push / Pull / Legs) with a live muscle
-  heatmap, per-exercise form cues, and a one-tap set logger prefilled from last time.
-- **Exercise demos:** each exercise shows a looping video clip when available and falls back to
-  a procedural stick-figure animation. Both pause when not visible to save battery.
-- **Bosses & relics:** milestone weights become derived PR "encounters"; named milestones mint
-  permanent relics in a trophy case. Nothing earned can be lost (it's all re-derived).
-- **System UI:** a holographic interface that changes color by tier, with a living void, glass panels,
-  decode/shimmer effects), fully reduced-motion safe.
-- **Offline-first PWA:** installs to the home screen, works fully offline (cold start
-  included), and syncs across devices through Supabase when signed in.
-- **Gym utilities:** rest timer, plate calculator + warm-ups, e1RM, bodyweight, measurements,
-  and nutrition tracking with charts.
+---
 
-## Stack (summary)
+## 🚀 How to Run & Deploy for Free
 
-React 19 + Vite + TypeScript PWA · Dexie (IndexedDB, offline-first event log) ·
-Supabase (Postgres + Auth, sync) · deployed as a static PWA. Full rationale in the
-[technical design doc](docs/03-TECHNICAL-DESIGN.md).
-
-## Documentation
-
-All design and build documentation lives in [`docs/`](docs/):
-
-- [`00-HANDOFF.md`](docs/00-HANDOFF.md) — context handoff log; **read this first** when picking up the project, update it when finishing a phase
-- [`01-PRD.md`](docs/01-PRD.md) — product requirements
-- [`02-GDD.md`](docs/02-GDD.md) — game design document (XP, levels, tiers, quests, bosses)
-- [`03-TECHNICAL-DESIGN.md`](docs/03-TECHNICAL-DESIGN.md) — stack, data model, sync, architecture
-- [`04-DESIGN-SYSTEM.md`](docs/04-DESIGN-SYSTEM.md) — visual language, tokens, wireframes
-- [`05-BUILD-PLAN.md`](docs/05-BUILD-PLAN.md) — phased build plan with files, models, and tests per phase
-- [`06-DEPLOY.md`](docs/06-DEPLOY.md) — deploy & install · [`08-ASSETS.md`](docs/08-ASSETS.md) — asset generation guide · [`10-USER-GUIDE.md`](docs/10-USER-GUIDE.md) — how to use
-
-## Develop
-
+### 1. Local Development
 ```bash
 npm install
-npm run dev          # local dev server
-npm test             # engine unit tests (Vitest)
-npm run build        # production build + service worker
+npm run dev          # Start local dev server (default: http://localhost:5173)
+npm test             # Run Vitest test suite (140 tests)
+npm run build        # Production build + PWA service worker (dist/)
+npm run preview      # Preview production build locally
 ```
 
-## Character assets
+### 2. Free Deployment to GitHub Pages
+A pre-configured GitHub Actions workflow is included at `.github/workflows/deploy.yml`:
+1. Push this code to your own GitHub repository (`git push origin main`).
+2. In your GitHub repository settings:
+   - Navigate to **Settings** -> **Pages**.
+   - Under **Build and deployment** -> **Source**, select **GitHub Actions**.
+3. Push any commit to `main`, and GitHub Actions will automatically build and publish your app at `https://<your-username>.github.io/<repo-name>/`!
 
-The app is designed around a **tier manifest** (`tiers.json`) and convention-based image paths
-(`assets/characters/lvl_NN.webp`). Images are generated separately and dropped in at any time;
-until then a procedural aura placeholder renders for every level. The system is extensible
-beyond level 100 by appending manifest entries without changing the code.
+### 3. Deploy to Vercel or Netlify (Alternative)
+- Import the repo into [Vercel](https://vercel.com) or [Netlify](https://netlify.com).
+- Build command: `npm run build`
+- Output directory: `dist`
+- 100% free tier.
 
-**Gate art** follows the same drop-in contract: place `assets/gates/<sessionId>.webp` and it
-appears as the banner on the dashboard's gate panel and as the hero inside the gate. Until a
-file exists, the slot stays hidden because the `Art` component handles a 404. Session IDs are
-the keys of `SESSIONS` in `src/data/program.ts`.
+---
 
-## License
+## 🏛️ Character Codex & Assets
+
+Character assets follow convention-based paths (`assets/characters/lvl_{nnn}.webp`) mapped by `tiers.json`. When an image file is not present, the app gracefully falls back to a procedural, tier-colored aura animation placeholder.
+
+Gate banners and exercise demos similarly fall back to procedural graphics when media files are not found, ensuring zero broken icons or crashed screens.
+
+---
+
+## 📜 License
 
 [MIT](LICENSE)

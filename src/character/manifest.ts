@@ -19,7 +19,11 @@ let cached: TierManifest | null = null;
 
 export async function loadManifest(): Promise<TierManifest> {
   if (cached) return cached;
-  const res = await fetch('/assets/characters/tiers.json');
+  const url =
+    typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL && import.meta.env.BASE_URL !== '/'
+      ? `${import.meta.env.BASE_URL}assets/characters/tiers.json`
+      : '/assets/characters/tiers.json';
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`tiers.json failed to load: ${res.status}`);
   cached = (await res.json()) as TierManifest;
   return cached;
