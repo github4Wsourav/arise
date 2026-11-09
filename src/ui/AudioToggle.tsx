@@ -18,7 +18,7 @@ export function AudioToggle() {
       onClick={toggleMusic}
       className="profile-link system-text"
       style={{
-        background: musicOn ? 'rgba(31, 203, 184, 0.15)' : 'transparent',
+        background: musicOn ? 'rgba(31, 203, 184, 0.2)' : 'transparent',
         border: musicOn ? '1px solid var(--aura)' : '1px solid var(--line)',
         borderRadius: 4,
         padding: '3px 8px',
@@ -28,12 +28,15 @@ export function AudioToggle() {
         alignItems: 'center',
         gap: 5,
         color: musicOn ? 'var(--aura-hi)' : 'var(--muted)',
-        textShadow: musicOn ? '0 0 6px var(--aura)' : 'none',
+        textShadow: musicOn ? '0 0 8px var(--aura)' : 'none',
+        fontWeight: musicOn ? 600 : 400,
+        transition: 'all 0.15s ease',
       }}
-      title="Toggle Dark Ambient Dungeon Music (Solo Leveling Soundscape)"
+      title="Toggle Motivating Gym Workout Beat (126 BPM Synthwave Pulse)"
+      aria-label="Toggle Gym BGM"
     >
-      <span>{musicOn ? '🔊' : '🔇'}</span>
-      <span>{musicOn ? 'BGM: ON' : 'BGM: OFF'}</span>
+      <span>{musicOn ? '⚡' : '🔇'}</span>
+      <span>{musicOn ? 'GYM BGM: ON' : 'BGM: OFF'}</span>
     </button>
   );
 }

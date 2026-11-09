@@ -9,31 +9,37 @@ export function AudioSettingsPanel() {
   const [sfxVol, setSfxVol] = useState(() => systemAudio.getSfxVolume());
 
   return (
-    <SystemWindow label="THE SYSTEM AUDIO // SOUNDTRACK & SFX">
+    <SystemWindow label="THE SYSTEM AUDIO // GYM SOUNDTRACK & SFX">
       <p className="intel-line system-text system-text--muted" style={{ marginBottom: 12 }}>
-        Synthesized procedural sound engine powered by the Web Audio API. 100% offline, zero data usage.
+        High-energy procedural Web Audio engine synthesized on your device. Zero lag, zero network data, 100% offline.
       </p>
 
       {/* BGM Controls */}
       <div style={{ padding: '10px 12px', background: 'var(--panel-2)', border: '1px solid var(--line)', borderRadius: 4, marginBottom: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--aura-hi)' }}>
-            🎵 SHADOW GATE AMBIENT BGM
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, flexWrap: 'wrap', gap: 6 }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--aura-hi)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span>⚡</span> CYBER DRIVE (126 BPM GYM BEAT)
           </span>
           <button
             className="log-btn"
-            style={{ minHeight: 32, padding: '0 10px', fontSize: 11 }}
+            style={{
+              minHeight: 32,
+              padding: '0 12px',
+              fontSize: 11,
+              background: musicOn ? 'var(--aura)' : 'var(--panel-3)',
+              color: musicOn ? '#000' : 'var(--ink)',
+            }}
             onClick={() => {
               const next = !musicOn;
               systemAudio.setMusicEnabled(next);
               setMusicOn(next);
             }}
           >
-            {musicOn ? 'BGM: PLAYING (TAP TO MUTE)' : 'BGM: MUTED (TAP TO START)'}
+            {musicOn ? '■ STOP BEAT' : '▶ START WORKOUT BEAT'}
           </button>
         </div>
         <p className="intel-line system-text system-text--muted" style={{ fontSize: 11, margin: '4px 0 8px' }}>
-          Dark dungeon drone with resonant filter sweeps and harmonic shimmer.
+          Motivating 126 BPM workout beat with punchy kick drums, rolling 16th cyber bassline, crisp hats, and heroic synth arps.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--muted)' }}>VOLUME:</span>
@@ -56,13 +62,19 @@ export function AudioSettingsPanel() {
 
       {/* SFX Controls */}
       <div style={{ padding: '10px 12px', background: 'var(--panel-2)', border: '1px solid var(--line)', borderRadius: 4 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--aura-hi)' }}>
-            🔔 SYSTEM INTERFACE SFX
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, flexWrap: 'wrap', gap: 6 }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--aura-hi)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span>🔔</span> SYSTEM HOLOGRAPHIC SFX
           </span>
           <button
             className="log-btn"
-            style={{ minHeight: 32, padding: '0 10px', fontSize: 11 }}
+            style={{
+              minHeight: 32,
+              padding: '0 12px',
+              fontSize: 11,
+              background: sfxOn ? 'rgba(31, 203, 184, 0.2)' : 'var(--panel-3)',
+              borderColor: sfxOn ? 'var(--aura)' : 'var(--line)',
+            }}
             onClick={() => {
               const next = !sfxOn;
               systemAudio.setSfxEnabled(next);
@@ -74,7 +86,7 @@ export function AudioSettingsPanel() {
           </button>
         </div>
         <p className="intel-line system-text system-text--muted" style={{ fontSize: 11, margin: '4px 0 8px' }}>
-          Crystal quest chimes, set logged confirmations, rest timer alarms, and level-up fanfares.
+          Varied tactical audio cues: weight plate rack, round buzzer, quest chime, and level-up fanfare.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--muted)' }}>VOLUME:</span>
@@ -94,27 +106,47 @@ export function AudioSettingsPanel() {
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', minWidth: 35 }}>{Math.round(sfxVol * 100)}%</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        {/* SFX Preview Buttons */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8 }}>
           <button
             className="log-btn"
-            style={{ flex: 1, minHeight: 36, fontSize: 10 }}
-            onClick={() => systemAudio.playSystemChime()}
-          >
-            ▶ TEST QUEST CHIME
-          </button>
-          <button
-            className="log-btn"
-            style={{ flex: 1, minHeight: 36, fontSize: 10 }}
-            onClick={() => systemAudio.playLevelUp()}
-          >
-            ▶ TEST LEVEL UP FANFARE
-          </button>
-          <button
-            className="log-btn"
-            style={{ flex: 1, minHeight: 36, fontSize: 10 }}
+            style={{ minHeight: 36, fontSize: 10, padding: '0 6px' }}
             onClick={() => systemAudio.playSetLogged()}
+            title="Weight plate lock & mechanical clack"
           >
-            ▶ TEST SET BLIP
+            🔩 SET LOGGED (WEIGHT CLINK)
+          </button>
+          <button
+            className="log-btn"
+            style={{ minHeight: 36, fontSize: 10, padding: '0 6px' }}
+            onClick={() => systemAudio.playRestDone()}
+            title="Boxing round buzzer & ready chime"
+          >
+            ⏰ REST TIMER (ROUND BELL)
+          </button>
+          <button
+            className="log-btn"
+            style={{ minHeight: 36, fontSize: 10, padding: '0 6px' }}
+            onClick={() => systemAudio.playSystemChime()}
+            title="Solo Leveling crystal notification chime"
+          >
+            💎 SYSTEM ALERT CHIME
+          </button>
+          <button
+            className="log-btn"
+            style={{ minHeight: 36, fontSize: 10, padding: '0 6px' }}
+            onClick={() => systemAudio.playLevelUp()}
+            title="Heroic power surge & ascending fanfare"
+          >
+            ⬆ LEVEL UP (POWER SURGE)
+          </button>
+          <button
+            className="log-btn"
+            style={{ minHeight: 36, fontSize: 10, padding: '0 6px' }}
+            onClick={() => systemAudio.playGateClear()}
+            title="Gate cleared triumphant victory chord"
+          >
+            🏆 GATE CLEARED (VICTORY)
           </button>
         </div>
       </div>

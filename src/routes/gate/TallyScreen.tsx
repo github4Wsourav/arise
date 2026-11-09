@@ -17,6 +17,7 @@ import { engineCfg, useEvents } from '../../store/useGameState';
 import { CountUp } from '../../ui/CountUp';
 import { XPBar } from '../../ui/XPBar';
 import { Ceremony } from './Ceremony';
+import { systemAudio } from '../../audio/systemAudio';
 
 interface Props {
   sessionId: string;
@@ -49,6 +50,7 @@ export function TallyScreen({ sessionId, date, onClose }: Props) {
   // post-Gate tally is a sync trigger (TDD §2.2) — the session's spoils upload now
   useEffect(() => {
     void requestSync('tally');
+    systemAudio.playGateClear();
   }, []);
 
   const computed = useMemo(() => {
