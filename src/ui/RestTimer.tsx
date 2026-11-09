@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { systemAudio } from '../audio/systemAudio';
 import { SYSTEM } from '../data/strings';
 import { stopRest, useRest } from '../store/restTimer';
 
@@ -13,12 +14,18 @@ export function RestTimer() {
     if (!endsAt) return;
     setNow(Date.now());
     const tick = setInterval(() => setNow(Date.now()), 250);
-    // a single subtle buzz exactly at completion (mobile; no-op elsewhere)
+
     const ms = endsAt - Date.now();
-    const buzz = ms > 0 ? setTimeout(() => navigator.vibrate?.(180), ms) : undefined;
+    const alarm =
+      ms > 0
+        ? setTimeout(() => {
+            systemAudio.playRestDone();
+          }, ms)
+        : undefined;
+
     return () => {
       clearInterval(tick);
-      if (buzz) clearTimeout(buzz);
+      if (alarm) clearTimeout(alarm);
     };
   }, [endsAt]);
 

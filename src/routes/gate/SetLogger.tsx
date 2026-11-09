@@ -12,6 +12,7 @@ import { SYSTEM } from '../../data/strings';
 import { appendEvent } from '../../store/append';
 import { startRest } from '../../store/restTimer';
 import { PlateTools } from '../../ui/PlateTools';
+import { systemAudio } from '../../audio/systemAudio';
 
 interface Props {
   exercise: Exercise;
@@ -84,7 +85,10 @@ export function SetLogger({ exercise, prev, today, date }: Props) {
       reps: draft.reps,
       sessionDate: date,
     });
-    if (!amend) startRest(exercise.scheme.restSec); // rest only starts on a fresh log
+    if (!amend) {
+      systemAudio.playSetLogged();
+      startRest(exercise.scheme.restSec); // rest only starts on a fresh log
+    }
     setEditing(null);
     setDraft(null);
   };

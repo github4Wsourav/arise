@@ -9,6 +9,7 @@ import { dateIso, daysBetween } from '../../store/dates';
 import { useGithubSyncConfig } from '../../store/githubSync';
 import { useGameState } from '../../store/useGameState';
 import { Art } from '../../ui/Art';
+import { AudioToggle } from '../../ui/AudioToggle';
 import { CharacterCard } from '../../ui/CharacterCard';
 import { STAT_ICON } from '../../ui/icons';
 import { PwaInstallBanner } from '../../ui/PwaInstallBanner';
@@ -108,6 +109,7 @@ export function Dashboard() {
           <Link to="/profile" className="profile-link system-text">
             [{SYSTEM.profile.link}]
           </Link>
+          <AudioToggle />
         </div>
         <div className="app-header__center">
           <h1 className="app-title">{SYSTEM.appName}</h1>

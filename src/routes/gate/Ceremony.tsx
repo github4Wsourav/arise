@@ -4,6 +4,7 @@
  * prefers-reduced-motion via CSS (crossfades only).
  */
 import { useEffect } from 'react';
+import { systemAudio } from '../../audio/systemAudio';
 import type { GameState, StatTag } from '../../engine/types';
 import { applyTierTheme, getManifest } from '../../character/manifest';
 import { CharacterImage } from '../../character/CharacterImage';
@@ -26,6 +27,7 @@ export function Ceremony({ before, after, onDone }: Props) {
   // the recolor IS the ceremony for tier-ups — apply as the overlay reveals
   useEffect(() => {
     applyTierTheme(after.tierIndex, manifest);
+    systemAudio.playLevelUp();
   }, [after.tierIndex, manifest]);
 
   return (
